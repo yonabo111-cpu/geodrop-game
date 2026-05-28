@@ -215,17 +215,17 @@ function showMenu() { showScreen("startScreen"); }
 
 /** Text shown inside the basket */
 function basketLabel() {
-  return selectedMode === "capitalMode" ? state.country : state.capital;
+  return state.mode === "capitalMode" ? state.country : state.capital;
 }
 
 /** The ONE correct capsule text for the current question */
 function correctAnswer() {
-  return selectedMode === "capitalMode" ? state.capital : state.country;
+  return state.mode === "capitalMode" ? state.capital : state.country;
 }
 
 /** Pool of wrong answers (texts to use as distractors) */
 function wrongAnswerPool(exclude) {
-  if (selectedMode === "capitalMode") {
+  if (state.mode === "capitalMode") {
     return COUNTRIES
       .filter(c => c.capital !== exclude)
       .map(c => c.capital);
@@ -238,14 +238,14 @@ function wrongAnswerPool(exclude) {
 
 /** Friendly label for missed-capsule flash message */
 function missedMsg() {
-  return selectedMode === "capitalMode"
+  return state.mode === "capitalMode"
     ? "Missed the capital! 💨"
     : "Missed the country! 💨";
 }
 
 /** Friendly label for wrong-catch flash message */
 function wrongCatchMsg() {
-  return selectedMode === "capitalMode"
+  return state.mode === "capitalMode"
     ? "Wrong capital! ❌"
     : "Wrong country! ❌";
 }
@@ -341,11 +341,17 @@ function update(dt) {
     spawnWave();
   }
 
-  // Move capsules
+  // Move capsules — snapshot length ONCE; bail out of the loop
+  // immediately after any catch/miss that replaces the array.
   const speed = diffCfg.dropSpeed * (1 + (state.level - 1) * 0.18);
+  const capSnapshot = state.capsules.slice(); // iterate a copy
 
-  for (let i = state.capsules.length - 1; i >= 0; i--) {
-    const cap = state.capsules[i];
+  for (let i = 0; i < capSnapshot.length; i++) {
+    const cap = capSnapshot[i];
+
+    // Skip if this capsule was already removed from the live array
+    if (!state.capsules.includes(cap)) continue;
+
     cap.y      += speed * (dt / 16);
     cap.wobble  = (cap.wobble || 0) + 0.05;
     cap.x      += Math.sin(cap.wobble) * 0.4;
@@ -357,8 +363,8 @@ function update(dt) {
       cap.x + cap.w / 2 >= basket.x - basket.w / 2 &&
       cap.x - cap.w / 2 <= basket.x + basket.w / 2
     ) {
-      catchCapsule(cap, i);
-      continue;
+      catchCapsule(cap);
+      break; // capsules array was replaced — stop iterating immediately
     }
 
     // Missed (gone past bottom)
@@ -367,9 +373,11 @@ function update(dt) {
         loseLife(missedMsg());
         state.capsules = [];
         if (state.lives > 0) nextQuestion();
-        break;
+        break; // array replaced — stop
       } else {
-        state.capsules.splice(i, 1);
+        // Remove just this one distractor
+        const idx = state.capsules.indexOf(cap);
+        if (idx !== -1) state.capsules.splice(idx, 1);
       }
     }
   }
@@ -440,8 +448,9 @@ function measureCapsule(text) {
 // ════════════════════════════════════════════════════════════
 //  CATCH / MISS LOGIC
 // ════════════════════════════════════════════════════════════
-function catchCapsule(cap, idx) {
-  state.capsules.splice(idx, 1);
+function catchCapsule(cap) {
+  const idx = state.capsules.indexOf(cap);
+  if (idx !== -1) state.capsules.splice(idx, 1);
 
   if (cap.isCorrect) {
     const bonus = state.level;
@@ -499,8 +508,8 @@ function nextQuestion() {
 
   updateHUD();
 
-  // 800 ms pause before next wave
-  state.spawnTimer = state.spawnInterval - 800;
+  // 800 ms pause before next wave (never let timer go negative)
+  state.spawnTimer = Math.max(0, state.spawnInterval - 800);
 }
 
 function pickQuestion() {
