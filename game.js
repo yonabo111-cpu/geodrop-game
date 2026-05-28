@@ -98,6 +98,8 @@ const levelEl        = document.getElementById("level");
 const countryLabel   = document.getElementById("countryLabel");
 const livesDisplay   = document.getElementById("livesDisplay");
 const modeBadgeEl    = document.getElementById("modeBadge");
+const streakDisplay  = document.getElementById("streakDisplay");
+const pauseOverlay   = document.getElementById("pauseOverlay");
 const finalScoreEl   = document.getElementById("finalScore");
 const bestScoreEl    = document.getElementById("bestScore");
 const finalLevelEl   = document.getElementById("finalLevel");
@@ -136,6 +138,14 @@ musicToggle.addEventListener("click", () => {
 });
 
 applyMuteState();
+
+// ── Pause button wiring ─────────────────────────────────────
+document.getElementById("pauseBtn").addEventListener("click", togglePause);
+document.getElementById("resumeBtn").addEventListener("click", togglePause);
+document.getElementById("pauseMenuBtn").addEventListener("click", () => {
+  if (state.paused) togglePause();   // unpause first
+  showMenu();
+});
 
 // ── State ───────────────────────────────────────────────────
 let state        = {};
@@ -196,6 +206,7 @@ const keys = {};
 window.addEventListener("keydown", e => {
   keys[e.key] = true;
   if (["ArrowLeft", "ArrowRight", " "].includes(e.key)) e.preventDefault();
+  if (e.key === "Escape" && state.running) togglePause();
 });
 window.addEventListener("keyup", e => { keys[e.key] = false; });
 
@@ -301,6 +312,7 @@ function startGame() {
 
   state = {
     running:       true,
+    paused:        false,
     score:         0,
     level:         1,
     lives:         diff.lives,
@@ -319,6 +331,9 @@ function startGame() {
     dropQueue:     [],                 // ordered list of texts yet to drop
     correctCount:  0,
     nextLevel:     8,
+    // streak speed system
+    streak:        0,                  // consecutive correct catches
+    speedMult:     1.0,                // current drop-speed multiplier
     basket: {
       x: canvas.width / 2,
       y: canvas.height - 52,
@@ -352,11 +367,31 @@ function updateModeBadge() {
 }
 
 // ════════════════════════════════════════════════════════════
+//  PAUSE
+// ════════════════════════════════════════════════════════════
+function togglePause() {
+  if (!state.running) return;
+  state.paused = !state.paused;
+
+  if (state.paused) {
+    cancelAnimationFrame(animId);
+    animId = null;
+    pauseOverlay.classList.remove("hidden");
+    if (!bgMusic.paused && !bgMusic.muted) bgMusic.volume = 0.15;
+  } else {
+    pauseOverlay.classList.add("hidden");
+    if (!bgMusic.muted) bgMusic.volume = 0.45;
+    lastTime = performance.now();   // prevent dt spike after long pause
+    animId = requestAnimationFrame(loop);
+  }
+}
+
+// ════════════════════════════════════════════════════════════
 //  MAIN LOOP
 // ════════════════════════════════════════════════════════════
 let lastTime = 0;
 function loop(now) {
-  if (!state.running) return;
+  if (!state.running || state.paused) return;
   const dt = Math.min(now - lastTime, 50);
   lastTime  = now;
   update(dt);
@@ -391,7 +426,8 @@ function update(dt) {
 
   // Move capsules — snapshot length ONCE; bail out of the loop
   // immediately after any catch/miss that replaces the array.
-  const speed = diffCfg.dropSpeed * (1 + (state.level - 1) * 0.18);
+  // speedMult grows with consecutive correct catches (streak)
+  const speed = diffCfg.dropSpeed * (1 + (state.level - 1) * 0.18) * state.speedMult;
   const capSnapshot = state.capsules.slice(); // iterate a copy
 
   for (let i = 0; i < capSnapshot.length; i++) {
@@ -540,12 +576,22 @@ function catchCapsule(cap) {
     const bonus = state.level;
     state.score += 10 * bonus;
     state.correctCount++;
-    spawnParticles(cap.x, cap.y, cap.color, 22, true);
-    showFlash("✅ Correct! +" + (10 * bonus), "#4ecca3");
 
-    // ── CONTINUOUS: don't wipe the screen — just advance the question ──
-    // Remove only wrong capsules so the screen keeps flowing
-    state.capsules = state.capsules.filter(c => c.isCorrect === false);
+    // ── STREAK: build speed on each correct catch ──
+    state.streak++;
+    // +8% speed per streak step, max +120% over base
+    state.speedMult   = Math.min(2.2, 1.0 + state.streak * 0.08);
+    // drop interval shrinks 80ms per streak step, floor 400ms
+    state.dropInterval = Math.max(400,
+      state.diffCfg.dropInterval - (state.level - 1) * 60 - state.streak * 80
+    );
+
+    spawnParticles(cap.x, cap.y, cap.color, 22, true);
+    const streakTag = state.streak >= 2 ? ` 🔥x${state.streak}` : "";
+    showFlash(`✅ +${10 * bonus}${streakTag}`, "#4ecca3");
+
+    // CONTINUOUS: keep wrong capsules falling, just swap the question
+    state.capsules = state.capsules.filter(c => !c.isCorrect);
 
     if (state.correctCount >= state.nextLevel) {
       levelUp();
@@ -553,6 +599,12 @@ function catchCapsule(cap) {
       nextQuestion();
     }
   } else {
+    // Wrong catch resets streak back to zero
+    state.streak       = 0;
+    state.speedMult    = 1.0;
+    state.dropInterval = Math.max(400,
+      state.diffCfg.dropInterval - (state.level - 1) * 60
+    );
     spawnParticles(cap.x, cap.y, "#ff6b6b", 14, false);
     loseLife(wrongCatchMsg());
   }
@@ -563,6 +615,12 @@ function catchCapsule(cap) {
 function loseLife(msg) {
   state.lives--;
   state.shake = 18;
+  // Missing the correct capsule also resets the streak
+  state.streak       = 0;
+  state.speedMult    = 1.0;
+  state.dropInterval = Math.max(400,
+    state.diffCfg.dropInterval - (state.level - 1) * 60
+  );
   showFlash(msg, "#ff6b6b");
   updateHUD();
   if (state.lives <= 0) setTimeout(endGame, 600);
@@ -574,11 +632,11 @@ function loseLife(msg) {
 function levelUp() {
   state.level++;
   state.correctCount = 0;
+  // Keep streak alive across level-ups — player earned it!
   showFlash("🎉 Level " + state.level + "!", "#f7c948");
-  // dropInterval tightens with each level (min 600 ms)
-  state.dropInterval = Math.max(
-    600,
-    state.diffCfg.dropInterval - (state.level - 1) * 60
+  // Recalc dropInterval: level reduction + streak reduction stacked
+  state.dropInterval = Math.max(400,
+    state.diffCfg.dropInterval - (state.level - 1) * 60 - state.streak * 80
   );
   nextQuestion();
 }
@@ -665,13 +723,23 @@ function endGame() {
 function updateHUD() {
   scoreEl.textContent = state.score;
   levelEl.textContent = state.level;
-
-  // The HUD label shows what the basket is looking for
   countryLabel.textContent = basketLabel();
 
   const hearts = "❤️".repeat(state.lives)
     + "🖤".repeat(Math.max(0, state.maxLives - state.lives));
   livesDisplay.textContent = hearts;
+
+  // Streak badge — visible when streak >= 2
+  if (state.streak >= 2) {
+    streakDisplay.textContent = `🔥 x${state.streak}`;
+    streakDisplay.classList.remove("hidden");
+    // Retrigger pulse animation
+    streakDisplay.style.animation = "none";
+    streakDisplay.offsetHeight;   // force reflow
+    streakDisplay.style.animation = "";
+  } else {
+    streakDisplay.classList.add("hidden");
+  }
 }
 
 // ════════════════════════════════════════════════════════════

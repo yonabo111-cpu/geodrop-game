@@ -215,23 +215,87 @@ h1 {
 .sum-row:last-child { border-bottom: none; }
 .sum-row strong { color: var(--accent); font-size: 1.1rem; }
 
-/* ─── Music toggle button ─── */
-.music-btn {
+/* ─── HUD icon buttons (pause + music) ─── */
+.hud-btn-row {
+  display: flex; gap: 6px; margin-top: 4px;
+}
+.icon-btn {
   background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.15);
   border-radius: 50%;
-  width: 32px; height: 32px;
-  font-size: 1rem;
+  width: 30px; height: 30px;
+  font-size: .95rem;
   cursor: pointer;
   color: #fff;
   display: flex; align-items: center; justify-content: center;
   transition: background .2s, transform .15s;
-  margin-top: 4px;
   line-height: 1;
+  padding: 0;
 }
-.music-btn:hover  { background: rgba(255,255,255,.18); transform: scale(1.1); }
-.music-btn:active { transform: scale(.95); }
-.music-btn.muted  { opacity: .45; }
+.icon-btn:hover  { background: rgba(255,255,255,.18); transform: scale(1.1); }
+.icon-btn:active { transform: scale(.95); }
+.icon-btn.muted  { opacity: .45; }
+
+/* ─── Streak display ─── */
+.hud-bottom-row {
+  display: flex; align-items: center; gap: 10px; margin-top: 2px;
+}
+.streak-display {
+  font-size: .8rem; font-weight: 800;
+  color: #f7c948;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(247,201,72,.6);
+  animation: streakPulse .4s ease;
+}
+.streak-display.hidden { display: none; }
+@keyframes streakPulse {
+  0%   { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* ─── Pause overlay ─── */
+.pause-overlay {
+  position: absolute; inset: 0;
+  background: rgba(7, 7, 32, 0.82);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 50;
+  animation: fadeIn .2s ease;
+}
+.pause-overlay.hidden { display: none; }
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+.pause-card {
+  text-align: center;
+  padding: 36px 40px;
+}
+.pause-icon {
+  font-size: 3rem; margin-bottom: 10px;
+  animation: pauseBounce .6s ease;
+}
+@keyframes pauseBounce {
+  0%,100% { transform: scale(1);   }
+  50%      { transform: scale(1.2); }
+}
+.pause-card h2 {
+  font-size: 2rem; font-weight: 900; letter-spacing: 5px;
+  background: linear-gradient(90deg, #f7c948, #4ecca3);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.pause-sub {
+  color: rgba(255,255,255,.55); font-size: .88rem; margin-bottom: 24px;
+}
+.pause-sub kbd {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 5px; padding: 1px 6px;
+  font-size: .82rem; color: rgba(255,255,255,.8);
+}
+.pause-card .primary-btn   { margin-bottom: 0; width: 200px; }
+.pause-card .secondary-btn { width: 200px; }
 
 /* ─── Game Screen ─── */
 #gameScreen {
@@ -301,7 +365,7 @@ h1 {
   max-width: 260px;
 }
 
-.lives { font-size: 1rem; margin-top: 2px; letter-spacing: 2px; }
+.lives { font-size: 1rem; letter-spacing: 2px; }
 
 /* Game area */
 #gameArea {

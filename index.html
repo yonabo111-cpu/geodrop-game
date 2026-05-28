@@ -73,18 +73,34 @@
         <!-- shows current mode badge -->
         <div id="modeBadge" class="mode-badge">🧺 Capital Hunt</div>
         <div id="countryLabel">Country</div>
-        <div class="lives" id="livesDisplay">❤️❤️❤️</div>
+        <div class="hud-bottom-row">
+          <div class="lives" id="livesDisplay">❤️❤️❤️</div>
+          <div id="streakDisplay" class="streak-display hidden">🔥 ×1</div>
+        </div>
       </div>
       <div class="hud-block">
         <span class="hud-label">LEVEL</span>
         <span id="level">1</span>
-        <!-- Music toggle -->
-        <button id="musicToggle" class="music-btn" title="Toggle music">🔊</button>
+        <div class="hud-btn-row">
+          <button id="pauseBtn"  class="icon-btn" title="Pause (Esc)">⏸</button>
+          <button id="musicToggle" class="icon-btn music-btn" title="Toggle music">🔊</button>
+        </div>
       </div>
     </div>
 
     <div id="gameArea">
       <canvas id="gameCanvas"></canvas>
+
+      <!-- ── PAUSE OVERLAY ── -->
+      <div id="pauseOverlay" class="pause-overlay hidden">
+        <div class="pause-card">
+          <div class="pause-icon">⏸</div>
+          <h2>PAUSED</h2>
+          <p class="pause-sub">Press <kbd>Esc</kbd> or tap Resume to continue</p>
+          <button id="resumeBtn" class="primary-btn">▶ Resume</button>
+          <button id="pauseMenuBtn" class="secondary-btn">Main Menu</button>
+        </div>
+      </div>
     </div>
 
     <!-- Mobile controls -->
