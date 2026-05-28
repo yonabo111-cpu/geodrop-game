@@ -23,17 +23,36 @@
           <button class="mode-btn active" data-mode="capitalMode">
             <span class="mode-icon">🧺</span>
             <span class="mode-title">Capital Hunt</span>
-            <span class="mode-desc">Basket shows a Country — catch its Capital</span>
+            <span class="mode-desc">Catch its Capital</span>
           </button>
           <button class="mode-btn" data-mode="countryMode">
             <span class="mode-icon">🗺️</span>
             <span class="mode-title">Country Hunt</span>
-            <span class="mode-desc">Basket shows a Capital — catch its Country</span>
+            <span class="mode-desc">Catch its Country</span>
+          </button>
+          <button class="mode-btn" data-mode="marathon">
+            <span class="mode-icon">🔁</span>
+            <span class="mode-title">Marathon</span>
+            <span class="mode-desc">Alternates each round</span>
           </button>
         </div>
       </div>
 
-      <!-- How to play (updated dynamically) -->
+      <!-- Region Filter -->
+      <div class="region-select">
+        <label>Region</label>
+        <div class="region-buttons">
+          <button class="region-btn active" data-region="all">🌍 All</button>
+          <button class="region-btn" data-region="Europe">🇪🇺 Europe</button>
+          <button class="region-btn" data-region="Asia">🌏 Asia</button>
+          <button class="region-btn" data-region="Africa">🌍 Africa</button>
+          <button class="region-btn" data-region="Americas">🌎 Americas</button>
+          <button class="region-btn" data-region="Oceania">🏝️ Oceania</button>
+          <button class="region-btn" data-region="Middle East">🕌 Mid East</button>
+        </div>
+      </div>
+
+      <!-- How to play -->
       <div class="how-to">
         <h3>How to Play</h3>
         <ul id="howToList">
@@ -55,7 +74,19 @@
         </div>
       </div>
 
-      <button id="startBtn" class="primary-btn">Start Game</button>
+      <!-- Basket Skin selector -->
+      <div class="skin-select">
+        <label>Basket Skin <span class="skin-hint">(earn pts to unlock)</span></label>
+        <div id="skinBtns" class="skin-buttons"></div>
+      </div>
+
+      <!-- Action buttons -->
+      <button id="startBtn" class="primary-btn">▶ Start Game</button>
+
+      <div class="start-footer">
+        <button id="leaderboardBtn" class="ghost-btn">🏆 Leaderboard</button>
+        <button id="learnBtn" class="ghost-btn">📚 Learn</button>
+      </div>
     </div>
   </div>
 
@@ -70,7 +101,6 @@
         <span id="score">0</span>
       </div>
       <div class="hud-block center-hud">
-        <!-- shows current mode badge -->
         <div id="modeBadge" class="mode-badge">🧺 Capital Hunt</div>
         <div id="countryLabel">Country</div>
         <div class="hud-bottom-row">
@@ -82,7 +112,7 @@
         <span class="hud-label">LEVEL</span>
         <span id="level">1</span>
         <div class="hud-btn-row">
-          <button id="pauseBtn"  class="icon-btn" title="Pause (Esc)">⏸</button>
+          <button id="pauseBtn"    class="icon-btn" title="Pause (Esc)">⏸</button>
           <button id="musicToggle" class="icon-btn music-btn" title="Toggle music">🔊</button>
         </div>
       </div>
@@ -91,21 +121,20 @@
     <div id="gameArea">
       <canvas id="gameCanvas"></canvas>
 
-      <!-- ── PAUSE OVERLAY ── -->
+      <!-- PAUSE OVERLAY -->
       <div id="pauseOverlay" class="pause-overlay hidden">
         <div class="pause-card">
           <div class="pause-icon">⏸</div>
           <h2>PAUSED</h2>
           <p class="pause-sub">Press <kbd>Esc</kbd> or tap Resume to continue</p>
-          <button id="resumeBtn" class="primary-btn">▶ Resume</button>
+          <button id="resumeBtn"    class="primary-btn">▶ Resume</button>
           <button id="pauseMenuBtn" class="secondary-btn">Main Menu</button>
         </div>
       </div>
     </div>
 
-    <!-- Mobile controls -->
     <div id="mobileControls">
-      <button id="leftBtn" class="ctrl-btn">◀</button>
+      <button id="leftBtn"  class="ctrl-btn">◀</button>
       <button id="rightBtn" class="ctrl-btn">▶</button>
     </div>
   </div>
@@ -118,12 +147,71 @@
       <p class="tagline" id="finalMessage">Better luck next time!</p>
       <div class="score-summary">
         <div class="sum-row"><span>Final Score</span><strong id="finalScore">0</strong></div>
-        <div class="sum-row"><span>Best Score</span><strong id="bestScore">0</strong></div>
+        <div class="sum-row"><span>Best Score</span> <strong id="bestScore">0</strong></div>
         <div class="sum-row"><span>Level Reached</span><strong id="finalLevel">1</strong></div>
-        <div class="sum-row"><span>Mode</span><strong id="finalMode">Capital Hunt</strong></div>
+        <div class="sum-row"><span>Mode</span>        <strong id="finalMode">Capital Hunt</strong></div>
       </div>
-      <button id="restartBtn" class="primary-btn">Play Again</button>
-      <button id="menuBtn" class="secondary-btn">Main Menu</button>
+
+      <!-- Top 5 leaderboard preview -->
+      <div class="lb-preview">
+        <h3 class="lb-title">🏆 Top 5 Scores</h3>
+        <div id="leaderboardListPreview"></div>
+      </div>
+
+      <button id="restartBtn" class="primary-btn">▶ Play Again</button>
+      <div class="gameover-footer">
+        <button id="menuBtn"   class="secondary-btn">Main Menu</button>
+        <button id="learnBtn2" class="ghost-btn" onclick="showLearnScreen()">📚 Learn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: LEADERBOARD ── -->
+  <div id="leaderboardScreen" class="screen">
+    <div class="start-card">
+      <div class="globe-icon">🏆</div>
+      <h1>LEADERBOARD</h1>
+      <p class="tagline">Top 5 all-time scores</p>
+      <div id="leaderboardListFull" class="lb-full"></div>
+      <button id="leaderboardBackBtn" class="primary-btn" style="margin-top:20px">← Back</button>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: LEARN ── -->
+  <div id="learnScreen" class="screen">
+    <div class="learn-wrapper">
+      <div class="learn-header">
+        <h2>📚 Learn the World</h2>
+        <p class="learn-sub">Browse all countries, capitals &amp; flags</p>
+        <div class="learn-controls">
+          <input id="learnSearch" type="search" placeholder="🔍 Search country or capital…" class="learn-search-input" />
+          <div class="learn-filter-row">
+            <button class="learn-filter-btn active" data-continent="all">All</button>
+            <button class="learn-filter-btn" data-continent="Europe">Europe</button>
+            <button class="learn-filter-btn" data-continent="Asia">Asia</button>
+            <button class="learn-filter-btn" data-continent="Africa">Africa</button>
+            <button class="learn-filter-btn" data-continent="Americas">Americas</button>
+            <button class="learn-filter-btn" data-continent="Oceania">Oceania</button>
+            <button class="learn-filter-btn" data-continent="Middle East">Mid East</button>
+          </div>
+        </div>
+      </div>
+      <div id="learnGrid" class="learn-grid"></div>
+      <button id="learnBackBtn" class="primary-btn learn-back-btn">← Main Menu</button>
+    </div>
+  </div>
+
+  <!-- ── NAME ENTRY MODAL (over everything) ── -->
+  <div id="nameModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-icon">🏅</div>
+      <h2>Game Over!</h2>
+      <p id="modalScoreDisplay" class="modal-score">Score: 0</p>
+      <p class="modal-sub">Enter your name for the leaderboard</p>
+      <input id="playerNameInput" type="text" maxlength="20"
+             placeholder="Your name…" class="name-input" />
+      <button id="submitNameBtn" class="primary-btn">Save Score 🏆</button>
+      <button id="skipNameBtn"   class="secondary-btn">Skip</button>
     </div>
   </div>
 

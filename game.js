@@ -4,71 +4,75 @@
 
 // ── Country / Capital data ──────────────────────────────────
 const COUNTRIES = [
-  { country: "France",         capital: "Paris" },
-  { country: "Germany",        capital: "Berlin" },
-  { country: "Italy",          capital: "Rome" },
-  { country: "Spain",          capital: "Madrid" },
-  { country: "Portugal",       capital: "Lisbon" },
-  { country: "Japan",          capital: "Tokyo" },
-  { country: "China",          capital: "Beijing" },
-  { country: "India",          capital: "New Delhi" },
-  { country: "Brazil",         capital: "Brasília" },
-  { country: "Argentina",      capital: "Buenos Aires" },
-  { country: "Australia",      capital: "Canberra" },
-  { country: "Canada",         capital: "Ottawa" },
-  { country: "Mexico",         capital: "Mexico City" },
-  { country: "Russia",         capital: "Moscow" },
-  { country: "Egypt",          capital: "Cairo" },
-  { country: "Nigeria",        capital: "Abuja" },
-  { country: "South Africa",   capital: "Pretoria" },
-  { country: "Kenya",          capital: "Nairobi" },
-  { country: "Turkey",         capital: "Ankara" },
-  { country: "Greece",         capital: "Athens" },
-  { country: "Sweden",         capital: "Stockholm" },
-  { country: "Norway",         capital: "Oslo" },
-  { country: "Denmark",        capital: "Copenhagen" },
-  { country: "Netherlands",    capital: "Amsterdam" },
-  { country: "Belgium",        capital: "Brussels" },
-  { country: "Switzerland",    capital: "Bern" },
-  { country: "Austria",        capital: "Vienna" },
-  { country: "Poland",         capital: "Warsaw" },
-  { country: "Ukraine",        capital: "Kyiv" },
-  { country: "USA",            capital: "Washington D.C." },
-  { country: "South Korea",    capital: "Seoul" },
-  { country: "Thailand",       capital: "Bangkok" },
-  { country: "Vietnam",        capital: "Hanoi" },
-  { country: "Indonesia",      capital: "Jakarta" },
-  { country: "Malaysia",       capital: "Kuala Lumpur" },
-  { country: "Philippines",    capital: "Manila" },
-  { country: "Pakistan",       capital: "Islamabad" },
-  { country: "Bangladesh",     capital: "Dhaka" },
-  { country: "Saudi Arabia",   capital: "Riyadh" },
-  { country: "Iran",           capital: "Tehran" },
-  { country: "Iraq",           capital: "Baghdad" },
-  { country: "Israel",         capital: "Jerusalem" },
-  { country: "Jordan",         capital: "Amman" },
-  { country: "Morocco",        capital: "Rabat" },
-  { country: "Algeria",        capital: "Algiers" },
-  { country: "Ethiopia",       capital: "Addis Ababa" },
-  { country: "Ghana",          capital: "Accra" },
-  { country: "Cuba",           capital: "Havana" },
-  { country: "Peru",           capital: "Lima" },
-  { country: "Colombia",       capital: "Bogotá" },
-  { country: "Chile",          capital: "Santiago" },
-  { country: "Venezuela",      capital: "Caracas" },
-  { country: "Romania",        capital: "Bucharest" },
-  { country: "Hungary",        capital: "Budapest" },
-  { country: "Czech Republic", capital: "Prague" },
-  { country: "Finland",        capital: "Helsinki" },
-  { country: "New Zealand",    capital: "Wellington" },
-  { country: "Singapore",      capital: "Singapore" },
-  { country: "UAE",            capital: "Abu Dhabi" },
-  { country: "Qatar",          capital: "Doha" },
+  // Europe
+  { country: "France",         capital: "Paris",          flag: "🇫🇷", continent: "Europe" },
+  { country: "Germany",        capital: "Berlin",         flag: "🇩🇪", continent: "Europe" },
+  { country: "Italy",          capital: "Rome",           flag: "🇮🇹", continent: "Europe" },
+  { country: "Spain",          capital: "Madrid",         flag: "🇪🇸", continent: "Europe" },
+  { country: "Portugal",       capital: "Lisbon",         flag: "🇵🇹", continent: "Europe" },
+  { country: "Greece",         capital: "Athens",         flag: "🇬🇷", continent: "Europe" },
+  { country: "Sweden",         capital: "Stockholm",      flag: "🇸🇪", continent: "Europe" },
+  { country: "Norway",         capital: "Oslo",           flag: "🇳🇴", continent: "Europe" },
+  { country: "Denmark",        capital: "Copenhagen",     flag: "🇩🇰", continent: "Europe" },
+  { country: "Netherlands",    capital: "Amsterdam",      flag: "🇳🇱", continent: "Europe" },
+  { country: "Belgium",        capital: "Brussels",       flag: "🇧🇪", continent: "Europe" },
+  { country: "Switzerland",    capital: "Bern",           flag: "🇨🇭", continent: "Europe" },
+  { country: "Austria",        capital: "Vienna",         flag: "🇦🇹", continent: "Europe" },
+  { country: "Poland",         capital: "Warsaw",         flag: "🇵🇱", continent: "Europe" },
+  { country: "Ukraine",        capital: "Kyiv",           flag: "🇺🇦", continent: "Europe" },
+  { country: "Romania",        capital: "Bucharest",      flag: "🇷🇴", continent: "Europe" },
+  { country: "Hungary",        capital: "Budapest",       flag: "🇭🇺", continent: "Europe" },
+  { country: "Czech Republic", capital: "Prague",         flag: "🇨🇿", continent: "Europe" },
+  { country: "Finland",        capital: "Helsinki",       flag: "🇫🇮", continent: "Europe" },
+  { country: "Russia",         capital: "Moscow",         flag: "🇷🇺", continent: "Europe" },
+  // Asia
+  { country: "Japan",          capital: "Tokyo",          flag: "🇯🇵", continent: "Asia" },
+  { country: "China",          capital: "Beijing",        flag: "🇨🇳", continent: "Asia" },
+  { country: "India",          capital: "New Delhi",      flag: "🇮🇳", continent: "Asia" },
+  { country: "South Korea",    capital: "Seoul",          flag: "🇰🇷", continent: "Asia" },
+  { country: "Thailand",       capital: "Bangkok",        flag: "🇹🇭", continent: "Asia" },
+  { country: "Vietnam",        capital: "Hanoi",          flag: "🇻🇳", continent: "Asia" },
+  { country: "Indonesia",      capital: "Jakarta",        flag: "🇮🇩", continent: "Asia" },
+  { country: "Malaysia",       capital: "Kuala Lumpur",   flag: "🇲🇾", continent: "Asia" },
+  { country: "Philippines",    capital: "Manila",         flag: "🇵🇭", continent: "Asia" },
+  { country: "Pakistan",       capital: "Islamabad",      flag: "🇵🇰", continent: "Asia" },
+  { country: "Bangladesh",     capital: "Dhaka",          flag: "🇧🇩", continent: "Asia" },
+  { country: "Singapore",      capital: "Singapore",      flag: "🇸🇬", continent: "Asia" },
+  // Africa
+  { country: "Egypt",          capital: "Cairo",          flag: "🇪🇬", continent: "Africa" },
+  { country: "Nigeria",        capital: "Abuja",          flag: "🇳🇬", continent: "Africa" },
+  { country: "South Africa",   capital: "Pretoria",       flag: "🇿🇦", continent: "Africa" },
+  { country: "Kenya",          capital: "Nairobi",        flag: "🇰🇪", continent: "Africa" },
+  { country: "Morocco",        capital: "Rabat",          flag: "🇲🇦", continent: "Africa" },
+  { country: "Algeria",        capital: "Algiers",        flag: "🇩🇿", continent: "Africa" },
+  { country: "Ethiopia",       capital: "Addis Ababa",    flag: "🇪🇹", continent: "Africa" },
+  { country: "Ghana",          capital: "Accra",          flag: "🇬🇭", continent: "Africa" },
+  // Americas
+  { country: "USA",            capital: "Washington D.C.", flag: "🇺🇸", continent: "Americas" },
+  { country: "Canada",         capital: "Ottawa",         flag: "🇨🇦", continent: "Americas" },
+  { country: "Mexico",         capital: "Mexico City",    flag: "🇲🇽", continent: "Americas" },
+  { country: "Brazil",         capital: "Brasília",       flag: "🇧🇷", continent: "Americas" },
+  { country: "Argentina",      capital: "Buenos Aires",   flag: "🇦🇷", continent: "Americas" },
+  { country: "Cuba",           capital: "Havana",         flag: "🇨🇺", continent: "Americas" },
+  { country: "Peru",           capital: "Lima",           flag: "🇵🇪", continent: "Americas" },
+  { country: "Colombia",       capital: "Bogotá",         flag: "🇨🇴", continent: "Americas" },
+  { country: "Chile",          capital: "Santiago",       flag: "🇨🇱", continent: "Americas" },
+  { country: "Venezuela",      capital: "Caracas",        flag: "🇻🇪", continent: "Americas" },
+  // Oceania
+  { country: "Australia",      capital: "Canberra",       flag: "🇦🇺", continent: "Oceania" },
+  { country: "New Zealand",    capital: "Wellington",     flag: "🇳🇿", continent: "Oceania" },
+  // Middle East
+  { country: "Turkey",         capital: "Ankara",         flag: "🇹🇷", continent: "Middle East" },
+  { country: "Saudi Arabia",   capital: "Riyadh",         flag: "🇸🇦", continent: "Middle East" },
+  { country: "Iran",           capital: "Tehran",         flag: "🇮🇷", continent: "Middle East" },
+  { country: "Iraq",           capital: "Baghdad",        flag: "🇮🇶", continent: "Middle East" },
+  { country: "Israel",         capital: "Jerusalem",      flag: "🇮🇱", continent: "Middle East" },
+  { country: "Jordan",         capital: "Amman",          flag: "🇯🇴", continent: "Middle East" },
+  { country: "UAE",            capital: "Abu Dhabi",      flag: "🇦🇪", continent: "Middle East" },
+  { country: "Qatar",          capital: "Doha",           flag: "🇶🇦", continent: "Middle East" },
 ];
 
 // ── Difficulty settings ─────────────────────────────────────
-// distractors = max wrong capsules visible at any one time
-// dropInterval = ms between dropping ONE capsule
 const DIFFICULTY = {
   easy:   { dropSpeed: 1.5, dropInterval: 1800, distractors: 1, lives: 5 },
   medium: { dropSpeed: 2.0, dropInterval: 1400, distractors: 2, lives: 3 },
@@ -85,12 +89,23 @@ const CAPSULE_COLORS = [
 const MODE_STYLE = {
   capitalMode: { rgb: "78,204,163",  hex: "#4ecca3" },   // teal
   countryMode:  { rgb: "162,155,254", hex: "#a29bfe" },  // purple
+  marathon:     { rgb: "247,201,72",  hex: "#f7c948" },  // gold
 };
+
+// ── Basket Skins ─────────────────────────────────────────────
+const SKINS = [
+  { id: "classic",   name: "Classic",   threshold: 0,   icon: "🧺", rgb: null,           hex: null },
+  { id: "fire",      name: "Inferno",   threshold: 50,  icon: "🔥", rgb: "255,107,107",  hex: "#ff6b6b" },
+  { id: "galaxy",    name: "Galaxy",    threshold: 150, icon: "🌌", rgb: "126,130,255",  hex: "#7e82ff" },
+  { id: "gold",      name: "Golden",    threshold: 300, icon: "✨", rgb: "247,201,72",   hex: "#f7c948" },
+  { id: "neon",      name: "Neon",      threshold: 500, icon: "⚡", rgb: "85,239,196",   hex: "#55efc4" },
+];
 
 // ── DOM refs ────────────────────────────────────────────────
 const startScreen    = document.getElementById("startScreen");
 const gameScreen     = document.getElementById("gameScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
+const learnScreen    = document.getElementById("learnScreen");
 const canvas         = document.getElementById("gameCanvas");
 const ctx            = canvas.getContext("2d");
 const scoreEl        = document.getElementById("score");
@@ -110,12 +125,12 @@ const finalMessageEl = document.getElementById("finalMessage");
 const bgMusic      = document.getElementById("bgMusic");
 const musicToggle  = document.getElementById("musicToggle");
 let   musicMuted   = localStorage.getItem("geodrop_muted") === "true";
-let   musicStarted = false;   // browsers block autoplay until user gesture
+let   musicStarted = false;
 
 bgMusic.volume = 0.45;
 
 function applyMuteState() {
-  bgMusic.muted          = musicMuted;
+  bgMusic.muted           = musicMuted;
   musicToggle.textContent = musicMuted ? "🔇" : "🔊";
   musicToggle.classList.toggle("muted", musicMuted);
 }
@@ -123,17 +138,13 @@ function applyMuteState() {
 function startMusic() {
   if (musicStarted) return;
   musicStarted = true;
-  bgMusic.play().catch(() => {
-    // autoplay blocked — will retry on next user interaction
-    musicStarted = false;
-  });
+  bgMusic.play().catch(() => { musicStarted = false; });
 }
 
 musicToggle.addEventListener("click", () => {
   musicMuted = !musicMuted;
   localStorage.setItem("geodrop_muted", musicMuted);
   applyMuteState();
-  // If unmuting and music hasn't started yet, start it now
   if (!musicMuted) startMusic();
 });
 
@@ -143,18 +154,34 @@ applyMuteState();
 document.getElementById("pauseBtn").addEventListener("click", togglePause);
 document.getElementById("resumeBtn").addEventListener("click", togglePause);
 document.getElementById("pauseMenuBtn").addEventListener("click", () => {
-  if (state.paused) togglePause();   // unpause first
+  if (state.paused) togglePause();
   showMenu();
 });
 
 // ── State ───────────────────────────────────────────────────
-let state        = {};
-let animId       = null;
-let selectedDiff = "easy";
-let selectedMode = "capitalMode";   // "capitalMode" | "countryMode"
-let bestScore    = parseInt(localStorage.getItem("geodrop_best") || "0");
+let state          = {};
+let animId         = null;
+let selectedDiff   = "easy";
+let selectedMode   = "capitalMode";   // "capitalMode" | "countryMode" | "marathon"
+let selectedRegion = "all";           // "all" | continent name
+let selectedSkin   = localStorage.getItem("geodrop_skin") || "classic";
+let bestScore      = parseInt(localStorage.getItem("geodrop_best") || "0");
 
-// ── Mode buttons ────────────────────────────────────────────
+// ── Leaderboard helpers ──────────────────────────────────────
+function getLeaderboard() {
+  try {
+    return JSON.parse(localStorage.getItem("geodrop_leaderboard") || "[]");
+  } catch (e) { return []; }
+}
+function saveToLeaderboard(name, score, mode, level) {
+  const lb = getLeaderboard();
+  lb.push({ name: name.trim().slice(0, 20) || "Anonymous", score, mode, level, date: new Date().toLocaleDateString() });
+  lb.sort((a, b) => b.score - a.score);
+  lb.splice(5); // keep top 5
+  localStorage.setItem("geodrop_leaderboard", JSON.stringify(lb));
+}
+
+// ── Mode buttons ─────────────────────────────────────────────
 const HOW_TO = {
   capitalMode: [
     "🧺 The basket shows a <strong>country name</strong>",
@@ -170,6 +197,13 @@ const HOW_TO = {
     "✅ Catch the <strong>correct country</strong> for points",
     "❌ Wrong answers cost you a life",
   ],
+  marathon: [
+    "🔁 Questions <strong>alternate</strong> between Capital Hunt and Country Hunt",
+    "💧 Capitals AND country names rain down",
+    "⬅️ ➡️ Move with <strong>Arrow keys</strong> or tap buttons",
+    "✅ Catch whichever the <strong>badge tells you</strong>",
+    "❌ Wrong answers cost you a life",
+  ],
 };
 
 document.querySelectorAll(".mode-btn").forEach(btn => {
@@ -183,10 +217,18 @@ document.querySelectorAll(".mode-btn").forEach(btn => {
 
 function updateHowTo() {
   const list = document.getElementById("howToList");
-  list.innerHTML = HOW_TO[selectedMode]
-    .map(t => `<li>${t}</li>`)
-    .join("");
+  const key  = HOW_TO[selectedMode] ? selectedMode : "capitalMode";
+  list.innerHTML = HOW_TO[key].map(t => `<li>${t}</li>`).join("");
 }
+
+// ── Region buttons ───────────────────────────────────────────
+document.querySelectorAll(".region-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".region-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedRegion = btn.dataset.region;
+  });
+});
 
 // ── Difficulty buttons ──────────────────────────────────────
 document.querySelectorAll(".diff-btn").forEach(btn => {
@@ -197,15 +239,94 @@ document.querySelectorAll(".diff-btn").forEach(btn => {
   });
 });
 
+// ── Skin selector ───────────────────────────────────────────
+function buildSkinSelector() {
+  const container = document.getElementById("skinBtns");
+  if (!container) return;
+  const unlockedScore = bestScore;
+  container.innerHTML = "";
+  SKINS.forEach(skin => {
+    const unlocked = unlockedScore >= skin.threshold;
+    const btn = document.createElement("button");
+    btn.className  = "skin-btn" + (selectedSkin === skin.id ? " active" : "") + (unlocked ? "" : " locked");
+    btn.dataset.skin = skin.id;
+    btn.title      = unlocked ? skin.name : `Unlock at ${skin.threshold} pts`;
+    btn.innerHTML  = `<span class="skin-icon">${skin.icon}</span><span class="skin-name">${skin.name}</span>`
+      + (unlocked ? "" : `<span class="skin-lock">🔒${skin.threshold}</span>`);
+    if (unlocked) {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".skin-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedSkin = skin.id;
+        localStorage.setItem("geodrop_skin", skin.id);
+      });
+    }
+    container.appendChild(btn);
+  });
+}
+
+// ── Leaderboard display ─────────────────────────────────────
+function buildLeaderboardDisplay() {
+  const lb   = getLeaderboard();
+  const html = lb.length === 0
+    ? `<div class="lb-empty">No scores yet — play your first game!</div>`
+    : lb.map((entry, i) => `
+    <div class="lb-row ${i === 0 ? 'lb-gold' : i === 1 ? 'lb-silver' : i === 2 ? 'lb-bronze' : ''}">
+      <span class="lb-rank">${["🥇","🥈","🥉","4","5"][i]}</span>
+      <span class="lb-name">${escapeHtml(entry.name)}</span>
+      <span class="lb-score">${entry.score} pts</span>
+      <span class="lb-meta">Lv.${entry.level} · ${entry.date}</span>
+    </div>
+  `).join("");
+  // Update both the preview (game-over) and the full leaderboard screen
+  const preview = document.getElementById("leaderboardListPreview");
+  const full    = document.getElementById("leaderboardListFull");
+  if (preview) preview.innerHTML = html;
+  if (full)    full.innerHTML    = html;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+// ── Button wire-ups ─────────────────────────────────────────
 document.getElementById("startBtn").addEventListener("click", startGame);
 document.getElementById("restartBtn").addEventListener("click", startGame);
 document.getElementById("menuBtn").addEventListener("click", showMenu);
+document.getElementById("learnBtn").addEventListener("click", showLearnScreen);
+document.getElementById("learnBackBtn").addEventListener("click", showMenu);
+document.getElementById("leaderboardBtn").addEventListener("click", () => {
+  buildLeaderboardDisplay();
+  showScreen("leaderboardScreen");
+});
+document.getElementById("leaderboardBackBtn").addEventListener("click", showMenu);
+
+// Name entry modal submit
+document.getElementById("submitNameBtn").addEventListener("click", submitNameAndSave);
+document.getElementById("skipNameBtn").addEventListener("click", () => {
+  saveToLeaderboard("Anonymous", pendingScore.score, pendingScore.mode, pendingScore.level);
+  document.getElementById("nameModal").classList.add("hidden");
+  buildLeaderboardDisplay();
+  showScreen("gameOverScreen");
+});
+document.getElementById("playerNameInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") submitNameAndSave();
+});
+
+let pendingScore = null;
+function submitNameAndSave() {
+  const name = document.getElementById("playerNameInput").value;
+  saveToLeaderboard(name, pendingScore.score, pendingScore.mode, pendingScore.level);
+  document.getElementById("nameModal").classList.add("hidden");
+  buildLeaderboardDisplay();
+  showScreen("gameOverScreen");
+}
 
 // ── Keyboard ────────────────────────────────────────────────
 const keys = {};
 window.addEventListener("keydown", e => {
   keys[e.key] = true;
-  if (["ArrowLeft", "ArrowRight", " "].includes(e.key)) e.preventDefault();
+  if (["ArrowLeft","ArrowRight"," "].includes(e.key)) e.preventDefault();
   if (e.key === "Escape" && state.running) togglePause();
 });
 window.addEventListener("keyup", e => { keys[e.key] = false; });
@@ -248,16 +369,69 @@ function repositionBasket() {
 //  SCREENS
 // ════════════════════════════════════════════════════════════
 function showScreen(id) {
-  [startScreen, gameScreen, gameOverScreen].forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
-function showMenu() { showScreen("startScreen"); }
+function showMenu() {
+  buildSkinSelector();
+  buildLeaderboardDisplay();
+  showScreen("startScreen");
+}
+
+// ── Learn screen ─────────────────────────────────────────────
+function showLearnScreen() {
+  populateLearnScreen();
+  showScreen("learnScreen");
+}
+
+function populateLearnScreen() {
+  const grid = document.getElementById("learnGrid");
+  if (!grid) return;
+  grid.innerHTML = COUNTRIES.map(c => `
+    <div class="learn-card">
+      <div class="learn-flag">${c.flag}</div>
+      <div class="learn-country">${c.country}</div>
+      <div class="learn-capital">🏛️ ${c.capital}</div>
+      <div class="learn-continent">${c.continent}</div>
+      <a class="learn-map-link"
+         href="https://www.google.com/maps/search/${encodeURIComponent(c.country)}"
+         target="_blank" rel="noopener">🗺️ View on Map</a>
+    </div>
+  `).join("");
+}
+
+// ── Learn search filter ───────────────────────────────────────
+document.getElementById("learnSearch").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll(".learn-card").forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(q) ? "" : "none";
+  });
+});
+
+// ── Learn continent filter ────────────────────────────────────
+document.querySelectorAll(".learn-filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".learn-filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const cont = btn.dataset.continent;
+    document.querySelectorAll(".learn-card").forEach(card => {
+      card.style.display = (cont === "all" || card.querySelector(".learn-continent").textContent === cont)
+        ? "" : "none";
+    });
+  });
+});
 
 // ════════════════════════════════════════════════════════════
 //  MODE HELPERS
-//  In capitalMode: basket = country, capsules = capitals
-//  In countryMode: basket = capital,  capsules = countries
 // ════════════════════════════════════════════════════════════
+
+/** Active question pool filtered by region */
+function questionPool() {
+  if (selectedRegion === "all") return COUNTRIES;
+  const filtered = COUNTRIES.filter(c => c.continent === selectedRegion);
+  return filtered.length >= 3 ? filtered : COUNTRIES; // fallback if too few
+}
 
 /** Text shown inside the basket */
 function basketLabel() {
@@ -269,31 +443,31 @@ function correctAnswer() {
   return state.mode === "capitalMode" ? state.capital : state.country;
 }
 
+/** Flag for the current question entry */
+function currentFlag() {
+  const pool = questionPool();
+  const entry = pool[state.questionIdx] || COUNTRIES[0];
+  return entry.flag || "";
+}
+
 /** Pool of wrong answers (texts to use as distractors) */
 function wrongAnswerPool(exclude) {
+  const pool = questionPool();
   if (state.mode === "capitalMode") {
-    return COUNTRIES
-      .filter(c => c.capital !== exclude)
-      .map(c => c.capital);
+    return pool.filter(c => c.capital !== exclude).map(c => c.capital);
   } else {
-    return COUNTRIES
-      .filter(c => c.country !== exclude)
-      .map(c => c.country);
+    return pool.filter(c => c.country !== exclude).map(c => c.country);
   }
 }
 
 /** Friendly label for missed-capsule flash message */
 function missedMsg() {
-  return state.mode === "capitalMode"
-    ? "Missed the capital! 💨"
-    : "Missed the country! 💨";
+  return state.mode === "capitalMode" ? "Missed the capital! 💨" : "Missed the country! 💨";
 }
 
 /** Friendly label for wrong-catch flash message */
 function wrongCatchMsg() {
-  return state.mode === "capitalMode"
-    ? "Wrong capital! ❌"
-    : "Wrong country! ❌";
+  return state.mode === "capitalMode" ? "Wrong capital! ❌" : "Wrong country! ❌";
 }
 
 // ════════════════════════════════════════════════════════════
@@ -301,14 +475,16 @@ function wrongCatchMsg() {
 // ════════════════════════════════════════════════════════════
 function startGame() {
   if (animId) cancelAnimationFrame(animId);
-  // Reset music state so it restarts cleanly on Play Again
   musicStarted = false;
   bgMusic.currentTime = 0;
   showScreen("gameScreen");
   resizeCanvas();
 
   const diff = DIFFICULTY[selectedDiff];
-  const qi   = pickQuestion();
+  // Marathon starts on capitalMode for first question
+  const initialMode = selectedMode === "marathon" ? "capitalMode" : selectedMode;
+  const pool = questionPool();
+  const qi   = pickQuestion(pool);
 
   state = {
     running:       true,
@@ -319,21 +495,21 @@ function startGame() {
     maxLives:      diff.lives,
     diff:          selectedDiff,
     diffCfg:       { ...diff },
-    mode:          selectedMode,
+    mode:          initialMode,
+    isMarathon:    selectedMode === "marathon",
     questionIdx:   qi,
-    country:       COUNTRIES[qi].country,
-    capital:       COUNTRIES[qi].capital,
+    country:       pool[qi].country,
+    capital:       pool[qi].capital,
+    flag:          pool[qi].flag,
     capsules:      [],
     particles:     [],
-    // continuous single-drop scheduler
-    dropTimer:     diff.dropInterval,  // fire first capsule immediately
+    dropTimer:     diff.dropInterval,
     dropInterval:  diff.dropInterval,
-    dropQueue:     [],                 // ordered list of texts yet to drop
+    dropQueue:     [],
     correctCount:  0,
     nextLevel:     8,
-    // streak speed system
-    streak:        0,                  // consecutive correct catches
-    speedMult:     1.0,                // current drop-speed multiplier
+    streak:        0,
+    speedMult:     1.0,
     basket: {
       x: canvas.width / 2,
       y: canvas.height - 52,
@@ -345,11 +521,8 @@ function startGame() {
     flashMsg: null,
   };
 
-  // update HUD badge
   updateModeBadge();
   updateHUD();
-
-  // Start music on first user gesture (browser autoplay policy)
   startMusic();
 
   lastTime = performance.now();
@@ -358,10 +531,12 @@ function startGame() {
 
 function updateModeBadge() {
   if (state.mode === "capitalMode") {
-    modeBadgeEl.textContent = "🧺 Capital Hunt";
-    modeBadgeEl.classList.remove("country-mode");
+    modeBadgeEl.textContent = state.isMarathon ? "🔁 Capital Hunt" : "🧺 Capital Hunt";
+    modeBadgeEl.classList.remove("country-mode", "marathon-mode");
+    if (state.isMarathon) modeBadgeEl.classList.add("marathon-mode");
   } else {
-    modeBadgeEl.textContent = "🗺️ Country Hunt";
+    modeBadgeEl.textContent = state.isMarathon ? "🔁 Country Hunt" : "🗺️ Country Hunt";
+    modeBadgeEl.classList.remove("marathon-mode");
     modeBadgeEl.classList.add("country-mode");
   }
 }
@@ -381,7 +556,7 @@ function togglePause() {
   } else {
     pauseOverlay.classList.add("hidden");
     if (!bgMusic.muted) bgMusic.volume = 0.45;
-    lastTime = performance.now();   // prevent dt spike after long pause
+    lastTime = performance.now();
     animId = requestAnimationFrame(loop);
   }
 }
@@ -405,18 +580,14 @@ function loop(now) {
 function update(dt) {
   const { basket, diffCfg } = state;
 
-  // Move basket
   if (keys["ArrowLeft"])  basket.x -= basket.speed;
   if (keys["ArrowRight"]) basket.x += basket.speed;
   basket.x = Math.max(basket.w / 2, Math.min(canvas.width - basket.w / 2, basket.x));
 
-  // Shake decay
   if (state.shake > 0) state.shake = Math.max(0, state.shake - dt * 0.12);
 
-  // Refill queue whenever it runs low
   refillQueue();
 
-  // Drop ONE capsule at a time on a fixed interval
   state.dropTimer += dt;
   const curInterval = Math.max(600, state.dropInterval - (state.level - 1) * 60);
   if (state.dropTimer >= curInterval && state.dropQueue.length > 0) {
@@ -424,23 +595,17 @@ function update(dt) {
     dropOneCapsule();
   }
 
-  // Move capsules — snapshot length ONCE; bail out of the loop
-  // immediately after any catch/miss that replaces the array.
-  // speedMult grows with consecutive correct catches (streak)
-  const speed = diffCfg.dropSpeed * (1 + (state.level - 1) * 0.18) * state.speedMult;
-  const capSnapshot = state.capsules.slice(); // iterate a copy
+  const speed      = diffCfg.dropSpeed * (1 + (state.level - 1) * 0.18) * state.speedMult;
+  const capSnapshot = state.capsules.slice();
 
   for (let i = 0; i < capSnapshot.length; i++) {
     const cap = capSnapshot[i];
-
-    // Skip if this capsule was already removed from the live array
     if (!state.capsules.includes(cap)) continue;
 
     cap.y      += speed * (dt / 16);
     cap.wobble  = (cap.wobble || 0) + 0.05;
     cap.x      += Math.sin(cap.wobble) * 0.4;
 
-    // Caught by basket
     if (
       cap.y + cap.h / 2 >= basket.y &&
       cap.y - cap.h / 2 <= basket.y + basket.h &&
@@ -448,27 +613,23 @@ function update(dt) {
       cap.x - cap.w / 2 <= basket.x + basket.w / 2
     ) {
       catchCapsule(cap);
-      break; // capsules array was replaced — stop iterating immediately
+      break;
     }
 
-    // Missed (gone past bottom)
     if (cap.y - cap.h / 2 > canvas.height + 10) {
       const idx = state.capsules.indexOf(cap);
       if (idx !== -1) state.capsules.splice(idx, 1);
 
       if (cap.isCorrect && state.lives > 0) {
-        // Correct one fell through — lose a life, re-queue it
         loseLife(missedMsg());
-        // Put the correct answer back at the front of the queue
         if (state.lives > 0) {
-          state.dropQueue.unshift(correctAnswer());
+          state.dropQueue.unshift({ text: correctAnswer(), flag: currentFlag() });
         }
         break;
       }
     }
   }
 
-  // Particles
   for (let i = state.particles.length - 1; i >= 0; i--) {
     const p  = state.particles[i];
     p.x     += p.vx;
@@ -478,7 +639,6 @@ function update(dt) {
     if (p.life <= 0) state.particles.splice(i, 1);
   }
 
-  // Flash timer
   if (state.flashMsg) {
     state.flashMsg.life -= dt;
     if (state.flashMsg.life <= 0) state.flashMsg = null;
@@ -488,59 +648,60 @@ function update(dt) {
 // ════════════════════════════════════════════════════════════
 //  CONTINUOUS SINGLE-DROP SYSTEM
 // ════════════════════════════════════════════════════════════
-
-/**
- * Build / replenish the drop queue.
- * Always contains exactly 1 correct answer surrounded by distractors.
- * We keep a rolling buffer so capsules fall one-by-one continuously.
- */
 function refillQueue() {
-  // Only refill when the queue is almost empty
   if (state.dropQueue.length > 2) return;
 
   const { diffCfg } = state;
-  const correct     = correctAnswer();
+  const correct      = correctAnswer();
+  const flag         = currentFlag();
 
-  // Count how many wrong capsules are already on screen
   const wrongOnScreen = state.capsules.filter(c => !c.isCorrect).length;
-  // How many distractors we still need to queue
-  const wrongNeeded = Math.max(0, diffCfg.distractors - wrongOnScreen);
+  const wrongNeeded   = Math.max(0, diffCfg.distractors - wrongOnScreen);
 
-  // Pick fresh wrong answers (avoid ones already visible)
   const visibleTexts = new Set(state.capsules.map(c => c.text));
-  const wrongPool = wrongAnswerPool(correct)
+  const wrongPool    = wrongAnswerPool(correct)
     .filter(t => !visibleTexts.has(t))
     .sort(() => Math.random() - 0.5)
     .slice(0, wrongNeeded);
 
-  // Always make sure the correct answer is queued if not on screen yet
   const correctOnScreen = state.capsules.some(c => c.isCorrect);
-  const correctInQueue  = state.dropQueue.some(t => t === correct);
+  const correctInQueue  = state.dropQueue.some(q => q.text === correct);
 
-  const toAdd = [...wrongPool];
+  // Build with flag info for wrong answers
+  const pool = questionPool();
+  const toAdd = wrongPool.map(text => {
+    // Find flag for this distractor
+    let f = "🌐";
+    if (state.mode === "capitalMode") {
+      const entry = pool.find(c => c.capital === text);
+      if (entry) f = entry.flag;
+    } else {
+      const entry = pool.find(c => c.country === text);
+      if (entry) f = entry.flag;
+    }
+    return { text, flag: f };
+  });
+
   if (!correctOnScreen && !correctInQueue) {
-    // Insert correct at a random position among the distractors
     const pos = Math.floor(Math.random() * (toAdd.length + 1));
-    toAdd.splice(pos, 0, correct);
-  } else {
-    // Already present somewhere — just add the distractors
+    toAdd.splice(pos, 0, { text: correct, flag });
   }
 
   state.dropQueue.push(...toAdd);
 }
 
-/** Drop the next text from the queue as a single capsule */
 function dropOneCapsule() {
   if (state.dropQueue.length === 0) return;
 
-  const text    = state.dropQueue.shift();
+  const item    = state.dropQueue.shift();
+  const text    = item.text;
+  const flag    = item.flag || "🌐";
   const correct = correctAnswer();
-  const w = measureCapsule(text);
-  const h = 36;
+  const w       = measureCapsule(flag + " " + text);
+  const h       = 40; // slightly taller to fit flag
   const margin  = 60;
   const usableW = canvas.width - margin * 2;
 
-  // Pick an x that doesn't overlap existing capsules near the top
   let x, tries = 0;
   const topCaps = state.capsules.filter(c => c.y < canvas.height * 0.35);
   do {
@@ -550,6 +711,7 @@ function dropOneCapsule() {
 
   state.capsules.push({
     text,
+    flag,
     isCorrect: text === correct,
     x,
     y: -h / 2,
@@ -561,8 +723,8 @@ function dropOneCapsule() {
 }
 
 function measureCapsule(text) {
-  ctx.font = "bold 14px 'Segoe UI', sans-serif";
-  return ctx.measureText(text).width + 28;
+  ctx.font = "bold 13px 'Segoe UI', sans-serif";
+  return ctx.measureText(text).width + 38; // extra room for flag
 }
 
 // ════════════════════════════════════════════════════════════
@@ -577,11 +739,8 @@ function catchCapsule(cap) {
     state.score += 10 * bonus;
     state.correctCount++;
 
-    // ── STREAK: build speed on each correct catch ──
     state.streak++;
-    // +8% speed per streak step, max +120% over base
-    state.speedMult   = Math.min(2.2, 1.0 + state.streak * 0.08);
-    // drop interval shrinks 80ms per streak step, floor 400ms
+    state.speedMult    = Math.min(2.2, 1.0 + state.streak * 0.08);
     state.dropInterval = Math.max(400,
       state.diffCfg.dropInterval - (state.level - 1) * 60 - state.streak * 80
     );
@@ -590,7 +749,6 @@ function catchCapsule(cap) {
     const streakTag = state.streak >= 2 ? ` 🔥x${state.streak}` : "";
     showFlash(`✅ +${10 * bonus}${streakTag}`, "#4ecca3");
 
-    // CONTINUOUS: keep wrong capsules falling, just swap the question
     state.capsules = state.capsules.filter(c => !c.isCorrect);
 
     if (state.correctCount >= state.nextLevel) {
@@ -599,7 +757,6 @@ function catchCapsule(cap) {
       nextQuestion();
     }
   } else {
-    // Wrong catch resets streak back to zero
     state.streak       = 0;
     state.speedMult    = 1.0;
     state.dropInterval = Math.max(400,
@@ -614,8 +771,7 @@ function catchCapsule(cap) {
 
 function loseLife(msg) {
   state.lives--;
-  state.shake = 18;
-  // Missing the correct capsule also resets the streak
+  state.shake        = 18;
   state.streak       = 0;
   state.speedMult    = 1.0;
   state.dropInterval = Math.max(400,
@@ -632,9 +788,7 @@ function loseLife(msg) {
 function levelUp() {
   state.level++;
   state.correctCount = 0;
-  // Keep streak alive across level-ups — player earned it!
   showFlash("🎉 Level " + state.level + "!", "#f7c948");
-  // Recalc dropInterval: level reduction + streak reduction stacked
   state.dropInterval = Math.max(400,
     state.diffCfg.dropInterval - (state.level - 1) * 60 - state.streak * 80
   );
@@ -642,27 +796,31 @@ function levelUp() {
 }
 
 function nextQuestion() {
-  // Pick a new question (avoid same as last)
+  // Reverse Marathon: alternate mode each question
+  if (state.isMarathon) {
+    state.mode = state.mode === "capitalMode" ? "countryMode" : "capitalMode";
+    updateModeBadge();
+  }
+
+  const pool = questionPool();
   let qi;
-  do { qi = pickQuestion(); }
-  while (qi === state.questionIdx && COUNTRIES.length > 1);
+  do { qi = pickQuestion(pool); }
+  while (qi === state.questionIdx && pool.length > 1);
 
   state.questionIdx = qi;
-  state.country     = COUNTRIES[qi].country;
-  state.capital     = COUNTRIES[qi].capital;
+  state.country     = pool[qi].country;
+  state.capital     = pool[qi].capital;
+  state.flag        = pool[qi].flag;
 
-  // Clear the queue so only the new answer gets queued next refill
   state.dropQueue = [];
-
-  // Remove the OLD correct capsule if still on screen (it's now wrong context)
-  state.capsules = state.capsules.filter(c => !c.isCorrect);
+  state.capsules  = state.capsules.filter(c => !c.isCorrect);
 
   updateHUD();
-  // refillQueue() will run on the next update tick and queue the new correct answer
 }
 
-function pickQuestion() {
-  return Math.floor(Math.random() * COUNTRIES.length);
+function pickQuestion(pool) {
+  const p = pool || questionPool();
+  return Math.floor(Math.random() * p.length);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -682,7 +840,7 @@ function fadeOutMusic(duration = 1500) {
       clearInterval(iv);
       bgMusic.pause();
       bgMusic.currentTime = 0;
-      bgMusic.volume      = startVol;   // restore for next round
+      bgMusic.volume      = startVol;
     }
   }, stepTime);
 }
@@ -697,12 +855,17 @@ function endGame() {
     localStorage.setItem("geodrop_best", bestScore);
   }
 
+  // Rebuild skin selector to reflect new unlocks
+  buildSkinSelector();
+
   finalScoreEl.textContent = state.score;
   bestScoreEl.textContent  = bestScore;
   finalLevelEl.textContent = state.level;
-  finalModeEl.textContent  = state.mode === "capitalMode"
-    ? "🧺 Capital Hunt"
-    : "🗺️ Country Hunt";
+  finalModeEl.textContent  = state.isMarathon
+    ? "🔁 Reverse Marathon"
+    : state.mode === "capitalMode"
+      ? "🧺 Capital Hunt"
+      : "🗺️ Country Hunt";
 
   const messages = [
     "Keep exploring the globe! 🌍",
@@ -714,7 +877,11 @@ function endGame() {
     ? "Amazing! You're a geography legend! 🏆"
     : messages[Math.floor(Math.random() * messages.length)];
 
-  showScreen("gameOverScreen");
+  // Show name-entry modal before game-over screen
+  pendingScore = { score: state.score, mode: finalModeEl.textContent, level: state.level };
+  document.getElementById("modalScoreDisplay").textContent = `Score: ${state.score}`;
+  document.getElementById("playerNameInput").value = "";
+  document.getElementById("nameModal").classList.remove("hidden");
 }
 
 // ════════════════════════════════════════════════════════════
@@ -729,17 +896,17 @@ function updateHUD() {
     + "🖤".repeat(Math.max(0, state.maxLives - state.lives));
   livesDisplay.textContent = hearts;
 
-  // Streak badge — visible when streak >= 2
   if (state.streak >= 2) {
     streakDisplay.textContent = `🔥 x${state.streak}`;
     streakDisplay.classList.remove("hidden");
-    // Retrigger pulse animation
     streakDisplay.style.animation = "none";
-    streakDisplay.offsetHeight;   // force reflow
+    streakDisplay.offsetHeight;
     streakDisplay.style.animation = "";
   } else {
     streakDisplay.classList.add("hidden");
   }
+
+  updateModeBadge();
 }
 
 // ════════════════════════════════════════════════════════════
@@ -782,7 +949,6 @@ function draw() {
   ctx.save();
   ctx.translate(sx, sy);
 
-  // Background
   const grad = ctx.createLinearGradient(0, 0, 0, H);
   grad.addColorStop(0, "#070720");
   grad.addColorStop(1, "#0f1040");
@@ -827,7 +993,8 @@ function drawStars(W, H) {
 // ── Ground ─────────────────────────────────────────────────
 function drawGround(W, H) {
   const gh = 10;
-  const mStyle = MODE_STYLE[state.mode];
+  const mKey = state.isMarathon ? "marathon" : state.mode;
+  const mStyle = MODE_STYLE[mKey] || MODE_STYLE.capitalMode;
   const gg = ctx.createLinearGradient(0, H - gh, 0, H);
   gg.addColorStop(0, `rgba(${mStyle.rgb},.5)`);
   gg.addColorStop(1, `rgba(${mStyle.rgb},.1)`);
@@ -838,7 +1005,7 @@ function drawGround(W, H) {
 // ── Capsules ───────────────────────────────────────────────
 function drawCapsules() {
   state.capsules.forEach(cap => {
-    const { x, y, w, h, text, color } = cap;
+    const { x, y, w, h, text, flag, color } = cap;
     const r = h / 2;
 
     ctx.shadowColor = color;
@@ -866,14 +1033,18 @@ function drawCapsules() {
     ctx.ellipse(x, y - h * 0.15, w * 0.35, h * 0.22, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Text
-    ctx.fillStyle    = "#fff";
-    ctx.font         = "bold 13px 'Segoe UI', sans-serif";
+    // Flag emoji above text
+    ctx.shadowColor  = "rgba(0,0,0,0.5)";
+    ctx.shadowBlur   = 3;
+    ctx.font         = "13px 'Segoe UI', sans-serif";
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
-    ctx.shadowColor  = "rgba(0,0,0,0.5)";
-    ctx.shadowBlur   = 4;
-    ctx.fillText(text, x, y);
+    ctx.fillStyle    = "#fff";
+    // Draw flag slightly above center, text below
+    ctx.fillText(flag, x, y - 6);
+
+    ctx.font         = "bold 11px 'Segoe UI', sans-serif";
+    ctx.fillText(text, x, y + 9);
     ctx.shadowBlur   = 0;
   });
 }
@@ -894,16 +1065,22 @@ function drawParticles() {
 function drawBasket() {
   const { x, y, w, h } = state.basket;
   const r       = 8;
-  const mStyle  = MODE_STYLE[state.mode];
+  const mKey    = state.isMarathon ? "marathon" : state.mode;
+  const mStyle  = MODE_STYLE[mKey] || MODE_STYLE.capitalMode;
+
+  // Apply skin override colours if skin is not classic
+  const skin = SKINS.find(s => s.id === selectedSkin) || SKINS[0];
+  const skinRgb = skin.rgb || mStyle.rgb;
+  const skinHex = skin.hex || mStyle.hex;
 
   // Glow
-  ctx.shadowColor = mStyle.hex;
+  ctx.shadowColor = skinHex;
   ctx.shadowBlur  = 22;
 
   // Body gradient
   const bg = ctx.createLinearGradient(x - w / 2, y, x + w / 2, y + h);
-  bg.addColorStop(0, `rgba(${mStyle.rgb},0.38)`);
-  bg.addColorStop(1, `rgba(${mStyle.rgb},0.15)`);
+  bg.addColorStop(0, `rgba(${skinRgb},0.45)`);
+  bg.addColorStop(1, `rgba(${skinRgb},0.18)`);
 
   ctx.beginPath();
   ctx.moveTo(x - w / 2 + r, y);
@@ -919,13 +1096,13 @@ function drawBasket() {
 
   ctx.fillStyle   = bg;
   ctx.fill();
-  ctx.strokeStyle = mStyle.hex;
+  ctx.strokeStyle = skinHex;
   ctx.lineWidth   = 2.5;
   ctx.stroke();
 
   // Weave lines
   ctx.shadowBlur  = 0;
-  ctx.strokeStyle = `rgba(${mStyle.rgb},0.25)`;
+  ctx.strokeStyle = `rgba(${skinRgb},0.25)`;
   ctx.lineWidth   = 1;
   for (let lx = x - w / 2 + 18; lx < x + w / 2 - 10; lx += 18) {
     ctx.beginPath();
@@ -934,15 +1111,23 @@ function drawBasket() {
     ctx.stroke();
   }
 
-  // Label inside basket — shows country (capitalMode) or capital (countryMode)
-  const label = truncateLabel(basketLabel(), w - 14);
+  // Skin icon on far-left of basket
+  if (skin.id !== "classic") {
+    ctx.font         = "14px 'Segoe UI', sans-serif";
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(skin.icon, x - w / 2 + 14, y + h / 2);
+  }
+
+  // Label inside basket
+  const label = truncateLabel(basketLabel(), w - (skin.id !== "classic" ? 28 : 14));
   ctx.fillStyle    = "#fff";
   ctx.font         = "bold 12px 'Segoe UI', sans-serif";
   ctx.textAlign    = "center";
   ctx.textBaseline = "middle";
   ctx.shadowColor  = "rgba(0,0,0,0.6)";
   ctx.shadowBlur   = 4;
-  ctx.fillText(label, x, y + h / 2);
+  ctx.fillText(label, x + (skin.id !== "classic" ? 7 : 0), y + h / 2);
   ctx.shadowBlur   = 0;
 }
 
@@ -987,9 +1172,13 @@ function shuffle(arr) {
 }
 
 function lighten(hex, amount) {
-  const num = parseInt(hex.replace("#", ""), 16);
+  const num = parseInt(hex.replace("#",""), 16);
   const r   = Math.min(255, (num >> 16) + amount);
   const g   = Math.min(255, ((num >> 8) & 0x00ff) + amount);
   const b   = Math.min(255, (num & 0x0000ff) + amount);
   return `rgb(${r},${g},${b})`;
 }
+
+// ── Init on load ─────────────────────────────────────────────
+buildSkinSelector();
+buildLeaderboardDisplay();
