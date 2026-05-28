@@ -35,6 +35,11 @@
             <span class="mode-title">Marathon</span>
             <span class="mode-desc">Alternates each round</span>
           </button>
+          <button class="mode-btn" data-mode="flagMode">
+            <span class="mode-icon">🏳️</span>
+            <span class="mode-title">Flag Mode</span>
+            <span class="mode-desc">Catch the country</span>
+          </button>
         </div>
       </div>
 
@@ -212,6 +217,18 @@
              placeholder="Your name…" class="name-input" />
       <button id="submitNameBtn" class="primary-btn">Save Score 🏆</button>
       <button id="skipNameBtn"   class="secondary-btn">Skip</button>
+    </div>
+  </div>
+
+  <!-- ── MAP MODAL (in-app OpenStreetMap) ── -->
+  <div id="mapModal" class="modal-overlay hidden">
+    <div class="map-modal-card">
+      <div class="map-modal-header">
+        <span id="mapModalTitle" class="map-modal-title"></span>
+        <button id="mapModalClose" class="map-modal-close" title="Close">✕</button>
+      </div>
+      <iframe id="mapIframe" src="" frameborder="0" allowfullscreen
+              title="OpenStreetMap" loading="lazy"></iframe>
     </div>
   </div>
 
