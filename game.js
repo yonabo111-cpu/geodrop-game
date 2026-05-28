@@ -188,7 +188,7 @@ function startGame() {
     capital:      COUNTRIES[qi].capital,
     capsules:     [],
     particles:    [],
-    spawnTimer:   0,
+    spawnTimer:   diff.spawnInterval,   // trigger first wave immediately
     spawnInterval: diff.spawnInterval,
     correctCount: 0,         // correct catches this level
     nextLevel:    8,         // catches needed to level-up
@@ -240,7 +240,7 @@ function update(dt) {
   // Spawn capsules
   state.spawnTimer += dt;
   if (state.spawnTimer >= state.spawnInterval) {
-    state.spawnTimer = 0;
+    state.spawnTimer = 0;   // reset — never goes negative
     spawnWave();
   }
 
@@ -266,11 +266,15 @@ function update(dt) {
 
     // Missed (gone past bottom)
     if (cap.y - cap.h / 2 > canvas.height + 10) {
-      // If the correct capital was missed, lose a life
-      if (cap.isCorrect) {
+      if (cap.isCorrect && state.lives > 0) {
+        // Only penalise once per wave by advancing to next question too
         loseLife("Missed the capital! 💨");
+        state.capsules = [];   // clear the whole wave, avoid double-penalty
+        if (state.lives > 0) nextQuestion();
+        break;                 // exit the loop — capsules array was replaced
+      } else {
+        state.capsules.splice(i, 1);
       }
-      state.capsules.splice(i, 1);
     }
   }
 
@@ -396,21 +400,25 @@ function levelUp() {
   state.correctCount = 0;
   showFlash("🎉 Level " + state.level + "!", "#f7c948");
 
-  // Slightly increase difficulty
+  // Tighten the spawn interval, but never go below 700 ms
   state.spawnInterval = Math.max(700, state.diffCfg.spawnInterval - (state.level - 1) * 80);
+
   nextQuestion();
 }
 
 function nextQuestion() {
-  // Wait a tiny bit before next question spawns
-  state.spawnTimer = -(state.spawnInterval * 0.4);
   state.capsules = [];
 
-  const qi = pickQuestion();
+  // Pick a new question (avoid repeating the same country back-to-back)
+  let qi;
+  do { qi = pickQuestion(); } while (qi === state.questionIdx && COUNTRIES.length > 1);
   state.questionIdx = qi;
   state.country = COUNTRIES[qi].country;
-  state.capital = COUNTRIES[qi].capital;
+  state.capital  = COUNTRIES[qi].capital;
   countryLabel.textContent = state.country;
+
+  // Spawn the next wave after a short fixed delay (800 ms)
+  state.spawnTimer = state.spawnInterval - 800;
 }
 
 function pickQuestion() {
