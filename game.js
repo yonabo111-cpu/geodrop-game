@@ -67,10 +67,12 @@ const COUNTRIES = [
 ];
 
 // ── Difficulty settings ─────────────────────────────────────
+// distractors = max wrong capsules visible at any one time
+// dropInterval = ms between dropping ONE capsule
 const DIFFICULTY = {
-  easy:   { dropSpeed: 1.4, spawnInterval: 2600, distractors: 2, lives: 5 },
-  medium: { dropSpeed: 2.2, spawnInterval: 2000, distractors: 3, lives: 3 },
-  hard:   { dropSpeed: 3.2, spawnInterval: 1400, distractors: 4, lives: 2 },
+  easy:   { dropSpeed: 1.5, dropInterval: 1800, distractors: 1, lives: 5 },
+  medium: { dropSpeed: 2.0, dropInterval: 1400, distractors: 2, lives: 3 },
+  hard:   { dropSpeed: 2.8, dropInterval: 1000, distractors: 2, lives: 2 },
 };
 
 // ── Colour palette for capsules ──────────────────────────────
@@ -311,8 +313,10 @@ function startGame() {
     capital:       COUNTRIES[qi].capital,
     capsules:      [],
     particles:     [],
-    spawnTimer:    diff.spawnInterval,   // fire first wave immediately
-    spawnInterval: diff.spawnInterval,
+    // continuous single-drop scheduler
+    dropTimer:     diff.dropInterval,  // fire first capsule immediately
+    dropInterval:  diff.dropInterval,
+    dropQueue:     [],                 // ordered list of texts yet to drop
     correctCount:  0,
     nextLevel:     8,
     basket: {
@@ -374,11 +378,15 @@ function update(dt) {
   // Shake decay
   if (state.shake > 0) state.shake = Math.max(0, state.shake - dt * 0.12);
 
-  // Spawn wave
-  state.spawnTimer += dt;
-  if (state.spawnTimer >= state.spawnInterval) {
-    state.spawnTimer = 0;
-    spawnWave();
+  // Refill queue whenever it runs low
+  refillQueue();
+
+  // Drop ONE capsule at a time on a fixed interval
+  state.dropTimer += dt;
+  const curInterval = Math.max(600, state.dropInterval - (state.level - 1) * 60);
+  if (state.dropTimer >= curInterval && state.dropQueue.length > 0) {
+    state.dropTimer = 0;
+    dropOneCapsule();
   }
 
   // Move capsules — snapshot length ONCE; bail out of the loop
@@ -409,15 +417,17 @@ function update(dt) {
 
     // Missed (gone past bottom)
     if (cap.y - cap.h / 2 > canvas.height + 10) {
+      const idx = state.capsules.indexOf(cap);
+      if (idx !== -1) state.capsules.splice(idx, 1);
+
       if (cap.isCorrect && state.lives > 0) {
+        // Correct one fell through — lose a life, re-queue it
         loseLife(missedMsg());
-        state.capsules = [];
-        if (state.lives > 0) nextQuestion();
-        break; // array replaced — stop
-      } else {
-        // Remove just this one distractor
-        const idx = state.capsules.indexOf(cap);
-        if (idx !== -1) state.capsules.splice(idx, 1);
+        // Put the correct answer back at the front of the queue
+        if (state.lives > 0) {
+          state.dropQueue.unshift(correctAnswer());
+        }
+        break;
       }
     }
   }
@@ -440,43 +450,77 @@ function update(dt) {
 }
 
 // ════════════════════════════════════════════════════════════
-//  SPAWN WAVE
+//  CONTINUOUS SINGLE-DROP SYSTEM
 // ════════════════════════════════════════════════════════════
-function spawnWave() {
+
+/**
+ * Build / replenish the drop queue.
+ * Always contains exactly 1 correct answer surrounded by distractors.
+ * We keep a rolling buffer so capsules fall one-by-one continuously.
+ */
+function refillQueue() {
+  // Only refill when the queue is almost empty
+  if (state.dropQueue.length > 2) return;
+
   const { diffCfg } = state;
   const correct     = correctAnswer();
-  const pool        = wrongAnswerPool(correct)
+
+  // Count how many wrong capsules are already on screen
+  const wrongOnScreen = state.capsules.filter(c => !c.isCorrect).length;
+  // How many distractors we still need to queue
+  const wrongNeeded = Math.max(0, diffCfg.distractors - wrongOnScreen);
+
+  // Pick fresh wrong answers (avoid ones already visible)
+  const visibleTexts = new Set(state.capsules.map(c => c.text));
+  const wrongPool = wrongAnswerPool(correct)
+    .filter(t => !visibleTexts.has(t))
     .sort(() => Math.random() - 0.5)
-    .slice(0, diffCfg.distractors);
+    .slice(0, wrongNeeded);
 
-  const options = shuffle([correct, ...pool]);
+  // Always make sure the correct answer is queued if not on screen yet
+  const correctOnScreen = state.capsules.some(c => c.isCorrect);
+  const correctInQueue  = state.dropQueue.some(t => t === correct);
 
-  const margin   = 60;
-  const usableW  = canvas.width - margin * 2;
-  const positions = [];
+  const toAdd = [...wrongPool];
+  if (!correctOnScreen && !correctInQueue) {
+    // Insert correct at a random position among the distractors
+    const pos = Math.floor(Math.random() * (toAdd.length + 1));
+    toAdd.splice(pos, 0, correct);
+  } else {
+    // Already present somewhere — just add the distractors
+  }
 
-  options.forEach((text, i) => {
-    const w = measureCapsule(text);
-    const h = 36;
-    let x, tries = 0;
+  state.dropQueue.push(...toAdd);
+}
 
-    do {
-      x = margin + Math.random() * usableW;
-      tries++;
-    } while (tries < 30 && positions.some(p => Math.abs(p - x) < w + 14));
+/** Drop the next text from the queue as a single capsule */
+function dropOneCapsule() {
+  if (state.dropQueue.length === 0) return;
 
-    positions.push(x);
+  const text    = state.dropQueue.shift();
+  const correct = correctAnswer();
+  const w = measureCapsule(text);
+  const h = 36;
+  const margin  = 60;
+  const usableW = canvas.width - margin * 2;
 
-    state.capsules.push({
-      text,
-      isCorrect: text === correct,
-      x,
-      y: -h / 2 - i * 30,
-      w,
-      h,
-      color: CAPSULE_COLORS[Math.floor(Math.random() * CAPSULE_COLORS.length)],
-      wobble: Math.random() * Math.PI * 2,
-    });
+  // Pick an x that doesn't overlap existing capsules near the top
+  let x, tries = 0;
+  const topCaps = state.capsules.filter(c => c.y < canvas.height * 0.35);
+  do {
+    x = margin + Math.random() * usableW;
+    tries++;
+  } while (tries < 40 && topCaps.some(c => Math.abs(c.x - x) < Math.max(c.w, w) * 0.7));
+
+  state.capsules.push({
+    text,
+    isCorrect: text === correct,
+    x,
+    y: -h / 2,
+    w,
+    h,
+    color:  CAPSULE_COLORS[Math.floor(Math.random() * CAPSULE_COLORS.length)],
+    wobble: Math.random() * Math.PI * 2,
   });
 }
 
@@ -498,7 +542,10 @@ function catchCapsule(cap) {
     state.correctCount++;
     spawnParticles(cap.x, cap.y, cap.color, 22, true);
     showFlash("✅ Correct! +" + (10 * bonus), "#4ecca3");
-    state.capsules = [];
+
+    // ── CONTINUOUS: don't wipe the screen — just advance the question ──
+    // Remove only wrong capsules so the screen keeps flowing
+    state.capsules = state.capsules.filter(c => c.isCorrect === false);
 
     if (state.correctCount >= state.nextLevel) {
       levelUp();
@@ -528,16 +575,16 @@ function levelUp() {
   state.level++;
   state.correctCount = 0;
   showFlash("🎉 Level " + state.level + "!", "#f7c948");
-  state.spawnInterval = Math.max(
-    700,
-    state.diffCfg.spawnInterval - (state.level - 1) * 80
+  // dropInterval tightens with each level (min 600 ms)
+  state.dropInterval = Math.max(
+    600,
+    state.diffCfg.dropInterval - (state.level - 1) * 60
   );
   nextQuestion();
 }
 
 function nextQuestion() {
-  state.capsules = [];
-
+  // Pick a new question (avoid same as last)
   let qi;
   do { qi = pickQuestion(); }
   while (qi === state.questionIdx && COUNTRIES.length > 1);
@@ -546,10 +593,14 @@ function nextQuestion() {
   state.country     = COUNTRIES[qi].country;
   state.capital     = COUNTRIES[qi].capital;
 
-  updateHUD();
+  // Clear the queue so only the new answer gets queued next refill
+  state.dropQueue = [];
 
-  // 800 ms pause before next wave (never let timer go negative)
-  state.spawnTimer = Math.max(0, state.spawnInterval - 800);
+  // Remove the OLD correct capsule if still on screen (it's now wrong context)
+  state.capsules = state.capsules.filter(c => !c.isCorrect);
+
+  updateHUD();
+  // refillQueue() will run on the next update tick and queue the new correct answer
 }
 
 function pickQuestion() {
