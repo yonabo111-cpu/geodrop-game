@@ -14,17 +14,38 @@
     <div class="start-card">
       <div class="globe-icon">🌍</div>
       <h1>GEO DROP</h1>
-      <p class="tagline">Catch the correct capital before it hits the ground!</p>
+      <p class="tagline">Catch the right answer before it hits the ground!</p>
+
+      <!-- Game Mode -->
+      <div class="mode-select">
+        <label>Game Mode</label>
+        <div class="mode-buttons">
+          <button class="mode-btn active" data-mode="capitalMode">
+            <span class="mode-icon">🧺</span>
+            <span class="mode-title">Capital Hunt</span>
+            <span class="mode-desc">Basket shows a Country — catch its Capital</span>
+          </button>
+          <button class="mode-btn" data-mode="countryMode">
+            <span class="mode-icon">🗺️</span>
+            <span class="mode-title">Country Hunt</span>
+            <span class="mode-desc">Basket shows a Capital — catch its Country</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- How to play (updated dynamically) -->
       <div class="how-to">
         <h3>How to Play</h3>
-        <ul>
-          <li>🧺 A basket shows a <strong>country name</strong></li>
+        <ul id="howToList">
+          <li>🧺 The basket shows a <strong>country name</strong></li>
           <li>💧 Capitals rain down from the top</li>
           <li>⬅️ ➡️ Move with <strong>Arrow keys</strong> or tap buttons</li>
           <li>✅ Catch the <strong>correct capital</strong> for points</li>
-          <li>❌ Wrong capitals cost you a life</li>
+          <li>❌ Wrong answers cost you a life</li>
         </ul>
       </div>
+
+      <!-- Difficulty -->
       <div class="difficulty-select">
         <label>Difficulty</label>
         <div class="diff-buttons">
@@ -33,6 +54,7 @@
           <button class="diff-btn" data-diff="hard">Hard</button>
         </div>
       </div>
+
       <button id="startBtn" class="primary-btn">Start Game</button>
     </div>
   </div>
@@ -45,6 +67,8 @@
         <span id="score">0</span>
       </div>
       <div class="hud-block center-hud">
+        <!-- shows current mode badge -->
+        <div id="modeBadge" class="mode-badge">🧺 Capital Hunt</div>
         <div id="countryLabel">Country</div>
         <div class="lives" id="livesDisplay">❤️❤️❤️</div>
       </div>
@@ -75,6 +99,7 @@
         <div class="sum-row"><span>Final Score</span><strong id="finalScore">0</strong></div>
         <div class="sum-row"><span>Best Score</span><strong id="bestScore">0</strong></div>
         <div class="sum-row"><span>Level Reached</span><strong id="finalLevel">1</strong></div>
+        <div class="sum-row"><span>Mode</span><strong id="finalMode">Capital Hunt</strong></div>
       </div>
       <button id="restartBtn" class="primary-btn">Play Again</button>
       <button id="menuBtn" class="secondary-btn">Main Menu</button>

@@ -7,9 +7,13 @@
   --accent:     #f7c948;
   --accent2:    #ff6b6b;
   --green:      #4ecca3;
+  --purple:     #a29bfe;
   --text:       #e8eaf6;
   --card-bg:    rgba(255,255,255,0.06);
   --card-border: rgba(255,255,255,0.12);
+  /* basket colours per mode */
+  --basket-color:     78, 204, 163;   /* teal  – Capital Hunt */
+  --basket-glow:      #4ecca3;
 }
 
 html, body {
@@ -59,12 +63,16 @@ body::before {
   border: 1px solid var(--card-border);
   backdrop-filter: blur(16px);
   border-radius: 24px;
-  padding: 40px 36px;
-  width: min(480px, 95vw);
+  padding: 32px 32px 28px;
+  width: min(500px, 96vw);
+  max-height: 96vh;
+  overflow-y: auto;
   text-align: center;
   box-shadow: 0 0 60px rgba(247,201,72,.12);
   animation: fadeUp .5s ease;
+  scrollbar-width: none;
 }
+.start-card::-webkit-scrollbar { display: none; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -72,10 +80,10 @@ body::before {
 }
 
 .globe-icon {
-  font-size: 64px;
+  font-size: 56px;
   animation: spin 8s linear infinite;
   display: inline-block;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 @keyframes spin {
   from { transform: rotate(0deg); }
@@ -83,34 +91,73 @@ body::before {
 }
 
 h1 {
-  font-size: 2.8rem;
+  font-size: 2.6rem;
   font-weight: 900;
   letter-spacing: 6px;
   background: linear-gradient(90deg, var(--accent), var(--green));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
-.tagline { color: rgba(255,255,255,.65); font-size: .95rem; margin-bottom: 24px; }
+.tagline { color: rgba(255,255,255,.65); font-size: .9rem; margin-bottom: 18px; }
+
+/* ─── Game Mode selector ─── */
+.mode-select { margin-bottom: 16px; }
+.mode-select > label {
+  display: block; font-size: .75rem; letter-spacing: 2px;
+  color: var(--accent); margin-bottom: 10px; text-transform: uppercase;
+}
+.mode-buttons {
+  display: flex; gap: 10px;
+}
+.mode-btn {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 12px 10px;
+  background: rgba(255,255,255,.07);
+  border: 2px solid rgba(255,255,255,.12);
+  border-radius: 14px; color: rgba(255,255,255,.7);
+  cursor: pointer; transition: all .2s;
+  text-align: center;
+}
+.mode-btn:hover {
+  background: rgba(255,255,255,.12);
+  color: #fff;
+}
+.mode-btn.active {
+  border-color: var(--green);
+  background: rgba(78,204,163,.15);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(78,204,163,.25);
+}
+.mode-btn[data-mode="countryMode"].active {
+  border-color: var(--purple);
+  background: rgba(162,155,254,.15);
+  box-shadow: 0 0 20px rgba(162,155,254,.25);
+}
+.mode-icon  { font-size: 1.5rem; }
+.mode-title { font-size: .85rem; font-weight: 700; letter-spacing: .5px; }
+.mode-desc  { font-size: .72rem; color: rgba(255,255,255,.55); line-height: 1.3; }
+.mode-btn.active .mode-desc { color: rgba(255,255,255,.75); }
 
 /* How to play */
 .how-to {
   background: rgba(255,255,255,.05);
   border-radius: 14px;
-  padding: 16px 20px;
+  padding: 14px 18px;
   text-align: left;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
-.how-to h3 { font-size: .85rem; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
+.how-to h3 { font-size: .78rem; letter-spacing: 2px; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
 .how-to ul { list-style: none; }
-.how-to li { font-size: .88rem; padding: 4px 0; color: rgba(255,255,255,.8); }
+.how-to li { font-size: .85rem; padding: 3px 0; color: rgba(255,255,255,.8); }
 
 /* Difficulty */
-.difficulty-select { margin-bottom: 28px; }
+.difficulty-select { margin-bottom: 20px; }
 .difficulty-select label {
-  display: block; font-size: .8rem; letter-spacing: 2px;
-  color: var(--green); margin-bottom: 10px;
+  display: block; font-size: .75rem; letter-spacing: 2px;
+  color: var(--green); margin-bottom: 10px; text-transform: uppercase;
 }
 .diff-buttons { display: flex; gap: 10px; justify-content: center; }
 .diff-btn {
@@ -130,7 +177,7 @@ h1 {
 
 /* Buttons */
 .primary-btn {
-  width: 100%; padding: 16px;
+  width: 100%; padding: 15px;
   background: linear-gradient(135deg, var(--accent), #e0a800);
   border: none; border-radius: 14px;
   font-size: 1.1rem; font-weight: 800;
@@ -178,7 +225,7 @@ h1 {
 #hud {
   width: 100%;
   max-width: 800px;
-  padding: 12px 20px;
+  padding: 10px 20px 6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -204,13 +251,31 @@ h1 {
   text-shadow: 0 0 12px rgba(247,201,72,.5);
 }
 
+/* Mode badge inside HUD */
+.mode-badge {
+  font-size: .68rem; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 4px;
+  background: rgba(78,204,163,.2);
+  color: var(--green);
+  border: 1px solid rgba(78,204,163,.35);
+  transition: all .4s;
+}
+.mode-badge.country-mode {
+  background: rgba(162,155,254,.2);
+  color: var(--purple);
+  border-color: rgba(162,155,254,.35);
+}
+
 #countryLabel {
-  font-size: 1.15rem; font-weight: 700;
+  font-size: 1.1rem; font-weight: 700;
   color: #fff;
   background: rgba(255,255,255,.1);
   border: 1px solid rgba(255,255,255,.15);
   border-radius: 20px;
-  padding: 6px 22px;
+  padding: 5px 20px;
   letter-spacing: 1px;
   white-space: nowrap;
   overflow: hidden;
@@ -218,7 +283,7 @@ h1 {
   max-width: 260px;
 }
 
-.lives { font-size: 1.1rem; margin-top: 2px; letter-spacing: 2px; }
+.lives { font-size: 1rem; margin-top: 2px; letter-spacing: 2px; }
 
 /* Game area */
 #gameArea {
@@ -242,12 +307,12 @@ h1 {
   justify-content: space-between;
   width: 100%;
   max-width: 380px;
-  padding: 12px 16px 20px;
+  padding: 10px 16px 18px;
   gap: 16px;
 }
 
 .ctrl-btn {
-  flex: 1; padding: 20px;
+  flex: 1; padding: 18px;
   background: rgba(255,255,255,.1);
   border: 1px solid rgba(255,255,255,.15);
   border-radius: 16px; font-size: 1.6rem;
@@ -262,6 +327,8 @@ h1 {
 }
 @media (max-width: 500px) {
   #mobileControls { display: flex; }
-  #countryLabel { font-size: .95rem; padding: 5px 14px; max-width: 180px; }
+  #countryLabel { font-size: .9rem; padding: 4px 12px; max-width: 170px; }
   #score, #level { font-size: 1.4rem; }
+  .mode-btn { padding: 10px 6px; }
+  .mode-desc { display: none; }
 }
