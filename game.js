@@ -3,73 +3,141 @@
 // ═══════════════════════════════════════════════════════════
 
 // ── Country / Capital data ──────────────────────────────────
+// Each entry: { country, capital, flag, continent, population, language, currency }
 const COUNTRIES = [
-  // Europe
-  { country: "France",         capital: "Paris",          flag: "🇫🇷", continent: "Europe" },
-  { country: "Germany",        capital: "Berlin",         flag: "🇩🇪", continent: "Europe" },
-  { country: "Italy",          capital: "Rome",           flag: "🇮🇹", continent: "Europe" },
-  { country: "Spain",          capital: "Madrid",         flag: "🇪🇸", continent: "Europe" },
-  { country: "Portugal",       capital: "Lisbon",         flag: "🇵🇹", continent: "Europe" },
-  { country: "Greece",         capital: "Athens",         flag: "🇬🇷", continent: "Europe" },
-  { country: "Sweden",         capital: "Stockholm",      flag: "🇸🇪", continent: "Europe" },
-  { country: "Norway",         capital: "Oslo",           flag: "🇳🇴", continent: "Europe" },
-  { country: "Denmark",        capital: "Copenhagen",     flag: "🇩🇰", continent: "Europe" },
-  { country: "Netherlands",    capital: "Amsterdam",      flag: "🇳🇱", continent: "Europe" },
-  { country: "Belgium",        capital: "Brussels",       flag: "🇧🇪", continent: "Europe" },
-  { country: "Switzerland",    capital: "Bern",           flag: "🇨🇭", continent: "Europe" },
-  { country: "Austria",        capital: "Vienna",         flag: "🇦🇹", continent: "Europe" },
-  { country: "Poland",         capital: "Warsaw",         flag: "🇵🇱", continent: "Europe" },
-  { country: "Ukraine",        capital: "Kyiv",           flag: "🇺🇦", continent: "Europe" },
-  { country: "Romania",        capital: "Bucharest",      flag: "🇷🇴", continent: "Europe" },
-  { country: "Hungary",        capital: "Budapest",       flag: "🇭🇺", continent: "Europe" },
-  { country: "Czech Republic", capital: "Prague",         flag: "🇨🇿", continent: "Europe" },
-  { country: "Finland",        capital: "Helsinki",       flag: "🇫🇮", continent: "Europe" },
-  { country: "Russia",         capital: "Moscow",         flag: "🇷🇺", continent: "Europe" },
-  // Asia
-  { country: "Japan",          capital: "Tokyo",          flag: "🇯🇵", continent: "Asia" },
-  { country: "China",          capital: "Beijing",        flag: "🇨🇳", continent: "Asia" },
-  { country: "India",          capital: "New Delhi",      flag: "🇮🇳", continent: "Asia" },
-  { country: "South Korea",    capital: "Seoul",          flag: "🇰🇷", continent: "Asia" },
-  { country: "Thailand",       capital: "Bangkok",        flag: "🇹🇭", continent: "Asia" },
-  { country: "Vietnam",        capital: "Hanoi",          flag: "🇻🇳", continent: "Asia" },
-  { country: "Indonesia",      capital: "Jakarta",        flag: "🇮🇩", continent: "Asia" },
-  { country: "Malaysia",       capital: "Kuala Lumpur",   flag: "🇲🇾", continent: "Asia" },
-  { country: "Philippines",    capital: "Manila",         flag: "🇵🇭", continent: "Asia" },
-  { country: "Pakistan",       capital: "Islamabad",      flag: "🇵🇰", continent: "Asia" },
-  { country: "Bangladesh",     capital: "Dhaka",          flag: "🇧🇩", continent: "Asia" },
-  { country: "Singapore",      capital: "Singapore",      flag: "🇸🇬", continent: "Asia" },
-  // Africa
-  { country: "Egypt",          capital: "Cairo",          flag: "🇪🇬", continent: "Africa" },
-  { country: "Nigeria",        capital: "Abuja",          flag: "🇳🇬", continent: "Africa" },
-  { country: "South Africa",   capital: "Pretoria",       flag: "🇿🇦", continent: "Africa" },
-  { country: "Kenya",          capital: "Nairobi",        flag: "🇰🇪", continent: "Africa" },
-  { country: "Morocco",        capital: "Rabat",          flag: "🇲🇦", continent: "Africa" },
-  { country: "Algeria",        capital: "Algiers",        flag: "🇩🇿", continent: "Africa" },
-  { country: "Ethiopia",       capital: "Addis Ababa",    flag: "🇪🇹", continent: "Africa" },
-  { country: "Ghana",          capital: "Accra",          flag: "🇬🇭", continent: "Africa" },
-  // Americas
-  { country: "USA",            capital: "Washington D.C.", flag: "🇺🇸", continent: "Americas" },
-  { country: "Canada",         capital: "Ottawa",         flag: "🇨🇦", continent: "Americas" },
-  { country: "Mexico",         capital: "Mexico City",    flag: "🇲🇽", continent: "Americas" },
-  { country: "Brazil",         capital: "Brasília",       flag: "🇧🇷", continent: "Americas" },
-  { country: "Argentina",      capital: "Buenos Aires",   flag: "🇦🇷", continent: "Americas" },
-  { country: "Cuba",           capital: "Havana",         flag: "🇨🇺", continent: "Americas" },
-  { country: "Peru",           capital: "Lima",           flag: "🇵🇪", continent: "Americas" },
-  { country: "Colombia",       capital: "Bogotá",         flag: "🇨🇴", continent: "Americas" },
-  { country: "Chile",          capital: "Santiago",       flag: "🇨🇱", continent: "Americas" },
-  { country: "Venezuela",      capital: "Caracas",        flag: "🇻🇪", continent: "Americas" },
-  // Oceania
-  { country: "Australia",      capital: "Canberra",       flag: "🇦🇺", continent: "Oceania" },
-  { country: "New Zealand",    capital: "Wellington",     flag: "🇳🇿", continent: "Oceania" },
-  // Middle East
-  { country: "Turkey",         capital: "Ankara",         flag: "🇹🇷", continent: "Middle East" },
-  { country: "Saudi Arabia",   capital: "Riyadh",         flag: "🇸🇦", continent: "Middle East" },
-  { country: "Iran",           capital: "Tehran",         flag: "🇮🇷", continent: "Middle East" },
-  { country: "Iraq",           capital: "Baghdad",        flag: "🇮🇶", continent: "Middle East" },
-  { country: "Israel",         capital: "Jerusalem",      flag: "🇮🇱", continent: "Middle East" },
-  { country: "Jordan",         capital: "Amman",          flag: "🇯🇴", continent: "Middle East" },
-  { country: "UAE",            capital: "Abu Dhabi",      flag: "🇦🇪", continent: "Middle East" },
-  { country: "Qatar",          capital: "Doha",           flag: "🇶🇦", continent: "Middle East" },
+  // ── Europe ─────────────────────────────────────────────────
+  { country: "France",          capital: "Paris",           flag: "🇫🇷", continent: "Europe",      population: "68M",  language: "French",      currency: "Euro" },
+  { country: "Germany",         capital: "Berlin",          flag: "🇩🇪", continent: "Europe",      population: "84M",  language: "German",      currency: "Euro" },
+  { country: "Italy",           capital: "Rome",            flag: "🇮🇹", continent: "Europe",      population: "59M",  language: "Italian",     currency: "Euro" },
+  { country: "Spain",           capital: "Madrid",          flag: "🇪🇸", continent: "Europe",      population: "47M",  language: "Spanish",     currency: "Euro" },
+  { country: "Portugal",        capital: "Lisbon",          flag: "🇵🇹", continent: "Europe",      population: "10M",  language: "Portuguese",  currency: "Euro" },
+  { country: "Greece",          capital: "Athens",          flag: "🇬🇷", continent: "Europe",      population: "11M",  language: "Greek",       currency: "Euro" },
+  { country: "Sweden",          capital: "Stockholm",       flag: "🇸🇪", continent: "Europe",      population: "10M",  language: "Swedish",     currency: "Krona" },
+  { country: "Norway",          capital: "Oslo",            flag: "🇳🇴", continent: "Europe",      population: "5M",   language: "Norwegian",   currency: "Krone" },
+  { country: "Denmark",         capital: "Copenhagen",      flag: "🇩🇰", continent: "Europe",      population: "6M",   language: "Danish",      currency: "Krone" },
+  { country: "Netherlands",     capital: "Amsterdam",       flag: "🇳🇱", continent: "Europe",      population: "17M",  language: "Dutch",       currency: "Euro" },
+  { country: "Belgium",         capital: "Brussels",        flag: "🇧🇪", continent: "Europe",      population: "11M",  language: "Dutch/French", currency: "Euro" },
+  { country: "Switzerland",     capital: "Bern",            flag: "🇨🇭", continent: "Europe",      population: "9M",   language: "German/French", currency: "Franc" },
+  { country: "Austria",         capital: "Vienna",          flag: "🇦🇹", continent: "Europe",      population: "9M",   language: "German",      currency: "Euro" },
+  { country: "Poland",          capital: "Warsaw",          flag: "🇵🇱", continent: "Europe",      population: "38M",  language: "Polish",      currency: "Złoty" },
+  { country: "Ukraine",         capital: "Kyiv",            flag: "🇺🇦", continent: "Europe",      population: "44M",  language: "Ukrainian",   currency: "Hryvnia" },
+  { country: "Romania",         capital: "Bucharest",       flag: "🇷🇴", continent: "Europe",      population: "19M",  language: "Romanian",    currency: "Leu" },
+  { country: "Hungary",         capital: "Budapest",        flag: "🇭🇺", continent: "Europe",      population: "10M",  language: "Hungarian",   currency: "Forint" },
+  { country: "Czech Republic",  capital: "Prague",          flag: "🇨🇿", continent: "Europe",      population: "11M",  language: "Czech",       currency: "Koruna" },
+  { country: "Finland",         capital: "Helsinki",        flag: "🇫🇮", continent: "Europe",      population: "6M",   language: "Finnish",     currency: "Euro" },
+  { country: "Russia",          capital: "Moscow",          flag: "🇷🇺", continent: "Europe",      population: "144M", language: "Russian",     currency: "Ruble" },
+  { country: "Serbia",          capital: "Belgrade",        flag: "🇷🇸", continent: "Europe",      population: "7M",   language: "Serbian",     currency: "Dinar" },
+  { country: "Croatia",         capital: "Zagreb",          flag: "🇭🇷", continent: "Europe",      population: "4M",   language: "Croatian",    currency: "Euro" },
+  { country: "Slovakia",        capital: "Bratislava",      flag: "🇸🇰", continent: "Europe",      population: "5M",   language: "Slovak",      currency: "Euro" },
+  { country: "Bulgaria",        capital: "Sofia",           flag: "🇧🇬", continent: "Europe",      population: "7M",   language: "Bulgarian",   currency: "Lev" },
+  { country: "Ireland",         capital: "Dublin",          flag: "🇮🇪", continent: "Europe",      population: "5M",   language: "English",     currency: "Euro" },
+  { country: "Scotland",        capital: "Edinburgh",       flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", continent: "Europe",      population: "5M",   language: "English",     currency: "Pound" },
+  { country: "UK",              capital: "London",          flag: "🇬🇧", continent: "Europe",      population: "67M",  language: "English",     currency: "Pound" },
+  { country: "Iceland",         capital: "Reykjavik",       flag: "🇮🇸", continent: "Europe",      population: "0.4M", language: "Icelandic",   currency: "Króna" },
+  { country: "Luxembourg",      capital: "Luxembourg City", flag: "🇱🇺", continent: "Europe",      population: "0.7M", language: "Luxembourgish", currency: "Euro" },
+  { country: "Albania",         capital: "Tirana",          flag: "🇦🇱", continent: "Europe",      population: "3M",   language: "Albanian",    currency: "Lek" },
+  { country: "Lithuania",       capital: "Vilnius",         flag: "🇱🇹", continent: "Europe",      population: "3M",   language: "Lithuanian",  currency: "Euro" },
+  { country: "Latvia",          capital: "Riga",            flag: "🇱🇻", continent: "Europe",      population: "2M",   language: "Latvian",     currency: "Euro" },
+  { country: "Estonia",         capital: "Tallinn",         flag: "🇪🇪", continent: "Europe",      population: "1.3M", language: "Estonian",    currency: "Euro" },
+  { country: "Belarus",         capital: "Minsk",           flag: "🇧🇾", continent: "Europe",      population: "9M",   language: "Belarusian",  currency: "Ruble" },
+  { country: "Slovenia",        capital: "Ljubljana",       flag: "🇸🇮", continent: "Europe",      population: "2M",   language: "Slovene",     currency: "Euro" },
+  { country: "North Macedonia",  capital: "Skopje",          flag: "🇲🇰", continent: "Europe",      population: "2M",   language: "Macedonian",  currency: "Denar" },
+  { country: "Moldova",         capital: "Chișinău",        flag: "🇲🇩", continent: "Europe",      population: "3M",   language: "Romanian",    currency: "Leu" },
+  // ── Asia ───────────────────────────────────────────────────
+  { country: "Japan",           capital: "Tokyo",           flag: "🇯🇵", continent: "Asia",        population: "125M", language: "Japanese",    currency: "Yen" },
+  { country: "China",           capital: "Beijing",         flag: "🇨🇳", continent: "Asia",        population: "1.4B", language: "Mandarin",    currency: "Yuan" },
+  { country: "India",           capital: "New Delhi",       flag: "🇮🇳", continent: "Asia",        population: "1.4B", language: "Hindi",       currency: "Rupee" },
+  { country: "South Korea",     capital: "Seoul",           flag: "🇰🇷", continent: "Asia",        population: "52M",  language: "Korean",      currency: "Won" },
+  { country: "Thailand",        capital: "Bangkok",         flag: "🇹🇭", continent: "Asia",        population: "72M",  language: "Thai",        currency: "Baht" },
+  { country: "Vietnam",         capital: "Hanoi",           flag: "🇻🇳", continent: "Asia",        population: "98M",  language: "Vietnamese",  currency: "Dong" },
+  { country: "Indonesia",       capital: "Jakarta",         flag: "🇮🇩", continent: "Asia",        population: "277M", language: "Indonesian",  currency: "Rupiah" },
+  { country: "Malaysia",        capital: "Kuala Lumpur",    flag: "🇲🇾", continent: "Asia",        population: "33M",  language: "Malay",       currency: "Ringgit" },
+  { country: "Philippines",     capital: "Manila",          flag: "🇵🇭", continent: "Asia",        population: "115M", language: "Filipino",    currency: "Peso" },
+  { country: "Pakistan",        capital: "Islamabad",       flag: "🇵🇰", continent: "Asia",        population: "231M", language: "Urdu",        currency: "Rupee" },
+  { country: "Bangladesh",      capital: "Dhaka",           flag: "🇧🇩", continent: "Asia",        population: "170M", language: "Bengali",     currency: "Taka" },
+  { country: "Singapore",       capital: "Singapore",       flag: "🇸🇬", continent: "Asia",        population: "6M",   language: "English",     currency: "Dollar" },
+  { country: "Myanmar",         capital: "Naypyidaw",       flag: "🇲🇲", continent: "Asia",        population: "55M",  language: "Burmese",     currency: "Kyat" },
+  { country: "Sri Lanka",       capital: "Sri Jayawardenepura Kotte", flag: "🇱🇰", continent: "Asia", population: "22M", language: "Sinhala", currency: "Rupee" },
+  { country: "Nepal",           capital: "Kathmandu",       flag: "🇳🇵", continent: "Asia",        population: "30M",  language: "Nepali",      currency: "Rupee" },
+  { country: "Mongolia",        capital: "Ulaanbaatar",     flag: "🇲🇳", continent: "Asia",        population: "3M",   language: "Mongolian",   currency: "Tögrög" },
+  { country: "Cambodia",        capital: "Phnom Penh",      flag: "🇰🇭", continent: "Asia",        population: "17M",  language: "Khmer",       currency: "Riel" },
+  { country: "Laos",            capital: "Vientiane",       flag: "🇱🇦", continent: "Asia",        population: "7M",   language: "Lao",         currency: "Kip" },
+  { country: "North Korea",     capital: "Pyongyang",       flag: "🇰🇵", continent: "Asia",        population: "26M",  language: "Korean",      currency: "Won" },
+  { country: "Taiwan",          capital: "Taipei",          flag: "🇹🇼", continent: "Asia",        population: "24M",  language: "Mandarin",    currency: "Dollar" },
+  { country: "Kazakhstan",      capital: "Astana",          flag: "🇰🇿", continent: "Asia",        population: "19M",  language: "Kazakh",      currency: "Tenge" },
+  { country: "Uzbekistan",      capital: "Tashkent",        flag: "🇺🇿", continent: "Asia",        population: "36M",  language: "Uzbek",       currency: "Som" },
+  { country: "Afghanistan",     capital: "Kabul",           flag: "🇦🇫", continent: "Asia",        population: "42M",  language: "Pashto/Dari", currency: "Afghani" },
+  // ── Africa ─────────────────────────────────────────────────
+  { country: "Egypt",           capital: "Cairo",           flag: "🇪🇬", continent: "Africa",      population: "105M", language: "Arabic",      currency: "Pound" },
+  { country: "Nigeria",         capital: "Abuja",           flag: "🇳🇬", continent: "Africa",      population: "223M", language: "English",     currency: "Naira" },
+  { country: "South Africa",    capital: "Pretoria",        flag: "🇿🇦", continent: "Africa",      population: "60M",  language: "Zulu/English", currency: "Rand" },
+  { country: "Kenya",           capital: "Nairobi",         flag: "🇰🇪", continent: "Africa",      population: "55M",  language: "Swahili",     currency: "Shilling" },
+  { country: "Morocco",         capital: "Rabat",           flag: "🇲🇦", continent: "Africa",      population: "38M",  language: "Arabic",      currency: "Dirham" },
+  { country: "Algeria",         capital: "Algiers",         flag: "🇩🇿", continent: "Africa",      population: "46M",  language: "Arabic",      currency: "Dinar" },
+  { country: "Ethiopia",        capital: "Addis Ababa",     flag: "🇪🇹", continent: "Africa",      population: "126M", language: "Amharic",     currency: "Birr" },
+  { country: "Ghana",           capital: "Accra",           flag: "🇬🇭", continent: "Africa",      population: "33M",  language: "English",     currency: "Cedi" },
+  { country: "Tanzania",        capital: "Dodoma",          flag: "🇹🇿", continent: "Africa",      population: "65M",  language: "Swahili",     currency: "Shilling" },
+  { country: "Uganda",          capital: "Kampala",         flag: "🇺🇬", continent: "Africa",      population: "48M",  language: "English",     currency: "Shilling" },
+  { country: "Mozambique",      capital: "Maputo",          flag: "🇲🇿", continent: "Africa",      population: "33M",  language: "Portuguese",  currency: "Metical" },
+  { country: "Senegal",         capital: "Dakar",           flag: "🇸🇳", continent: "Africa",      population: "17M",  language: "French",      currency: "CFA Franc" },
+  { country: "Cameroon",        capital: "Yaoundé",         flag: "🇨🇲", continent: "Africa",      population: "28M",  language: "French",      currency: "CFA Franc" },
+  { country: "Zimbabwe",        capital: "Harare",          flag: "🇿🇼", continent: "Africa",      population: "16M",  language: "English",     currency: "Dollar" },
+  { country: "Tunisia",         capital: "Tunis",           flag: "🇹🇳", continent: "Africa",      population: "12M",  language: "Arabic",      currency: "Dinar" },
+  { country: "Ivory Coast",     capital: "Yamoussoukro",    flag: "🇨🇮", continent: "Africa",      population: "27M",  language: "French",      currency: "CFA Franc" },
+  { country: "Angola",          capital: "Luanda",          flag: "🇦🇴", continent: "Africa",      population: "35M",  language: "Portuguese",  currency: "Kwanza" },
+  { country: "Mali",            capital: "Bamako",          flag: "🇲🇱", continent: "Africa",      population: "22M",  language: "French",      currency: "CFA Franc" },
+  { country: "Zambia",          capital: "Lusaka",          flag: "🇿🇲", continent: "Africa",      population: "20M",  language: "English",     currency: "Kwacha" },
+  { country: "Rwanda",          capital: "Kigali",          flag: "🇷🇼", continent: "Africa",      population: "14M",  language: "Kinyarwanda", currency: "Franc" },
+  { country: "Sudan",           capital: "Khartoum",        flag: "🇸🇩", continent: "Africa",      population: "46M",  language: "Arabic",      currency: "Pound" },
+  { country: "Libya",           capital: "Tripoli",         flag: "🇱🇾", continent: "Africa",      population: "7M",   language: "Arabic",      currency: "Dinar" },
+  { country: "Botswana",        capital: "Gaborone",        flag: "🇧🇼", continent: "Africa",      population: "2.6M", language: "English",     currency: "Pula" },
+  { country: "Namibia",         capital: "Windhoek",        flag: "🇳🇦", continent: "Africa",      population: "2.6M", language: "English",     currency: "Dollar" },
+  { country: "Madagascar",      capital: "Antananarivo",    flag: "🇲🇬", continent: "Africa",      population: "28M",  language: "Malagasy",    currency: "Ariary" },
+  // ── Americas ───────────────────────────────────────────────
+  { country: "USA",             capital: "Washington D.C.", flag: "🇺🇸", continent: "Americas",    population: "335M", language: "English",     currency: "Dollar" },
+  { country: "Canada",          capital: "Ottawa",          flag: "🇨🇦", continent: "Americas",    population: "38M",  language: "English",     currency: "Dollar" },
+  { country: "Mexico",          capital: "Mexico City",     flag: "🇲🇽", continent: "Americas",    population: "130M", language: "Spanish",     currency: "Peso" },
+  { country: "Brazil",          capital: "Brasília",        flag: "🇧🇷", continent: "Americas",    population: "215M", language: "Portuguese",  currency: "Real" },
+  { country: "Argentina",       capital: "Buenos Aires",    flag: "🇦🇷", continent: "Americas",    population: "46M",  language: "Spanish",     currency: "Peso" },
+  { country: "Cuba",            capital: "Havana",          flag: "🇨🇺", continent: "Americas",    population: "11M",  language: "Spanish",     currency: "Peso" },
+  { country: "Peru",            capital: "Lima",            flag: "🇵🇪", continent: "Americas",    population: "33M",  language: "Spanish",     currency: "Sol" },
+  { country: "Colombia",        capital: "Bogotá",          flag: "🇨🇴", continent: "Americas",    population: "52M",  language: "Spanish",     currency: "Peso" },
+  { country: "Chile",           capital: "Santiago",        flag: "🇨🇱", continent: "Americas",    population: "19M",  language: "Spanish",     currency: "Peso" },
+  { country: "Venezuela",       capital: "Caracas",         flag: "🇻🇪", continent: "Americas",    population: "29M",  language: "Spanish",     currency: "Bolívar" },
+  { country: "Ecuador",         capital: "Quito",           flag: "🇪🇨", continent: "Americas",    population: "18M",  language: "Spanish",     currency: "Dollar" },
+  { country: "Bolivia",         capital: "Sucre",           flag: "🇧🇴", continent: "Americas",    population: "12M",  language: "Spanish",     currency: "Boliviano" },
+  { country: "Paraguay",        capital: "Asunción",        flag: "🇵🇾", continent: "Americas",    population: "7M",   language: "Spanish",     currency: "Guaraní" },
+  { country: "Uruguay",         capital: "Montevideo",      flag: "🇺🇾", continent: "Americas",    population: "3.5M", language: "Spanish",     currency: "Peso" },
+  { country: "Guatemala",       capital: "Guatemala City",  flag: "🇬🇹", continent: "Americas",    population: "17M",  language: "Spanish",     currency: "Quetzal" },
+  { country: "Costa Rica",      capital: "San José",        flag: "🇨🇷", continent: "Americas",    population: "5M",   language: "Spanish",     currency: "Colón" },
+  { country: "Panama",          capital: "Panama City",     flag: "🇵🇦", continent: "Americas",    population: "4M",   language: "Spanish",     currency: "Balboa" },
+  { country: "Jamaica",         capital: "Kingston",        flag: "🇯🇲", continent: "Americas",    population: "3M",   language: "English",     currency: "Dollar" },
+  { country: "Honduras",        capital: "Tegucigalpa",     flag: "🇭🇳", continent: "Americas",    population: "10M",  language: "Spanish",     currency: "Lempira" },
+  // ── Oceania ────────────────────────────────────────────────
+  { country: "Australia",       capital: "Canberra",        flag: "🇦🇺", continent: "Oceania",     population: "26M",  language: "English",     currency: "Dollar" },
+  { country: "New Zealand",     capital: "Wellington",      flag: "🇳🇿", continent: "Oceania",     population: "5M",   language: "English",     currency: "Dollar" },
+  { country: "Papua New Guinea", capital: "Port Moresby",   flag: "🇵🇬", continent: "Oceania",     population: "10M",  language: "English",     currency: "Kina" },
+  { country: "Fiji",            capital: "Suva",            flag: "🇫🇯", continent: "Oceania",     population: "0.9M", language: "English",     currency: "Dollar" },
+  { country: "Samoa",           capital: "Apia",            flag: "🇼🇸", continent: "Oceania",     population: "0.2M", language: "Samoan",      currency: "Tālā" },
+  { country: "Vanuatu",         capital: "Port Vila",       flag: "🇻🇺", continent: "Oceania",     population: "0.3M", language: "Bislama",     currency: "Vatu" },
+  // ── Middle East ─────────────────────────────────────────────
+  { country: "Turkey",          capital: "Ankara",          flag: "🇹🇷", continent: "Middle East", population: "85M",  language: "Turkish",     currency: "Lira" },
+  { country: "Saudi Arabia",    capital: "Riyadh",          flag: "🇸🇦", continent: "Middle East", population: "36M",  language: "Arabic",      currency: "Riyal" },
+  { country: "Iran",            capital: "Tehran",          flag: "🇮🇷", continent: "Middle East", population: "89M",  language: "Persian",     currency: "Rial" },
+  { country: "Iraq",            capital: "Baghdad",         flag: "🇮🇶", continent: "Middle East", population: "43M",  language: "Arabic",      currency: "Dinar" },
+  { country: "Israel",          capital: "Jerusalem",       flag: "🇮🇱", continent: "Middle East", population: "9M",   language: "Hebrew",      currency: "Shekel" },
+  { country: "Jordan",          capital: "Amman",           flag: "🇯🇴", continent: "Middle East", population: "10M",  language: "Arabic",      currency: "Dinar" },
+  { country: "UAE",             capital: "Abu Dhabi",       flag: "🇦🇪", continent: "Middle East", population: "9M",   language: "Arabic",      currency: "Dirham" },
+  { country: "Qatar",           capital: "Doha",            flag: "🇶🇦", continent: "Middle East", population: "2.9M", language: "Arabic",      currency: "Riyal" },
+  { country: "Kuwait",          capital: "Kuwait City",     flag: "🇰🇼", continent: "Middle East", population: "4.3M", language: "Arabic",      currency: "Dinar" },
+  { country: "Bahrain",         capital: "Manama",          flag: "🇧🇭", continent: "Middle East", population: "1.5M", language: "Arabic",      currency: "Dinar" },
+  { country: "Oman",            capital: "Muscat",          flag: "🇴🇲", continent: "Middle East", population: "4.5M", language: "Arabic",      currency: "Rial" },
+  { country: "Yemen",           capital: "Sana'a",          flag: "🇾🇪", continent: "Middle East", population: "34M",  language: "Arabic",      currency: "Rial" },
+  { country: "Syria",           capital: "Damascus",        flag: "🇸🇾", continent: "Middle East", population: "22M",  language: "Arabic",      currency: "Pound" },
+  { country: "Lebanon",         capital: "Beirut",          flag: "🇱🇧", continent: "Middle East", population: "5M",   language: "Arabic",      currency: "Pound" },
+  { country: "Armenia",         capital: "Yerevan",         flag: "🇦🇲", continent: "Middle East", population: "3M",   language: "Armenian",    currency: "Dram" },
+  { country: "Georgia",         capital: "Tbilisi",         flag: "🇬🇪", continent: "Middle East", population: "4M",   language: "Georgian",    currency: "Lari" },
+  { country: "Azerbaijan",      capital: "Baku",            flag: "🇦🇿", continent: "Middle East", population: "10M",  language: "Azerbaijani", currency: "Manat" },
 ];
 
 // ── Difficulty settings ─────────────────────────────────────
@@ -85,21 +153,123 @@ const CAPSULE_COLORS = [
   "#ff9f43", "#a29bfe", "#fd79a8", "#55efc4",
 ];
 
-// ── Mode colours (basket glow / stroke) ─────────────────────
+// ── Mode colours ─────────────────────────────────────────────
 const MODE_STYLE = {
-  capitalMode: { rgb: "78,204,163",  hex: "#4ecca3" },   // teal
-  countryMode:  { rgb: "162,155,254", hex: "#a29bfe" },  // purple
-  marathon:     { rgb: "247,201,72",  hex: "#f7c948" },  // gold
+  capitalMode: { rgb: "78,204,163",  hex: "#4ecca3" },
+  countryMode:  { rgb: "162,155,254", hex: "#a29bfe" },
+  marathon:     { rgb: "247,201,72",  hex: "#f7c948" },
 };
 
 // ── Basket Skins ─────────────────────────────────────────────
 const SKINS = [
-  { id: "classic",   name: "Classic",   threshold: 0,   icon: "🧺", rgb: null,           hex: null },
-  { id: "fire",      name: "Inferno",   threshold: 50,  icon: "🔥", rgb: "255,107,107",  hex: "#ff6b6b" },
-  { id: "galaxy",    name: "Galaxy",    threshold: 150, icon: "🌌", rgb: "126,130,255",  hex: "#7e82ff" },
-  { id: "gold",      name: "Golden",    threshold: 300, icon: "✨", rgb: "247,201,72",   hex: "#f7c948" },
-  { id: "neon",      name: "Neon",      threshold: 500, icon: "⚡", rgb: "85,239,196",   hex: "#55efc4" },
+  { id: "classic", name: "Classic", threshold: 0,   icon: "🧺", rgb: null,          hex: null },
+  { id: "fire",    name: "Inferno", threshold: 50,  icon: "🔥", rgb: "255,107,107", hex: "#ff6b6b" },
+  { id: "galaxy",  name: "Galaxy",  threshold: 150, icon: "🌌", rgb: "126,130,255", hex: "#7e82ff" },
+  { id: "gold",    name: "Golden",  threshold: 300, icon: "✨", rgb: "247,201,72",  hex: "#f7c948" },
+  { id: "neon",    name: "Neon",    threshold: 500, icon: "⚡", rgb: "85,239,196",  hex: "#55efc4" },
 ];
+
+// ════════════════════════════════════════════════════════════
+//  WEB AUDIO – synthesised sound effects (no files needed)
+// ════════════════════════════════════════════════════════════
+let _audioCtx = null;
+function getAudioCtx() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return _audioCtx;
+}
+
+const SFX = {
+  /** Pleasant ascending chime on correct catch */
+  catch() {
+    try {
+      const ac  = getAudioCtx();
+      const now = ac.currentTime;
+      [0, 0.08, 0.16].forEach((delay, i) => {
+        const osc  = ac.createOscillator();
+        const gain = ac.createGain();
+        osc.connect(gain); gain.connect(ac.destination);
+        osc.type = "sine";
+        osc.frequency.setValueAtTime([523, 659, 784][i], now + delay);
+        gain.gain.setValueAtTime(0.18, now + delay);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.35);
+        osc.start(now + delay);
+        osc.stop(now + delay + 0.36);
+      });
+    } catch(e) {}
+  },
+
+  /** Deep thud on wrong catch / miss */
+  miss() {
+    try {
+      const ac  = getAudioCtx();
+      const now = ac.currentTime;
+      const osc  = ac.createOscillator();
+      const gain = ac.createGain();
+      osc.connect(gain); gain.connect(ac.destination);
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.exponentialRampToValueAtTime(60, now + 0.25);
+      gain.gain.setValueAtTime(0.22, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      osc.start(now); osc.stop(now + 0.3);
+    } catch(e) {}
+  },
+
+  /** Bright fanfare for level-up */
+  levelUp() {
+    try {
+      const ac  = getAudioCtx();
+      const now = ac.currentTime;
+      const notes = [523, 659, 784, 1047];
+      notes.forEach((freq, i) => {
+        const osc  = ac.createOscillator();
+        const gain = ac.createGain();
+        osc.connect(gain); gain.connect(ac.destination);
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now + i * 0.1);
+        gain.gain.setValueAtTime(0.15, now + i * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.4);
+        osc.start(now + i * 0.1);
+        osc.stop(now + i * 0.1 + 0.42);
+      });
+    } catch(e) {}
+  },
+
+  /** Short electric zap for speed-up alert */
+  speedUp() {
+    try {
+      const ac  = getAudioCtx();
+      const now = ac.currentTime;
+      const osc  = ac.createOscillator();
+      const gain = ac.createGain();
+      osc.connect(gain); gain.connect(ac.destination);
+      osc.type = "square";
+      osc.frequency.setValueAtTime(300, now);
+      osc.frequency.linearRampToValueAtTime(900, now + 0.18);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      osc.start(now); osc.stop(now + 0.23);
+    } catch(e) {}
+  },
+
+  /** Gentle pop when game starts */
+  start() {
+    try {
+      const ac  = getAudioCtx();
+      const now = ac.currentTime;
+      [0, 0.1].forEach((d, i) => {
+        const osc  = ac.createOscillator();
+        const gain = ac.createGain();
+        osc.connect(gain); gain.connect(ac.destination);
+        osc.type = "sine";
+        osc.frequency.setValueAtTime([440, 660][i], now + d);
+        gain.gain.setValueAtTime(0.13, now + d);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + d + 0.3);
+        osc.start(now + d); osc.stop(now + d + 0.32);
+      });
+    } catch(e) {}
+  },
+};
 
 // ── DOM refs ────────────────────────────────────────────────
 const startScreen    = document.getElementById("startScreen");
@@ -134,20 +304,17 @@ function applyMuteState() {
   musicToggle.textContent = musicMuted ? "🔇" : "🔊";
   musicToggle.classList.toggle("muted", musicMuted);
 }
-
 function startMusic() {
   if (musicStarted) return;
   musicStarted = true;
   bgMusic.play().catch(() => { musicStarted = false; });
 }
-
 musicToggle.addEventListener("click", () => {
   musicMuted = !musicMuted;
   localStorage.setItem("geodrop_muted", musicMuted);
   applyMuteState();
   if (!musicMuted) startMusic();
 });
-
 applyMuteState();
 
 // ── Pause button wiring ─────────────────────────────────────
@@ -162,23 +329,35 @@ document.getElementById("pauseMenuBtn").addEventListener("click", () => {
 let state          = {};
 let animId         = null;
 let selectedDiff   = "easy";
-let selectedMode   = "capitalMode";   // "capitalMode" | "countryMode" | "marathon"
-let selectedRegion = "all";           // "all" | continent name
+let selectedMode   = "capitalMode";
+let selectedRegion = "all";
 let selectedSkin   = localStorage.getItem("geodrop_skin") || "classic";
 let bestScore      = parseInt(localStorage.getItem("geodrop_best") || "0");
 
 // ── Leaderboard helpers ──────────────────────────────────────
 function getLeaderboard() {
-  try {
-    return JSON.parse(localStorage.getItem("geodrop_leaderboard") || "[]");
-  } catch (e) { return []; }
+  try { return JSON.parse(localStorage.getItem("geodrop_leaderboard") || "[]"); }
+  catch(e) { return []; }
 }
 function saveToLeaderboard(name, score, mode, level) {
   const lb = getLeaderboard();
   lb.push({ name: name.trim().slice(0, 20) || "Anonymous", score, mode, level, date: new Date().toLocaleDateString() });
   lb.sort((a, b) => b.score - a.score);
-  lb.splice(5); // keep top 5
+  lb.splice(5);
   localStorage.setItem("geodrop_leaderboard", JSON.stringify(lb));
+}
+
+// ── Wrong-answer tracking (weak spots) ──────────────────────
+function getWeakMap() {
+  try { return JSON.parse(localStorage.getItem("geodrop_weak") || "{}"); }
+  catch(e) { return {}; }
+}
+function recordAnswer(country, correct) {
+  const map = getWeakMap();
+  if (!map[country]) map[country] = { wrong: 0, total: 0 };
+  map[country].total++;
+  if (!correct) map[country].wrong++;
+  localStorage.setItem("geodrop_weak", JSON.stringify(map));
 }
 
 // ── Mode buttons ─────────────────────────────────────────────
@@ -186,21 +365,21 @@ const HOW_TO = {
   capitalMode: [
     "🧺 The basket shows a <strong>country name</strong>",
     "💧 Capitals rain down from the top",
-    "⬅️ ➡️ Move with <strong>Arrow keys</strong> or tap buttons",
+    "⬅️ ➡️ Move with <strong>Arrow keys</strong> or drag on mobile",
     "✅ Catch the <strong>correct capital</strong> for points",
     "❌ Wrong answers cost you a life",
   ],
   countryMode: [
     "🗺️ The basket shows a <strong>capital city</strong>",
     "💧 Country names rain down from the top",
-    "⬅️ ➡️ Move with <strong>Arrow keys</strong> or tap buttons",
+    "⬅️ ➡️ Move with <strong>Arrow keys</strong> or drag on mobile",
     "✅ Catch the <strong>correct country</strong> for points",
     "❌ Wrong answers cost you a life",
   ],
   marathon: [
     "🔁 Questions <strong>alternate</strong> between Capital Hunt and Country Hunt",
     "💧 Capitals AND country names rain down",
-    "⬅️ ➡️ Move with <strong>Arrow keys</strong> or tap buttons",
+    "⬅️ ➡️ Move with <strong>Arrow keys</strong> or drag on mobile",
     "✅ Catch whichever the <strong>badge tells you</strong>",
     "❌ Wrong answers cost you a life",
   ],
@@ -243,10 +422,9 @@ document.querySelectorAll(".diff-btn").forEach(btn => {
 function buildSkinSelector() {
   const container = document.getElementById("skinBtns");
   if (!container) return;
-  const unlockedScore = bestScore;
   container.innerHTML = "";
   SKINS.forEach(skin => {
-    const unlocked = unlockedScore >= skin.threshold;
+    const unlocked = bestScore >= skin.threshold;
     const btn = document.createElement("button");
     btn.className  = "skin-btn" + (selectedSkin === skin.id ? " active" : "") + (unlocked ? "" : " locked");
     btn.dataset.skin = skin.id;
@@ -271,14 +449,12 @@ function buildLeaderboardDisplay() {
   const html = lb.length === 0
     ? `<div class="lb-empty">No scores yet — play your first game!</div>`
     : lb.map((entry, i) => `
-    <div class="lb-row ${i === 0 ? 'lb-gold' : i === 1 ? 'lb-silver' : i === 2 ? 'lb-bronze' : ''}">
+    <div class="lb-row ${i === 0 ? "lb-gold" : i === 1 ? "lb-silver" : i === 2 ? "lb-bronze" : ""}">
       <span class="lb-rank">${["🥇","🥈","🥉","4","5"][i]}</span>
       <span class="lb-name">${escapeHtml(entry.name)}</span>
       <span class="lb-score">${entry.score} pts</span>
       <span class="lb-meta">Lv.${entry.level} · ${entry.date}</span>
-    </div>
-  `).join("");
-  // Update both the preview (game-over) and the full leaderboard screen
+    </div>`).join("");
   const preview = document.getElementById("leaderboardListPreview");
   const full    = document.getElementById("leaderboardListFull");
   if (preview) preview.innerHTML = html;
@@ -294,6 +470,7 @@ document.getElementById("startBtn").addEventListener("click", startGame);
 document.getElementById("restartBtn").addEventListener("click", startGame);
 document.getElementById("menuBtn").addEventListener("click", showMenu);
 document.getElementById("learnBtn").addEventListener("click", showLearnScreen);
+document.getElementById("learnBtn2").addEventListener("click", showLearnScreen);
 document.getElementById("learnBackBtn").addEventListener("click", showMenu);
 document.getElementById("leaderboardBtn").addEventListener("click", () => {
   buildLeaderboardDisplay();
@@ -301,7 +478,6 @@ document.getElementById("leaderboardBtn").addEventListener("click", () => {
 });
 document.getElementById("leaderboardBackBtn").addEventListener("click", showMenu);
 
-// Name entry modal submit
 document.getElementById("submitNameBtn").addEventListener("click", submitNameAndSave);
 document.getElementById("skipNameBtn").addEventListener("click", () => {
   saveToLeaderboard("Anonymous", pendingScore.score, pendingScore.mode, pendingScore.level);
@@ -331,7 +507,7 @@ window.addEventListener("keydown", e => {
 });
 window.addEventListener("keyup", e => { keys[e.key] = false; });
 
-// ── Mobile controls ─────────────────────────────────────────
+// ── Mobile controls (tap buttons) ───────────────────────────
 const leftBtn  = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
 leftBtn.addEventListener("pointerdown",   () => { keys["ArrowLeft"]  = true;  });
@@ -340,6 +516,44 @@ leftBtn.addEventListener("pointerleave",  () => { keys["ArrowLeft"]  = false; })
 rightBtn.addEventListener("pointerdown",  () => { keys["ArrowRight"] = true;  });
 rightBtn.addEventListener("pointerup",    () => { keys["ArrowRight"] = false; });
 rightBtn.addEventListener("pointerleave", () => { keys["ArrowRight"] = false; });
+
+// ── Touch/drag to move basket ─────────────────────────────────
+// Touching anywhere on the canvas drags the basket to that X
+let touchDragActive = false;
+canvas.addEventListener("touchstart", e => {
+  if (!state.running || state.paused) return;
+  touchDragActive = true;
+  e.preventDefault();
+  const t = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  state.basket.x = Math.max(state.basket.w / 2, Math.min(canvas.width - state.basket.w / 2, t.clientX - rect.left));
+}, { passive: false });
+
+canvas.addEventListener("touchmove", e => {
+  if (!state.running || state.paused || !touchDragActive) return;
+  e.preventDefault();
+  const t = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  state.basket.x = Math.max(state.basket.w / 2, Math.min(canvas.width - state.basket.w / 2, t.clientX - rect.left));
+}, { passive: false });
+
+canvas.addEventListener("touchend", () => { touchDragActive = false; });
+
+// Mouse drag on canvas (desktop convenience)
+let mouseDrag = false;
+canvas.addEventListener("mousedown", e => {
+  if (!state.running || state.paused) return;
+  mouseDrag = true;
+  const rect = canvas.getBoundingClientRect();
+  state.basket.x = Math.max(state.basket.w / 2, Math.min(canvas.width - state.basket.w / 2, e.clientX - rect.left));
+});
+canvas.addEventListener("mousemove", e => {
+  if (!mouseDrag || !state.running || state.paused) return;
+  const rect = canvas.getBoundingClientRect();
+  state.basket.x = Math.max(state.basket.w / 2, Math.min(canvas.width - state.basket.w / 2, e.clientX - rect.left));
+});
+canvas.addEventListener("mouseup",    () => { mouseDrag = false; });
+canvas.addEventListener("mouseleave", () => { mouseDrag = false; });
 
 // ════════════════════════════════════════════════════════════
 //  CANVAS RESIZE
@@ -387,25 +601,36 @@ function showLearnScreen() {
 function populateLearnScreen() {
   const grid = document.getElementById("learnGrid");
   if (!grid) return;
-  grid.innerHTML = COUNTRIES.map(c => `
-    <div class="learn-card">
+  const weakMap = getWeakMap();
+  grid.innerHTML = COUNTRIES.map(c => {
+    const w   = weakMap[c.country];
+    const weakBadge = (w && w.wrong > 0)
+      ? `<div class="learn-weak">❌ Missed ${w.wrong}×</div>`
+      : "";
+    return `
+    <div class="learn-card" data-continent="${c.continent}">
       <div class="learn-flag">${c.flag}</div>
       <div class="learn-country">${c.country}</div>
       <div class="learn-capital">🏛️ ${c.capital}</div>
       <div class="learn-continent">${c.continent}</div>
+      <div class="learn-facts">
+        <span title="Population">👥 ${c.population}</span>
+        <span title="Language">🗣️ ${c.language}</span>
+        <span title="Currency">💰 ${c.currency}</span>
+      </div>
+      ${weakBadge}
       <a class="learn-map-link"
          href="https://www.google.com/maps/search/${encodeURIComponent(c.country)}"
          target="_blank" rel="noopener">🗺️ View on Map</a>
-    </div>
-  `).join("");
+    </div>`;
+  }).join("");
 }
 
 // ── Learn search filter ───────────────────────────────────────
 document.getElementById("learnSearch").addEventListener("input", e => {
   const q = e.target.value.toLowerCase();
   document.querySelectorAll(".learn-card").forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(q) ? "" : "none";
+    card.style.display = card.textContent.toLowerCase().includes(q) ? "" : "none";
   });
 });
 
@@ -416,8 +641,7 @@ document.querySelectorAll(".learn-filter-btn").forEach(btn => {
     btn.classList.add("active");
     const cont = btn.dataset.continent;
     document.querySelectorAll(".learn-card").forEach(card => {
-      card.style.display = (cont === "all" || card.querySelector(".learn-continent").textContent === cont)
-        ? "" : "none";
+      card.style.display = (cont === "all" || card.dataset.continent === cont) ? "" : "none";
     });
   });
 });
@@ -425,32 +649,23 @@ document.querySelectorAll(".learn-filter-btn").forEach(btn => {
 // ════════════════════════════════════════════════════════════
 //  MODE HELPERS
 // ════════════════════════════════════════════════════════════
-
-/** Active question pool filtered by region */
 function questionPool() {
   if (selectedRegion === "all") return COUNTRIES;
-  const filtered = COUNTRIES.filter(c => c.continent === selectedRegion);
-  return filtered.length >= 3 ? filtered : COUNTRIES; // fallback if too few
+  const f = COUNTRIES.filter(c => c.continent === selectedRegion);
+  return f.length >= 3 ? f : COUNTRIES;
 }
 
-/** Text shown inside the basket */
 function basketLabel() {
   return state.mode === "capitalMode" ? state.country : state.capital;
 }
-
-/** The ONE correct capsule text for the current question */
 function correctAnswer() {
   return state.mode === "capitalMode" ? state.capital : state.country;
 }
-
-/** Flag for the current question entry */
 function currentFlag() {
-  const pool = questionPool();
+  const pool  = questionPool();
   const entry = pool[state.questionIdx] || COUNTRIES[0];
-  return entry.flag || "";
+  return entry.flag || "🌐";
 }
-
-/** Pool of wrong answers (texts to use as distractors) */
 function wrongAnswerPool(exclude) {
   const pool = questionPool();
   if (state.mode === "capitalMode") {
@@ -459,16 +674,8 @@ function wrongAnswerPool(exclude) {
     return pool.filter(c => c.country !== exclude).map(c => c.country);
   }
 }
-
-/** Friendly label for missed-capsule flash message */
-function missedMsg() {
-  return state.mode === "capitalMode" ? "Missed the capital! 💨" : "Missed the country! 💨";
-}
-
-/** Friendly label for wrong-catch flash message */
-function wrongCatchMsg() {
-  return state.mode === "capitalMode" ? "Wrong capital! ❌" : "Wrong country! ❌";
-}
+function missedMsg()     { return state.mode === "capitalMode" ? "Missed the capital! 💨" : "Missed the country! 💨"; }
+function wrongCatchMsg() { return state.mode === "capitalMode" ? "Wrong capital! ❌" : "Wrong country! ❌"; }
 
 // ════════════════════════════════════════════════════════════
 //  START GAME
@@ -480,11 +687,10 @@ function startGame() {
   showScreen("gameScreen");
   resizeCanvas();
 
-  const diff = DIFFICULTY[selectedDiff];
-  // Marathon starts on capitalMode for first question
+  const diff        = DIFFICULTY[selectedDiff];
   const initialMode = selectedMode === "marathon" ? "capitalMode" : selectedMode;
-  const pool = questionPool();
-  const qi   = pickQuestion(pool);
+  const pool        = questionPool();
+  const qi          = pickQuestion(pool);
 
   state = {
     running:       true,
@@ -511,11 +717,12 @@ function startGame() {
     streak:        0,
     speedMult:     1.0,
     basket: {
-      x: canvas.width / 2,
-      y: canvas.height - 52,
-      w: 140,
-      h: 44,
-      speed: 7,
+      x:      canvas.width / 2,
+      y:      canvas.height - 52,
+      w:      140,
+      h:      44,
+      speed:  7,
+      squish: 0,   // 0 = normal, positive = squish-down anim, negative = bounce-up
     },
     shake:    0,
     flashMsg: null,
@@ -524,6 +731,7 @@ function startGame() {
   updateModeBadge();
   updateHUD();
   startMusic();
+  SFX.start();
 
   lastTime = performance.now();
   animId   = requestAnimationFrame(loop);
@@ -547,10 +755,8 @@ function updateModeBadge() {
 function togglePause() {
   if (!state.running) return;
   state.paused = !state.paused;
-
   if (state.paused) {
-    cancelAnimationFrame(animId);
-    animId = null;
+    cancelAnimationFrame(animId); animId = null;
     pauseOverlay.classList.remove("hidden");
     if (!bgMusic.paused && !bgMusic.muted) bgMusic.volume = 0.15;
   } else {
@@ -580,11 +786,19 @@ function loop(now) {
 function update(dt) {
   const { basket, diffCfg } = state;
 
+  // Arrow-key movement (reduced if drag is active)
   if (keys["ArrowLeft"])  basket.x -= basket.speed;
   if (keys["ArrowRight"]) basket.x += basket.speed;
   basket.x = Math.max(basket.w / 2, Math.min(canvas.width - basket.w / 2, basket.x));
 
+  // Shake decay
   if (state.shake > 0) state.shake = Math.max(0, state.shake - dt * 0.12);
+
+  // Basket squish decay (spring back to 0)
+  if (basket.squish !== 0) {
+    basket.squish *= Math.pow(0.82, dt / 16);
+    if (Math.abs(basket.squish) < 0.01) basket.squish = 0;
+  }
 
   refillQueue();
 
@@ -595,12 +809,17 @@ function update(dt) {
     dropOneCapsule();
   }
 
-  const speed      = diffCfg.dropSpeed * (1 + (state.level - 1) * 0.18) * state.speedMult;
+  const speed       = diffCfg.dropSpeed * (1 + (state.level - 1) * 0.18) * state.speedMult;
   const capSnapshot = state.capsules.slice();
 
   for (let i = 0; i < capSnapshot.length; i++) {
     const cap = capSnapshot[i];
     if (!state.capsules.includes(cap)) continue;
+
+    // Spawn pop-in animation: spawnAge goes 0→1 over 200ms
+    if (cap.spawnAge < 1) {
+      cap.spawnAge = Math.min(1, cap.spawnAge + dt / 200);
+    }
 
     cap.y      += speed * (dt / 16);
     cap.wobble  = (cap.wobble || 0) + 0.05;
@@ -619,7 +838,6 @@ function update(dt) {
     if (cap.y - cap.h / 2 > canvas.height + 10) {
       const idx = state.capsules.indexOf(cap);
       if (idx !== -1) state.capsules.splice(idx, 1);
-
       if (cap.isCorrect && state.lives > 0) {
         loseLife(missedMsg());
         if (state.lives > 0) {
@@ -654,23 +872,23 @@ function refillQueue() {
   const { diffCfg } = state;
   const correct      = correctAnswer();
   const flag         = currentFlag();
+  const pool         = questionPool();
+  const weakMap      = getWeakMap();
 
   const wrongOnScreen = state.capsules.filter(c => !c.isCorrect).length;
   const wrongNeeded   = Math.max(0, diffCfg.distractors - wrongOnScreen);
 
-  const visibleTexts = new Set(state.capsules.map(c => c.text));
-  const wrongPool    = wrongAnswerPool(correct)
-    .filter(t => !visibleTexts.has(t))
-    .sort(() => Math.random() - 0.5)
-    .slice(0, wrongNeeded);
+  const visibleTexts  = new Set(state.capsules.map(c => c.text));
+  const wrongPool     = wrongAnswerPool(correct).filter(t => !visibleTexts.has(t));
+
+  // Shuffle with a slight bias toward player's weak spots (as distractors)
+  wrongPool.sort(() => Math.random() - 0.5);
+  const wrongChosen = wrongPool.slice(0, wrongNeeded);
 
   const correctOnScreen = state.capsules.some(c => c.isCorrect);
   const correctInQueue  = state.dropQueue.some(q => q.text === correct);
 
-  // Build with flag info for wrong answers
-  const pool = questionPool();
-  const toAdd = wrongPool.map(text => {
-    // Find flag for this distractor
+  const toAdd = wrongChosen.map(text => {
     let f = "🌐";
     if (state.mode === "capitalMode") {
       const entry = pool.find(c => c.capital === text);
@@ -698,7 +916,7 @@ function dropOneCapsule() {
   const flag    = item.flag || "🌐";
   const correct = correctAnswer();
   const w       = measureCapsule(flag + " " + text);
-  const h       = 40; // slightly taller to fit flag
+  const h       = 40;
   const margin  = 60;
   const usableW = canvas.width - margin * 2;
 
@@ -714,17 +932,18 @@ function dropOneCapsule() {
     flag,
     isCorrect: text === correct,
     x,
-    y: -h / 2,
+    y:         -h / 2,
     w,
     h,
-    color:  CAPSULE_COLORS[Math.floor(Math.random() * CAPSULE_COLORS.length)],
-    wobble: Math.random() * Math.PI * 2,
+    color:     CAPSULE_COLORS[Math.floor(Math.random() * CAPSULE_COLORS.length)],
+    wobble:    Math.random() * Math.PI * 2,
+    spawnAge:  0,   // 0→1 pop-in animation
   });
 }
 
 function measureCapsule(text) {
   ctx.font = "bold 13px 'Segoe UI', sans-serif";
-  return ctx.measureText(text).width + 38; // extra room for flag
+  return ctx.measureText(text).width + 38;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -745,9 +964,22 @@ function catchCapsule(cap) {
       state.diffCfg.dropInterval - (state.level - 1) * 60 - state.streak * 80
     );
 
+    // Basket bounce-up on correct catch
+    state.basket.squish = -0.35;
+    SFX.catch();
+
     spawnParticles(cap.x, cap.y, cap.color, 22, true);
     const streakTag = state.streak >= 2 ? ` 🔥x${state.streak}` : "";
     showFlash(`✅ +${10 * bonus}${streakTag}`, "#4ecca3");
+
+    // Speed-up feedback at streak milestones
+    if ([3, 6, 10, 15].includes(state.streak)) {
+      SFX.speedUp();
+      showFlash(`⚡ Speed Up! 🔥x${state.streak}`, "#f7c948");
+    }
+
+    // Track correct answer (weak-spot tracking)
+    recordAnswer(state.country, true);
 
     state.capsules = state.capsules.filter(c => !c.isCorrect);
 
@@ -762,6 +994,11 @@ function catchCapsule(cap) {
     state.dropInterval = Math.max(400,
       state.diffCfg.dropInterval - (state.level - 1) * 60
     );
+
+    // Basket squish-down on wrong catch
+    state.basket.squish = 0.45;
+    SFX.miss();
+
     spawnParticles(cap.x, cap.y, "#ff6b6b", 14, false);
     loseLife(wrongCatchMsg());
   }
@@ -777,6 +1014,10 @@ function loseLife(msg) {
   state.dropInterval = Math.max(400,
     state.diffCfg.dropInterval - (state.level - 1) * 60
   );
+
+  // Record missed question as wrong answer
+  recordAnswer(state.country, false);
+
   showFlash(msg, "#ff6b6b");
   updateHUD();
   if (state.lives <= 0) setTimeout(endGame, 600);
@@ -788,6 +1029,7 @@ function loseLife(msg) {
 function levelUp() {
   state.level++;
   state.correctCount = 0;
+  SFX.levelUp();
   showFlash("🎉 Level " + state.level + "!", "#f7c948");
   state.dropInterval = Math.max(400,
     state.diffCfg.dropInterval - (state.level - 1) * 60 - state.streak * 80
@@ -796,16 +1038,20 @@ function levelUp() {
 }
 
 function nextQuestion() {
-  // Reverse Marathon: alternate mode each question
   if (state.isMarathon) {
     state.mode = state.mode === "capitalMode" ? "countryMode" : "capitalMode";
     updateModeBadge();
   }
 
   const pool = questionPool();
-  let qi;
-  do { qi = pickQuestion(pool); }
-  while (qi === state.questionIdx && pool.length > 1);
+  const weakMap = getWeakMap();
+
+  // Weighted pick: countries with higher wrong-rate get higher chance
+  let qi = pickQuestion(pool, weakMap);
+  let tries2 = 0;
+  while (qi === state.questionIdx && pool.length > 1 && tries2++ < 10) {
+    qi = pickQuestion(pool, weakMap);
+  }
 
   state.questionIdx = qi;
   state.country     = pool[qi].country;
@@ -818,9 +1064,22 @@ function nextQuestion() {
   updateHUD();
 }
 
-function pickQuestion(pool) {
+function pickQuestion(pool, weakMap) {
   const p = pool || questionPool();
-  return Math.floor(Math.random() * p.length);
+  const w = weakMap || getWeakMap();
+
+  // Build weight array: base 1, +2 per recorded wrong answer
+  const weights = p.map(c => {
+    const entry = w[c.country];
+    return 1 + (entry ? Math.min(entry.wrong, 4) * 2 : 0);
+  });
+  const total = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  for (let i = 0; i < weights.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return i;
+  }
+  return p.length - 1;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -855,7 +1114,6 @@ function endGame() {
     localStorage.setItem("geodrop_best", bestScore);
   }
 
-  // Rebuild skin selector to reflect new unlocks
   buildSkinSelector();
 
   finalScoreEl.textContent = state.score;
@@ -877,7 +1135,6 @@ function endGame() {
     ? "Amazing! You're a geography legend! 🏆"
     : messages[Math.floor(Math.random() * messages.length)];
 
-  // Show name-entry modal before game-over screen
   pendingScore = { score: state.score, mode: finalModeEl.textContent, level: state.level };
   document.getElementById("modalScoreDisplay").textContent = `Score: ${state.score}`;
   document.getElementById("playerNameInput").value = "";
@@ -888,8 +1145,8 @@ function endGame() {
 //  HUD UPDATE
 // ════════════════════════════════════════════════════════════
 function updateHUD() {
-  scoreEl.textContent = state.score;
-  levelEl.textContent = state.level;
+  scoreEl.textContent      = state.score;
+  levelEl.textContent      = state.level;
   countryLabel.textContent = basketLabel();
 
   const hearts = "❤️".repeat(state.lives)
@@ -992,10 +1249,10 @@ function drawStars(W, H) {
 
 // ── Ground ─────────────────────────────────────────────────
 function drawGround(W, H) {
-  const gh = 10;
-  const mKey = state.isMarathon ? "marathon" : state.mode;
+  const gh     = 10;
+  const mKey   = state.isMarathon ? "marathon" : state.mode;
   const mStyle = MODE_STYLE[mKey] || MODE_STYLE.capitalMode;
-  const gg = ctx.createLinearGradient(0, H - gh, 0, H);
+  const gg     = ctx.createLinearGradient(0, H - gh, 0, H);
   gg.addColorStop(0, `rgba(${mStyle.rgb},.5)`);
   gg.addColorStop(1, `rgba(${mStyle.rgb},.1)`);
   ctx.fillStyle = gg;
@@ -1005,7 +1262,17 @@ function drawGround(W, H) {
 // ── Capsules ───────────────────────────────────────────────
 function drawCapsules() {
   state.capsules.forEach(cap => {
-    const { x, y, w, h, text, flag, color } = cap;
+    const { x, y, w, h, text, flag, color, spawnAge } = cap;
+
+    // Pop-in: scale from 0→1 during first 200ms of life
+    const scale = easeOutBack(spawnAge);
+    if (scale <= 0.01) return;   // not visible yet
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+    ctx.translate(-x, -y);
+
     const r = h / 2;
 
     ctx.shadowColor = color;
@@ -1033,20 +1300,27 @@ function drawCapsules() {
     ctx.ellipse(x, y - h * 0.15, w * 0.35, h * 0.22, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Flag emoji above text
+    // Flag above text
     ctx.shadowColor  = "rgba(0,0,0,0.5)";
     ctx.shadowBlur   = 3;
     ctx.font         = "13px 'Segoe UI', sans-serif";
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle    = "#fff";
-    // Draw flag slightly above center, text below
     ctx.fillText(flag, x, y - 6);
 
-    ctx.font         = "bold 11px 'Segoe UI', sans-serif";
+    ctx.font      = "bold 11px 'Segoe UI', sans-serif";
     ctx.fillText(text, x, y + 9);
-    ctx.shadowBlur   = 0;
+    ctx.shadowBlur = 0;
+
+    ctx.restore();
   });
+}
+
+// ease-out back curve for pop-in (overshoots slightly then settles)
+function easeOutBack(t) {
+  const c1 = 1.70158, c3 = c1 + 1;
+  return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
 }
 
 // ── Particles ──────────────────────────────────────────────
@@ -1063,21 +1337,28 @@ function drawParticles() {
 
 // ── Basket ─────────────────────────────────────────────────
 function drawBasket() {
-  const { x, y, w, h } = state.basket;
-  const r       = 8;
-  const mKey    = state.isMarathon ? "marathon" : state.mode;
-  const mStyle  = MODE_STYLE[mKey] || MODE_STYLE.capitalMode;
+  const bk     = state.basket;
+  const { x, y, w, h, squish } = bk;
+  const r      = 8;
+  const mKey   = state.isMarathon ? "marathon" : state.mode;
+  const mStyle = MODE_STYLE[mKey] || MODE_STYLE.capitalMode;
 
-  // Apply skin override colours if skin is not classic
-  const skin = SKINS.find(s => s.id === selectedSkin) || SKINS[0];
+  const skin   = SKINS.find(s => s.id === selectedSkin) || SKINS[0];
   const skinRgb = skin.rgb || mStyle.rgb;
   const skinHex = skin.hex || mStyle.hex;
 
-  // Glow
+  // Apply squish transform: squish > 0 = squash down, < 0 = stretch up (bounce)
+  const scaleX = 1 + Math.abs(squish) * 0.15;
+  const scaleY = 1 - squish * 0.3;
+
+  ctx.save();
+  ctx.translate(x, y + h / 2);         // pivot at basket centre-bottom
+  ctx.scale(scaleX, scaleY);
+  ctx.translate(-x, -(y + h / 2));
+
   ctx.shadowColor = skinHex;
   ctx.shadowBlur  = 22;
 
-  // Body gradient
   const bg = ctx.createLinearGradient(x - w / 2, y, x + w / 2, y + h);
   bg.addColorStop(0, `rgba(${skinRgb},0.45)`);
   bg.addColorStop(1, `rgba(${skinRgb},0.18)`);
@@ -1100,7 +1381,6 @@ function drawBasket() {
   ctx.lineWidth   = 2.5;
   ctx.stroke();
 
-  // Weave lines
   ctx.shadowBlur  = 0;
   ctx.strokeStyle = `rgba(${skinRgb},0.25)`;
   ctx.lineWidth   = 1;
@@ -1111,7 +1391,6 @@ function drawBasket() {
     ctx.stroke();
   }
 
-  // Skin icon on far-left of basket
   if (skin.id !== "classic") {
     ctx.font         = "14px 'Segoe UI', sans-serif";
     ctx.textAlign    = "center";
@@ -1119,7 +1398,6 @@ function drawBasket() {
     ctx.fillText(skin.icon, x - w / 2 + 14, y + h / 2);
   }
 
-  // Label inside basket
   const label = truncateLabel(basketLabel(), w - (skin.id !== "classic" ? 28 : 14));
   ctx.fillStyle    = "#fff";
   ctx.font         = "bold 12px 'Segoe UI', sans-serif";
@@ -1129,15 +1407,15 @@ function drawBasket() {
   ctx.shadowBlur   = 4;
   ctx.fillText(label, x + (skin.id !== "classic" ? 7 : 0), y + h / 2);
   ctx.shadowBlur   = 0;
+
+  ctx.restore();
 }
 
 function truncateLabel(text, maxWidth) {
   ctx.font = "bold 12px 'Segoe UI', sans-serif";
   if (ctx.measureText(text).width <= maxWidth) return text;
   let t = text;
-  while (t.length > 4 && ctx.measureText(t + "…").width > maxWidth) {
-    t = t.slice(0, -1);
-  }
+  while (t.length > 4 && ctx.measureText(t + "…").width > maxWidth) t = t.slice(0, -1);
   return t + "…";
 }
 
@@ -1179,6 +1457,6 @@ function lighten(hex, amount) {
   return `rgb(${r},${g},${b})`;
 }
 
-// ── Init on load ─────────────────────────────────────────────
+// ── Init ─────────────────────────────────────────────────────
 buildSkinSelector();
 buildLeaderboardDisplay();

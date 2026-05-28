@@ -565,6 +565,30 @@ h1 {
 .learn-country  { font-size: .85rem; font-weight: 700; color: #fff; }
 .learn-capital  { font-size: .75rem; color: var(--accent); }
 .learn-continent{ font-size: .65rem; color: rgba(255,255,255,.4); }
+
+/* facts row: population / language / currency */
+.learn-facts {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
+  margin-top: 2px;
+}
+.learn-facts span {
+  font-size: .62rem; color: rgba(255,255,255,.55);
+  background: rgba(255,255,255,.06);
+  border-radius: 8px; padding: 2px 5px;
+  white-space: nowrap;
+}
+
+/* weak-spot badge */
+.learn-weak {
+  font-size: .65rem; color: var(--accent2);
+  background: rgba(255,107,107,.12);
+  border-radius: 8px; padding: 2px 6px;
+  font-weight: 700;
+}
+
+/* make cards a bit taller for the extra info */
+.learn-card { min-height: 190px; justify-content: center; }
+
 .learn-map-link {
   display: inline-block; margin-top: 4px;
   font-size: .7rem; color: var(--green);
