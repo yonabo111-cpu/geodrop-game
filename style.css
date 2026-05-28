@@ -215,6 +215,24 @@ h1 {
 .sum-row:last-child { border-bottom: none; }
 .sum-row strong { color: var(--accent); font-size: 1.1rem; }
 
+/* ─── Music toggle button ─── */
+.music-btn {
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, transform .15s;
+  margin-top: 4px;
+  line-height: 1;
+}
+.music-btn:hover  { background: rgba(255,255,255,.18); transform: scale(1.1); }
+.music-btn:active { transform: scale(.95); }
+.music-btn.muted  { opacity: .45; }
+
 /* ─── Game Screen ─── */
 #gameScreen {
   flex-direction: column;

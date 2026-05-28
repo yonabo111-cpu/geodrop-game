@@ -59,6 +59,9 @@
     </div>
   </div>
 
+  <!-- ── Background Music (hidden) ── -->
+  <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+
   <!-- ── SCREEN: GAME ── -->
   <div id="gameScreen" class="screen">
     <div id="hud">
@@ -75,6 +78,8 @@
       <div class="hud-block">
         <span class="hud-label">LEVEL</span>
         <span id="level">1</span>
+        <!-- Music toggle -->
+        <button id="musicToggle" class="music-btn" title="Toggle music">🔊</button>
       </div>
     </div>
 

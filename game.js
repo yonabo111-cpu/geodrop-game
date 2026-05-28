@@ -102,6 +102,39 @@ const finalLevelEl   = document.getElementById("finalLevel");
 const finalModeEl    = document.getElementById("finalMode");
 const finalMessageEl = document.getElementById("finalMessage");
 
+// ── Background Music ─────────────────────────────────────────
+const bgMusic      = document.getElementById("bgMusic");
+const musicToggle  = document.getElementById("musicToggle");
+let   musicMuted   = localStorage.getItem("geodrop_muted") === "true";
+let   musicStarted = false;   // browsers block autoplay until user gesture
+
+bgMusic.volume = 0.45;
+
+function applyMuteState() {
+  bgMusic.muted          = musicMuted;
+  musicToggle.textContent = musicMuted ? "🔇" : "🔊";
+  musicToggle.classList.toggle("muted", musicMuted);
+}
+
+function startMusic() {
+  if (musicStarted) return;
+  musicStarted = true;
+  bgMusic.play().catch(() => {
+    // autoplay blocked — will retry on next user interaction
+    musicStarted = false;
+  });
+}
+
+musicToggle.addEventListener("click", () => {
+  musicMuted = !musicMuted;
+  localStorage.setItem("geodrop_muted", musicMuted);
+  applyMuteState();
+  // If unmuting and music hasn't started yet, start it now
+  if (!musicMuted) startMusic();
+});
+
+applyMuteState();
+
 // ── State ───────────────────────────────────────────────────
 let state        = {};
 let animId       = null;
@@ -255,6 +288,9 @@ function wrongCatchMsg() {
 // ════════════════════════════════════════════════════════════
 function startGame() {
   if (animId) cancelAnimationFrame(animId);
+  // Reset music state so it restarts cleanly on Play Again
+  musicStarted = false;
+  bgMusic.currentTime = 0;
   showScreen("gameScreen");
   resizeCanvas();
 
@@ -293,6 +329,10 @@ function startGame() {
   // update HUD badge
   updateModeBadge();
   updateHUD();
+
+  // Start music on first user gesture (browser autoplay policy)
+  startMusic();
+
   lastTime = performance.now();
   animId   = requestAnimationFrame(loop);
 }
@@ -519,9 +559,29 @@ function pickQuestion() {
 // ════════════════════════════════════════════════════════════
 //  END GAME
 // ════════════════════════════════════════════════════════════
+function fadeOutMusic(duration = 1500) {
+  if (bgMusic.paused || bgMusic.muted) return;
+  const startVol = bgMusic.volume;
+  const steps    = 30;
+  const stepTime = duration / steps;
+  const dec      = startVol / steps;
+  let   step     = 0;
+  const iv = setInterval(() => {
+    step++;
+    bgMusic.volume = Math.max(0, startVol - dec * step);
+    if (step >= steps) {
+      clearInterval(iv);
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
+      bgMusic.volume      = startVol;   // restore for next round
+    }
+  }, stepTime);
+}
+
 function endGame() {
   state.running = false;
   cancelAnimationFrame(animId);
+  fadeOutMusic();
 
   if (state.score > bestScore) {
     bestScore = state.score;
