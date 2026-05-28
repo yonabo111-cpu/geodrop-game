@@ -6,137 +6,137 @@
 // tier: 1=easy (famous capitals), 2=medium, 3=hard (obscure)
 const COUNTRIES = [
   // ── Europe ─────────────────────────────────────────────────
-  { country: "France",          capital: "Paris",           flag: "🇫🇷", continent: "Europe",      population: "68M",  language: "French",        currency: "Euro",       tier: 1 },
-  { country: "Germany",         capital: "Berlin",          flag: "🇩🇪", continent: "Europe",      population: "84M",  language: "German",        currency: "Euro",       tier: 1 },
-  { country: "Italy",           capital: "Rome",            flag: "🇮🇹", continent: "Europe",      population: "59M",  language: "Italian",       currency: "Euro",       tier: 1 },
-  { country: "Spain",           capital: "Madrid",          flag: "🇪🇸", continent: "Europe",      population: "47M",  language: "Spanish",       currency: "Euro",       tier: 1 },
-  { country: "Portugal",        capital: "Lisbon",          flag: "🇵🇹", continent: "Europe",      population: "10M",  language: "Portuguese",    currency: "Euro",       tier: 1 },
-  { country: "Greece",          capital: "Athens",          flag: "🇬🇷", continent: "Europe",      population: "11M",  language: "Greek",         currency: "Euro",       tier: 1 },
-  { country: "Sweden",          capital: "Stockholm",       flag: "🇸🇪", continent: "Europe",      population: "10M",  language: "Swedish",       currency: "Krona",      tier: 1 },
-  { country: "Norway",          capital: "Oslo",            flag: "🇳🇴", continent: "Europe",      population: "5M",   language: "Norwegian",     currency: "Krone",      tier: 1 },
-  { country: "Denmark",         capital: "Copenhagen",      flag: "🇩🇰", continent: "Europe",      population: "6M",   language: "Danish",        currency: "Krone",      tier: 1 },
-  { country: "Netherlands",     capital: "Amsterdam",       flag: "🇳🇱", continent: "Europe",      population: "17M",  language: "Dutch",         currency: "Euro",       tier: 1 },
-  { country: "Belgium",         capital: "Brussels",        flag: "🇧🇪", continent: "Europe",      population: "11M",  language: "Dutch/French",  currency: "Euro",       tier: 2 },
-  { country: "Switzerland",     capital: "Bern",            flag: "🇨🇭", continent: "Europe",      population: "9M",   language: "German/French", currency: "Franc",      tier: 2 },
-  { country: "Austria",         capital: "Vienna",          flag: "🇦🇹", continent: "Europe",      population: "9M",   language: "German",        currency: "Euro",       tier: 1 },
-  { country: "Poland",          capital: "Warsaw",          flag: "🇵🇱", continent: "Europe",      population: "38M",  language: "Polish",        currency: "Złoty",      tier: 1 },
-  { country: "Ukraine",         capital: "Kyiv",            flag: "🇺🇦", continent: "Europe",      population: "44M",  language: "Ukrainian",     currency: "Hryvnia",    tier: 2 },
-  { country: "Romania",         capital: "Bucharest",       flag: "🇷🇴", continent: "Europe",      population: "19M",  language: "Romanian",      currency: "Leu",        tier: 2 },
-  { country: "Hungary",         capital: "Budapest",        flag: "🇭🇺", continent: "Europe",      population: "10M",  language: "Hungarian",     currency: "Forint",     tier: 2 },
-  { country: "Czech Republic",  capital: "Prague",          flag: "🇨🇿", continent: "Europe",      population: "11M",  language: "Czech",         currency: "Koruna",     tier: 2 },
-  { country: "Finland",         capital: "Helsinki",        flag: "🇫🇮", continent: "Europe",      population: "6M",   language: "Finnish",       currency: "Euro",       tier: 2 },
-  { country: "Russia",          capital: "Moscow",          flag: "🇷🇺", continent: "Europe",      population: "144M", language: "Russian",       currency: "Ruble",      tier: 1 },
-  { country: "Serbia",          capital: "Belgrade",        flag: "🇷🇸", continent: "Europe",      population: "7M",   language: "Serbian",       currency: "Dinar",      tier: 2 },
-  { country: "Croatia",         capital: "Zagreb",          flag: "🇭🇷", continent: "Europe",      population: "4M",   language: "Croatian",      currency: "Euro",       tier: 2 },
-  { country: "Slovakia",        capital: "Bratislava",      flag: "🇸🇰", continent: "Europe",      population: "5M",   language: "Slovak",        currency: "Euro",       tier: 3 },
-  { country: "Bulgaria",        capital: "Sofia",           flag: "🇧🇬", continent: "Europe",      population: "7M",   language: "Bulgarian",     currency: "Lev",        tier: 2 },
-  { country: "Ireland",         capital: "Dublin",          flag: "🇮🇪", continent: "Europe",      population: "5M",   language: "English",       currency: "Euro",       tier: 1 },
-  { country: "UK",              capital: "London",          flag: "🇬🇧", continent: "Europe",      population: "67M",  language: "English",       currency: "Pound",      tier: 1 },
-  { country: "Iceland",         capital: "Reykjavik",       flag: "🇮🇸", continent: "Europe",      population: "0.4M", language: "Icelandic",     currency: "Króna",      tier: 2 },
-  { country: "Luxembourg",      capital: "Luxembourg City", flag: "🇱🇺", continent: "Europe",      population: "0.7M", language: "Luxembourgish", currency: "Euro",       tier: 3 },
-  { country: "Albania",         capital: "Tirana",          flag: "🇦🇱", continent: "Europe",      population: "3M",   language: "Albanian",      currency: "Lek",        tier: 3 },
-  { country: "Lithuania",       capital: "Vilnius",         flag: "🇱🇹", continent: "Europe",      population: "3M",   language: "Lithuanian",    currency: "Euro",       tier: 3 },
-  { country: "Latvia",          capital: "Riga",            flag: "🇱🇻", continent: "Europe",      population: "2M",   language: "Latvian",       currency: "Euro",       tier: 3 },
-  { country: "Estonia",         capital: "Tallinn",         flag: "🇪🇪", continent: "Europe",      population: "1.3M", language: "Estonian",      currency: "Euro",       tier: 3 },
-  { country: "Belarus",         capital: "Minsk",           flag: "🇧🇾", continent: "Europe",      population: "9M",   language: "Belarusian",    currency: "Ruble",      tier: 3 },
-  { country: "Slovenia",        capital: "Ljubljana",       flag: "🇸🇮", continent: "Europe",      population: "2M",   language: "Slovene",       currency: "Euro",       tier: 3 },
-  { country: "North Macedonia",  capital: "Skopje",          flag: "🇲🇰", continent: "Europe",      population: "2M",   language: "Macedonian",    currency: "Denar",      tier: 3 },
-  { country: "Moldova",         capital: "Chișinău",        flag: "🇲🇩", continent: "Europe",      population: "3M",   language: "Romanian",      currency: "Leu",        tier: 3 },
+  { country: "France",          capital: "Paris",           flag: "🇫🇷", code: "fr", continent: "Europe",      population: "68M",  language: "French",        currency: "Euro",       tier: 1 },
+  { country: "Germany",         capital: "Berlin",          flag: "🇩🇪", code: "de", continent: "Europe",      population: "84M",  language: "German",        currency: "Euro",       tier: 1 },
+  { country: "Italy",           capital: "Rome",            flag: "🇮🇹", code: "it", continent: "Europe",      population: "59M",  language: "Italian",       currency: "Euro",       tier: 1 },
+  { country: "Spain",           capital: "Madrid",          flag: "🇪🇸", code: "es", continent: "Europe",      population: "47M",  language: "Spanish",       currency: "Euro",       tier: 1 },
+  { country: "Portugal",        capital: "Lisbon",          flag: "🇵🇹", code: "pt", continent: "Europe",      population: "10M",  language: "Portuguese",    currency: "Euro",       tier: 1 },
+  { country: "Greece",          capital: "Athens",          flag: "🇬🇷", code: "gr", continent: "Europe",      population: "11M",  language: "Greek",         currency: "Euro",       tier: 1 },
+  { country: "Sweden",          capital: "Stockholm",       flag: "🇸🇪", code: "se", continent: "Europe",      population: "10M",  language: "Swedish",       currency: "Krona",      tier: 1 },
+  { country: "Norway",          capital: "Oslo",            flag: "🇳🇴", code: "no", continent: "Europe",      population: "5M",   language: "Norwegian",     currency: "Krone",      tier: 1 },
+  { country: "Denmark",         capital: "Copenhagen",      flag: "🇩🇰", code: "dk", continent: "Europe",      population: "6M",   language: "Danish",        currency: "Krone",      tier: 1 },
+  { country: "Netherlands",     capital: "Amsterdam",       flag: "🇳🇱", code: "nl", continent: "Europe",      population: "17M",  language: "Dutch",         currency: "Euro",       tier: 1 },
+  { country: "Belgium",         capital: "Brussels",        flag: "🇧🇪", code: "be", continent: "Europe",      population: "11M",  language: "Dutch/French",  currency: "Euro",       tier: 2 },
+  { country: "Switzerland",     capital: "Bern",            flag: "🇨🇭", code: "ch", continent: "Europe",      population: "9M",   language: "German/French", currency: "Franc",      tier: 2 },
+  { country: "Austria",         capital: "Vienna",          flag: "🇦🇹", code: "at", continent: "Europe",      population: "9M",   language: "German",        currency: "Euro",       tier: 1 },
+  { country: "Poland",          capital: "Warsaw",          flag: "🇵🇱", code: "pl", continent: "Europe",      population: "38M",  language: "Polish",        currency: "Złoty",      tier: 1 },
+  { country: "Ukraine",         capital: "Kyiv",            flag: "🇺🇦", code: "ua", continent: "Europe",      population: "44M",  language: "Ukrainian",     currency: "Hryvnia",    tier: 2 },
+  { country: "Romania",         capital: "Bucharest",       flag: "🇷🇴", code: "ro", continent: "Europe",      population: "19M",  language: "Romanian",      currency: "Leu",        tier: 2 },
+  { country: "Hungary",         capital: "Budapest",        flag: "🇭🇺", code: "hu", continent: "Europe",      population: "10M",  language: "Hungarian",     currency: "Forint",     tier: 2 },
+  { country: "Czech Republic",  capital: "Prague",          flag: "🇨🇿", code: "cz", continent: "Europe",      population: "11M",  language: "Czech",         currency: "Koruna",     tier: 2 },
+  { country: "Finland",         capital: "Helsinki",        flag: "🇫🇮", code: "fi", continent: "Europe",      population: "6M",   language: "Finnish",       currency: "Euro",       tier: 2 },
+  { country: "Russia",          capital: "Moscow",          flag: "🇷🇺", code: "ru", continent: "Europe",      population: "144M", language: "Russian",       currency: "Ruble",      tier: 1 },
+  { country: "Serbia",          capital: "Belgrade",        flag: "🇷🇸", code: "rs", continent: "Europe",      population: "7M",   language: "Serbian",       currency: "Dinar",      tier: 2 },
+  { country: "Croatia",         capital: "Zagreb",          flag: "🇭🇷", code: "hr", continent: "Europe",      population: "4M",   language: "Croatian",      currency: "Euro",       tier: 2 },
+  { country: "Slovakia",        capital: "Bratislava",      flag: "🇸🇰", code: "sk", continent: "Europe",      population: "5M",   language: "Slovak",        currency: "Euro",       tier: 3 },
+  { country: "Bulgaria",        capital: "Sofia",           flag: "🇧🇬", code: "bg", continent: "Europe",      population: "7M",   language: "Bulgarian",     currency: "Lev",        tier: 2 },
+  { country: "Ireland",         capital: "Dublin",          flag: "🇮🇪", code: "ie", continent: "Europe",      population: "5M",   language: "English",       currency: "Euro",       tier: 1 },
+  { country: "UK",              capital: "London",          flag: "🇬🇧", code: "gb", continent: "Europe",      population: "67M",  language: "English",       currency: "Pound",      tier: 1 },
+  { country: "Iceland",         capital: "Reykjavik",       flag: "🇮🇸", code: "is", continent: "Europe",      population: "0.4M", language: "Icelandic",     currency: "Króna",      tier: 2 },
+  { country: "Luxembourg",      capital: "Luxembourg City", flag: "🇱🇺", code: "lu", continent: "Europe",      population: "0.7M", language: "Luxembourgish", currency: "Euro",       tier: 3 },
+  { country: "Albania",         capital: "Tirana",          flag: "🇦🇱", code: "al", continent: "Europe",      population: "3M",   language: "Albanian",      currency: "Lek",        tier: 3 },
+  { country: "Lithuania",       capital: "Vilnius",         flag: "🇱🇹", code: "lt", continent: "Europe",      population: "3M",   language: "Lithuanian",    currency: "Euro",       tier: 3 },
+  { country: "Latvia",          capital: "Riga",            flag: "🇱🇻", code: "lv", continent: "Europe",      population: "2M",   language: "Latvian",       currency: "Euro",       tier: 3 },
+  { country: "Estonia",         capital: "Tallinn",         flag: "🇪🇪", code: "ee", continent: "Europe",      population: "1.3M", language: "Estonian",      currency: "Euro",       tier: 3 },
+  { country: "Belarus",         capital: "Minsk",           flag: "🇧🇾", code: "by", continent: "Europe",      population: "9M",   language: "Belarusian",    currency: "Ruble",      tier: 3 },
+  { country: "Slovenia",        capital: "Ljubljana",       flag: "🇸🇮", code: "si", continent: "Europe",      population: "2M",   language: "Slovene",       currency: "Euro",       tier: 3 },
+  { country: "North Macedonia",  capital: "Skopje",          flag: "🇲🇰", code: "mk", continent: "Europe",      population: "2M",   language: "Macedonian",    currency: "Denar",      tier: 3 },
+  { country: "Moldova",         capital: "Chișinău",        flag: "🇲🇩", code: "md", continent: "Europe",      population: "3M",   language: "Romanian",      currency: "Leu",        tier: 3 },
   // ── Asia ───────────────────────────────────────────────────
-  { country: "Japan",           capital: "Tokyo",           flag: "🇯🇵", continent: "Asia",        population: "125M", language: "Japanese",      currency: "Yen",        tier: 1 },
-  { country: "China",           capital: "Beijing",         flag: "🇨🇳", continent: "Asia",        population: "1.4B", language: "Mandarin",      currency: "Yuan",       tier: 1 },
-  { country: "India",           capital: "New Delhi",       flag: "🇮🇳", continent: "Asia",        population: "1.4B", language: "Hindi",         currency: "Rupee",      tier: 1 },
-  { country: "South Korea",     capital: "Seoul",           flag: "🇰🇷", continent: "Asia",        population: "52M",  language: "Korean",        currency: "Won",        tier: 1 },
-  { country: "Thailand",        capital: "Bangkok",         flag: "🇹🇭", continent: "Asia",        population: "72M",  language: "Thai",          currency: "Baht",       tier: 1 },
-  { country: "Vietnam",         capital: "Hanoi",           flag: "🇻🇳", continent: "Asia",        population: "98M",  language: "Vietnamese",    currency: "Dong",       tier: 2 },
-  { country: "Indonesia",       capital: "Jakarta",         flag: "🇮🇩", continent: "Asia",        population: "277M", language: "Indonesian",    currency: "Rupiah",     tier: 2 },
-  { country: "Malaysia",        capital: "Kuala Lumpur",    flag: "🇲🇾", continent: "Asia",        population: "33M",  language: "Malay",         currency: "Ringgit",    tier: 2 },
-  { country: "Philippines",     capital: "Manila",          flag: "🇵🇭", continent: "Asia",        population: "115M", language: "Filipino",      currency: "Peso",       tier: 2 },
-  { country: "Pakistan",        capital: "Islamabad",       flag: "🇵🇰", continent: "Asia",        population: "231M", language: "Urdu",          currency: "Rupee",      tier: 2 },
-  { country: "Bangladesh",      capital: "Dhaka",           flag: "🇧🇩", continent: "Asia",        population: "170M", language: "Bengali",       currency: "Taka",       tier: 2 },
-  { country: "Singapore",       capital: "Singapore",       flag: "🇸🇬", continent: "Asia",        population: "6M",   language: "English",       currency: "Dollar",     tier: 2 },
-  { country: "Myanmar",         capital: "Naypyidaw",       flag: "🇲🇲", continent: "Asia",        population: "55M",  language: "Burmese",       currency: "Kyat",       tier: 3 },
-  { country: "Sri Lanka",       capital: "Sri Jayawardenepura Kotte", flag: "🇱🇰", continent: "Asia", population: "22M", language: "Sinhala",   currency: "Rupee",      tier: 3 },
-  { country: "Nepal",           capital: "Kathmandu",       flag: "🇳🇵", continent: "Asia",        population: "30M",  language: "Nepali",        currency: "Rupee",      tier: 2 },
-  { country: "Mongolia",        capital: "Ulaanbaatar",     flag: "🇲🇳", continent: "Asia",        population: "3M",   language: "Mongolian",     currency: "Tögrög",     tier: 3 },
-  { country: "Cambodia",        capital: "Phnom Penh",      flag: "🇰🇭", continent: "Asia",        population: "17M",  language: "Khmer",         currency: "Riel",       tier: 3 },
-  { country: "Laos",            capital: "Vientiane",       flag: "🇱🇦", continent: "Asia",        population: "7M",   language: "Lao",           currency: "Kip",        tier: 3 },
-  { country: "North Korea",     capital: "Pyongyang",       flag: "🇰🇵", continent: "Asia",        population: "26M",  language: "Korean",        currency: "Won",        tier: 2 },
-  { country: "Taiwan",          capital: "Taipei",          flag: "🇹🇼", continent: "Asia",        population: "24M",  language: "Mandarin",      currency: "Dollar",     tier: 2 },
-  { country: "Kazakhstan",      capital: "Astana",          flag: "🇰🇿", continent: "Asia",        population: "19M",  language: "Kazakh",        currency: "Tenge",      tier: 3 },
-  { country: "Uzbekistan",      capital: "Tashkent",        flag: "🇺🇿", continent: "Asia",        population: "36M",  language: "Uzbek",         currency: "Som",        tier: 3 },
-  { country: "Afghanistan",     capital: "Kabul",           flag: "🇦🇫", continent: "Asia",        population: "42M",  language: "Pashto/Dari",   currency: "Afghani",    tier: 2 },
+  { country: "Japan",           capital: "Tokyo",           flag: "🇯🇵", code: "jp", continent: "Asia",        population: "125M", language: "Japanese",      currency: "Yen",        tier: 1 },
+  { country: "China",           capital: "Beijing",         flag: "🇨🇳", code: "cn", continent: "Asia",        population: "1.4B", language: "Mandarin",      currency: "Yuan",       tier: 1 },
+  { country: "India",           capital: "New Delhi",       flag: "🇮🇳", code: "in", continent: "Asia",        population: "1.4B", language: "Hindi",         currency: "Rupee",      tier: 1 },
+  { country: "South Korea",     capital: "Seoul",           flag: "🇰🇷", code: "kr", continent: "Asia",        population: "52M",  language: "Korean",        currency: "Won",        tier: 1 },
+  { country: "Thailand",        capital: "Bangkok",         flag: "🇹🇭", code: "th", continent: "Asia",        population: "72M",  language: "Thai",          currency: "Baht",       tier: 1 },
+  { country: "Vietnam",         capital: "Hanoi",           flag: "🇻🇳", code: "vn", continent: "Asia",        population: "98M",  language: "Vietnamese",    currency: "Dong",       tier: 2 },
+  { country: "Indonesia",       capital: "Jakarta",         flag: "🇮🇩", code: "id", continent: "Asia",        population: "277M", language: "Indonesian",    currency: "Rupiah",     tier: 2 },
+  { country: "Malaysia",        capital: "Kuala Lumpur",    flag: "🇲🇾", code: "my", continent: "Asia",        population: "33M",  language: "Malay",         currency: "Ringgit",    tier: 2 },
+  { country: "Philippines",     capital: "Manila",          flag: "🇵🇭", code: "ph", continent: "Asia",        population: "115M", language: "Filipino",      currency: "Peso",       tier: 2 },
+  { country: "Pakistan",        capital: "Islamabad",       flag: "🇵🇰", code: "pk", continent: "Asia",        population: "231M", language: "Urdu",          currency: "Rupee",      tier: 2 },
+  { country: "Bangladesh",      capital: "Dhaka",           flag: "🇧🇩", code: "bd", continent: "Asia",        population: "170M", language: "Bengali",       currency: "Taka",       tier: 2 },
+  { country: "Singapore",       capital: "Singapore",       flag: "🇸🇬", code: "sg", continent: "Asia",        population: "6M",   language: "English",       currency: "Dollar",     tier: 2 },
+  { country: "Myanmar",         capital: "Naypyidaw",       flag: "🇲🇲", code: "mm", continent: "Asia",        population: "55M",  language: "Burmese",       currency: "Kyat",       tier: 3 },
+  { country: "Sri Lanka",       capital: "Sri Jayawardenepura Kotte", flag: "🇱🇰", code: "lk", continent: "Asia", population: "22M", language: "Sinhala",   currency: "Rupee",      tier: 3 },
+  { country: "Nepal",           capital: "Kathmandu",       flag: "🇳🇵", code: "np", continent: "Asia",        population: "30M",  language: "Nepali",        currency: "Rupee",      tier: 2 },
+  { country: "Mongolia",        capital: "Ulaanbaatar",     flag: "🇲🇳", code: "mn", continent: "Asia",        population: "3M",   language: "Mongolian",     currency: "Tögrög",     tier: 3 },
+  { country: "Cambodia",        capital: "Phnom Penh",      flag: "🇰🇭", code: "kh", continent: "Asia",        population: "17M",  language: "Khmer",         currency: "Riel",       tier: 3 },
+  { country: "Laos",            capital: "Vientiane",       flag: "🇱🇦", code: "la", continent: "Asia",        population: "7M",   language: "Lao",           currency: "Kip",        tier: 3 },
+  { country: "North Korea",     capital: "Pyongyang",       flag: "🇰🇵", code: "kp", continent: "Asia",        population: "26M",  language: "Korean",        currency: "Won",        tier: 2 },
+  { country: "Taiwan",          capital: "Taipei",          flag: "🇹🇼", code: "tw", continent: "Asia",        population: "24M",  language: "Mandarin",      currency: "Dollar",     tier: 2 },
+  { country: "Kazakhstan",      capital: "Astana",          flag: "🇰🇿", code: "kz", continent: "Asia",        population: "19M",  language: "Kazakh",        currency: "Tenge",      tier: 3 },
+  { country: "Uzbekistan",      capital: "Tashkent",        flag: "🇺🇿", code: "uz", continent: "Asia",        population: "36M",  language: "Uzbek",         currency: "Som",        tier: 3 },
+  { country: "Afghanistan",     capital: "Kabul",           flag: "🇦🇫", code: "af", continent: "Asia",        population: "42M",  language: "Pashto/Dari",   currency: "Afghani",    tier: 2 },
   // ── Africa ─────────────────────────────────────────────────
-  { country: "Egypt",           capital: "Cairo",           flag: "🇪🇬", continent: "Africa",      population: "105M", language: "Arabic",        currency: "Pound",      tier: 1 },
-  { country: "Nigeria",         capital: "Abuja",           flag: "🇳🇬", continent: "Africa",      population: "223M", language: "English",       currency: "Naira",      tier: 1 },
-  { country: "South Africa",    capital: "Pretoria",        flag: "🇿🇦", continent: "Africa",      population: "60M",  language: "Zulu/English",  currency: "Rand",       tier: 1 },
-  { country: "Kenya",           capital: "Nairobi",         flag: "🇰🇪", continent: "Africa",      population: "55M",  language: "Swahili",       currency: "Shilling",   tier: 2 },
-  { country: "Morocco",         capital: "Rabat",           flag: "🇲🇦", continent: "Africa",      population: "38M",  language: "Arabic",        currency: "Dirham",     tier: 2 },
-  { country: "Algeria",         capital: "Algiers",         flag: "🇩🇿", continent: "Africa",      population: "46M",  language: "Arabic",        currency: "Dinar",      tier: 2 },
-  { country: "Ethiopia",        capital: "Addis Ababa",     flag: "🇪🇹", continent: "Africa",      population: "126M", language: "Amharic",       currency: "Birr",       tier: 2 },
-  { country: "Ghana",           capital: "Accra",           flag: "🇬🇭", continent: "Africa",      population: "33M",  language: "English",       currency: "Cedi",       tier: 2 },
-  { country: "Tanzania",        capital: "Dodoma",          flag: "🇹🇿", continent: "Africa",      population: "65M",  language: "Swahili",       currency: "Shilling",   tier: 3 },
-  { country: "Uganda",          capital: "Kampala",         flag: "🇺🇬", continent: "Africa",      population: "48M",  language: "English",       currency: "Shilling",   tier: 3 },
-  { country: "Mozambique",      capital: "Maputo",          flag: "🇲🇿", continent: "Africa",      population: "33M",  language: "Portuguese",    currency: "Metical",    tier: 3 },
-  { country: "Senegal",         capital: "Dakar",           flag: "🇸🇳", continent: "Africa",      population: "17M",  language: "French",        currency: "CFA Franc",  tier: 3 },
-  { country: "Cameroon",        capital: "Yaoundé",         flag: "🇨🇲", continent: "Africa",      population: "28M",  language: "French",        currency: "CFA Franc",  tier: 3 },
-  { country: "Zimbabwe",        capital: "Harare",          flag: "🇿🇼", continent: "Africa",      population: "16M",  language: "English",       currency: "Dollar",     tier: 3 },
-  { country: "Tunisia",         capital: "Tunis",           flag: "🇹🇳", continent: "Africa",      population: "12M",  language: "Arabic",        currency: "Dinar",      tier: 2 },
-  { country: "Ivory Coast",     capital: "Yamoussoukro",    flag: "🇨🇮", continent: "Africa",      population: "27M",  language: "French",        currency: "CFA Franc",  tier: 3 },
-  { country: "Angola",          capital: "Luanda",          flag: "🇦🇴", continent: "Africa",      population: "35M",  language: "Portuguese",    currency: "Kwanza",     tier: 3 },
-  { country: "Mali",            capital: "Bamako",          flag: "🇲🇱", continent: "Africa",      population: "22M",  language: "French",        currency: "CFA Franc",  tier: 3 },
-  { country: "Zambia",          capital: "Lusaka",          flag: "🇿🇲", continent: "Africa",      population: "20M",  language: "English",       currency: "Kwacha",     tier: 3 },
-  { country: "Rwanda",          capital: "Kigali",          flag: "🇷🇼", continent: "Africa",      population: "14M",  language: "Kinyarwanda",   currency: "Franc",      tier: 3 },
-  { country: "Sudan",           capital: "Khartoum",        flag: "🇸🇩", continent: "Africa",      population: "46M",  language: "Arabic",        currency: "Pound",      tier: 3 },
-  { country: "Libya",           capital: "Tripoli",         flag: "🇱🇾", continent: "Africa",      population: "7M",   language: "Arabic",        currency: "Dinar",      tier: 2 },
-  { country: "Botswana",        capital: "Gaborone",        flag: "🇧🇼", continent: "Africa",      population: "2.6M", language: "English",       currency: "Pula",       tier: 3 },
-  { country: "Namibia",         capital: "Windhoek",        flag: "🇳🇦", continent: "Africa",      population: "2.6M", language: "English",       currency: "Dollar",     tier: 3 },
-  { country: "Madagascar",      capital: "Antananarivo",    flag: "🇲🇬", continent: "Africa",      population: "28M",  language: "Malagasy",      currency: "Ariary",     tier: 3 },
+  { country: "Egypt",           capital: "Cairo",           flag: "🇪🇬", code: "eg", continent: "Africa",      population: "105M", language: "Arabic",        currency: "Pound",      tier: 1 },
+  { country: "Nigeria",         capital: "Abuja",           flag: "🇳🇬", code: "ng", continent: "Africa",      population: "223M", language: "English",       currency: "Naira",      tier: 1 },
+  { country: "South Africa",    capital: "Pretoria",        flag: "🇿🇦", code: "za", continent: "Africa",      population: "60M",  language: "Zulu/English",  currency: "Rand",       tier: 1 },
+  { country: "Kenya",           capital: "Nairobi",         flag: "🇰🇪", code: "ke", continent: "Africa",      population: "55M",  language: "Swahili",       currency: "Shilling",   tier: 2 },
+  { country: "Morocco",         capital: "Rabat",           flag: "🇲🇦", code: "ma", continent: "Africa",      population: "38M",  language: "Arabic",        currency: "Dirham",     tier: 2 },
+  { country: "Algeria",         capital: "Algiers",         flag: "🇩🇿", code: "dz", continent: "Africa",      population: "46M",  language: "Arabic",        currency: "Dinar",      tier: 2 },
+  { country: "Ethiopia",        capital: "Addis Ababa",     flag: "🇪🇹", code: "et", continent: "Africa",      population: "126M", language: "Amharic",       currency: "Birr",       tier: 2 },
+  { country: "Ghana",           capital: "Accra",           flag: "🇬🇭", code: "gh", continent: "Africa",      population: "33M",  language: "English",       currency: "Cedi",       tier: 2 },
+  { country: "Tanzania",        capital: "Dodoma",          flag: "🇹🇿", code: "tz", continent: "Africa",      population: "65M",  language: "Swahili",       currency: "Shilling",   tier: 3 },
+  { country: "Uganda",          capital: "Kampala",         flag: "🇺🇬", code: "ug", continent: "Africa",      population: "48M",  language: "English",       currency: "Shilling",   tier: 3 },
+  { country: "Mozambique",      capital: "Maputo",          flag: "🇲🇿", code: "mz", continent: "Africa",      population: "33M",  language: "Portuguese",    currency: "Metical",    tier: 3 },
+  { country: "Senegal",         capital: "Dakar",           flag: "🇸🇳", code: "sn", continent: "Africa",      population: "17M",  language: "French",        currency: "CFA Franc",  tier: 3 },
+  { country: "Cameroon",        capital: "Yaoundé",         flag: "🇨🇲", code: "cm", continent: "Africa",      population: "28M",  language: "French",        currency: "CFA Franc",  tier: 3 },
+  { country: "Zimbabwe",        capital: "Harare",          flag: "🇿🇼", code: "zw", continent: "Africa",      population: "16M",  language: "English",       currency: "Dollar",     tier: 3 },
+  { country: "Tunisia",         capital: "Tunis",           flag: "🇹🇳", code: "tn", continent: "Africa",      population: "12M",  language: "Arabic",        currency: "Dinar",      tier: 2 },
+  { country: "Ivory Coast",     capital: "Yamoussoukro",    flag: "🇨🇮", code: "ci", continent: "Africa",      population: "27M",  language: "French",        currency: "CFA Franc",  tier: 3 },
+  { country: "Angola",          capital: "Luanda",          flag: "🇦🇴", code: "ao", continent: "Africa",      population: "35M",  language: "Portuguese",    currency: "Kwanza",     tier: 3 },
+  { country: "Mali",            capital: "Bamako",          flag: "🇲🇱", code: "ml", continent: "Africa",      population: "22M",  language: "French",        currency: "CFA Franc",  tier: 3 },
+  { country: "Zambia",          capital: "Lusaka",          flag: "🇿🇲", code: "zm", continent: "Africa",      population: "20M",  language: "English",       currency: "Kwacha",     tier: 3 },
+  { country: "Rwanda",          capital: "Kigali",          flag: "🇷🇼", code: "rw", continent: "Africa",      population: "14M",  language: "Kinyarwanda",   currency: "Franc",      tier: 3 },
+  { country: "Sudan",           capital: "Khartoum",        flag: "🇸🇩", code: "sd", continent: "Africa",      population: "46M",  language: "Arabic",        currency: "Pound",      tier: 3 },
+  { country: "Libya",           capital: "Tripoli",         flag: "🇱🇾", code: "ly", continent: "Africa",      population: "7M",   language: "Arabic",        currency: "Dinar",      tier: 2 },
+  { country: "Botswana",        capital: "Gaborone",        flag: "🇧🇼", code: "bw", continent: "Africa",      population: "2.6M", language: "English",       currency: "Pula",       tier: 3 },
+  { country: "Namibia",         capital: "Windhoek",        flag: "🇳🇦", code: "na", continent: "Africa",      population: "2.6M", language: "English",       currency: "Dollar",     tier: 3 },
+  { country: "Madagascar",      capital: "Antananarivo",    flag: "🇲🇬", code: "mg", continent: "Africa",      population: "28M",  language: "Malagasy",      currency: "Ariary",     tier: 3 },
   // ── Americas ───────────────────────────────────────────────
-  { country: "USA",             capital: "Washington D.C.", flag: "🇺🇸", continent: "Americas",    population: "335M", language: "English",       currency: "Dollar",     tier: 1 },
-  { country: "Canada",          capital: "Ottawa",          flag: "🇨🇦", continent: "Americas",    population: "38M",  language: "English",       currency: "Dollar",     tier: 1 },
-  { country: "Mexico",          capital: "Mexico City",     flag: "🇲🇽", continent: "Americas",    population: "130M", language: "Spanish",       currency: "Peso",       tier: 1 },
-  { country: "Brazil",          capital: "Brasília",        flag: "🇧🇷", continent: "Americas",    population: "215M", language: "Portuguese",    currency: "Real",       tier: 1 },
-  { country: "Argentina",       capital: "Buenos Aires",    flag: "🇦🇷", continent: "Americas",    population: "46M",  language: "Spanish",       currency: "Peso",       tier: 1 },
-  { country: "Cuba",            capital: "Havana",          flag: "🇨🇺", continent: "Americas",    population: "11M",  language: "Spanish",       currency: "Peso",       tier: 2 },
-  { country: "Peru",            capital: "Lima",            flag: "🇵🇪", continent: "Americas",    population: "33M",  language: "Spanish",       currency: "Sol",        tier: 2 },
-  { country: "Colombia",        capital: "Bogotá",          flag: "🇨🇴", continent: "Americas",    population: "52M",  language: "Spanish",       currency: "Peso",       tier: 2 },
-  { country: "Chile",           capital: "Santiago",        flag: "🇨🇱", continent: "Americas",    population: "19M",  language: "Spanish",       currency: "Peso",       tier: 2 },
-  { country: "Venezuela",       capital: "Caracas",         flag: "🇻🇪", continent: "Americas",    population: "29M",  language: "Spanish",       currency: "Bolívar",    tier: 2 },
-  { country: "Ecuador",         capital: "Quito",           flag: "🇪🇨", continent: "Americas",    population: "18M",  language: "Spanish",       currency: "Dollar",     tier: 2 },
-  { country: "Bolivia",         capital: "Sucre",           flag: "🇧🇴", continent: "Americas",    population: "12M",  language: "Spanish",       currency: "Boliviano",  tier: 3 },
-  { country: "Paraguay",        capital: "Asunción",        flag: "🇵🇾", continent: "Americas",    population: "7M",   language: "Spanish",       currency: "Guaraní",    tier: 3 },
-  { country: "Uruguay",         capital: "Montevideo",      flag: "🇺🇾", continent: "Americas",    population: "3.5M", language: "Spanish",       currency: "Peso",       tier: 2 },
-  { country: "Guatemala",       capital: "Guatemala City",  flag: "🇬🇹", continent: "Americas",    population: "17M",  language: "Spanish",       currency: "Quetzal",    tier: 3 },
-  { country: "Costa Rica",      capital: "San José",        flag: "🇨🇷", continent: "Americas",    population: "5M",   language: "Spanish",       currency: "Colón",      tier: 3 },
-  { country: "Panama",          capital: "Panama City",     flag: "🇵🇦", continent: "Americas",    population: "4M",   language: "Spanish",       currency: "Balboa",     tier: 3 },
-  { country: "Jamaica",         capital: "Kingston",        flag: "🇯🇲", continent: "Americas",    population: "3M",   language: "English",       currency: "Dollar",     tier: 3 },
-  { country: "Honduras",        capital: "Tegucigalpa",     flag: "🇭🇳", continent: "Americas",    population: "10M",  language: "Spanish",       currency: "Lempira",    tier: 3 },
+  { country: "USA",             capital: "Washington D.C.", flag: "🇺🇸", code: "us", continent: "Americas",    population: "335M", language: "English",       currency: "Dollar",     tier: 1 },
+  { country: "Canada",          capital: "Ottawa",          flag: "🇨🇦", code: "ca", continent: "Americas",    population: "38M",  language: "English",       currency: "Dollar",     tier: 1 },
+  { country: "Mexico",          capital: "Mexico City",     flag: "🇲🇽", code: "mx", continent: "Americas",    population: "130M", language: "Spanish",       currency: "Peso",       tier: 1 },
+  { country: "Brazil",          capital: "Brasília",        flag: "🇧🇷", code: "br", continent: "Americas",    population: "215M", language: "Portuguese",    currency: "Real",       tier: 1 },
+  { country: "Argentina",       capital: "Buenos Aires",    flag: "🇦🇷", code: "ar", continent: "Americas",    population: "46M",  language: "Spanish",       currency: "Peso",       tier: 1 },
+  { country: "Cuba",            capital: "Havana",          flag: "🇨🇺", code: "cu", continent: "Americas",    population: "11M",  language: "Spanish",       currency: "Peso",       tier: 2 },
+  { country: "Peru",            capital: "Lima",            flag: "🇵🇪", code: "pe", continent: "Americas",    population: "33M",  language: "Spanish",       currency: "Sol",        tier: 2 },
+  { country: "Colombia",        capital: "Bogotá",          flag: "🇨🇴", code: "co", continent: "Americas",    population: "52M",  language: "Spanish",       currency: "Peso",       tier: 2 },
+  { country: "Chile",           capital: "Santiago",        flag: "🇨🇱", code: "cl", continent: "Americas",    population: "19M",  language: "Spanish",       currency: "Peso",       tier: 2 },
+  { country: "Venezuela",       capital: "Caracas",         flag: "🇻🇪", code: "ve", continent: "Americas",    population: "29M",  language: "Spanish",       currency: "Bolívar",    tier: 2 },
+  { country: "Ecuador",         capital: "Quito",           flag: "🇪🇨", code: "ec", continent: "Americas",    population: "18M",  language: "Spanish",       currency: "Dollar",     tier: 2 },
+  { country: "Bolivia",         capital: "Sucre",           flag: "🇧🇴", code: "bo", continent: "Americas",    population: "12M",  language: "Spanish",       currency: "Boliviano",  tier: 3 },
+  { country: "Paraguay",        capital: "Asunción",        flag: "🇵🇾", code: "py", continent: "Americas",    population: "7M",   language: "Spanish",       currency: "Guaraní",    tier: 3 },
+  { country: "Uruguay",         capital: "Montevideo",      flag: "🇺🇾", code: "uy", continent: "Americas",    population: "3.5M", language: "Spanish",       currency: "Peso",       tier: 2 },
+  { country: "Guatemala",       capital: "Guatemala City",  flag: "🇬🇹", code: "gt", continent: "Americas",    population: "17M",  language: "Spanish",       currency: "Quetzal",    tier: 3 },
+  { country: "Costa Rica",      capital: "San José",        flag: "🇨🇷", code: "cr", continent: "Americas",    population: "5M",   language: "Spanish",       currency: "Colón",      tier: 3 },
+  { country: "Panama",          capital: "Panama City",     flag: "🇵🇦", code: "pa", continent: "Americas",    population: "4M",   language: "Spanish",       currency: "Balboa",     tier: 3 },
+  { country: "Jamaica",         capital: "Kingston",        flag: "🇯🇲", code: "jm", continent: "Americas",    population: "3M",   language: "English",       currency: "Dollar",     tier: 3 },
+  { country: "Honduras",        capital: "Tegucigalpa",     flag: "🇭🇳", code: "hn", continent: "Americas",    population: "10M",  language: "Spanish",       currency: "Lempira",    tier: 3 },
   // ── Oceania ────────────────────────────────────────────────
-  { country: "Australia",       capital: "Canberra",        flag: "🇦🇺", continent: "Oceania",     population: "26M",  language: "English",       currency: "Dollar",     tier: 1 },
-  { country: "New Zealand",     capital: "Wellington",      flag: "🇳🇿", continent: "Oceania",     population: "5M",   language: "English",       currency: "Dollar",     tier: 1 },
-  { country: "Papua New Guinea", capital: "Port Moresby",   flag: "🇵🇬", continent: "Oceania",     population: "10M",  language: "English",       currency: "Kina",       tier: 3 },
-  { country: "Fiji",            capital: "Suva",            flag: "🇫🇯", continent: "Oceania",     population: "0.9M", language: "English",       currency: "Dollar",     tier: 3 },
-  { country: "Samoa",           capital: "Apia",            flag: "🇼🇸", continent: "Oceania",     population: "0.2M", language: "Samoan",        currency: "Tālā",       tier: 3 },
-  { country: "Vanuatu",         capital: "Port Vila",       flag: "🇻🇺", continent: "Oceania",     population: "0.3M", language: "Bislama",       currency: "Vatu",       tier: 3 },
+  { country: "Australia",       capital: "Canberra",        flag: "🇦🇺", code: "au", continent: "Oceania",     population: "26M",  language: "English",       currency: "Dollar",     tier: 1 },
+  { country: "New Zealand",     capital: "Wellington",      flag: "🇳🇿", code: "nz", continent: "Oceania",     population: "5M",   language: "English",       currency: "Dollar",     tier: 1 },
+  { country: "Papua New Guinea", capital: "Port Moresby",   flag: "🇵🇬", code: "pg", continent: "Oceania",     population: "10M",  language: "English",       currency: "Kina",       tier: 3 },
+  { country: "Fiji",            capital: "Suva",            flag: "🇫🇯", code: "fj", continent: "Oceania",     population: "0.9M", language: "English",       currency: "Dollar",     tier: 3 },
+  { country: "Samoa",           capital: "Apia",            flag: "🇼🇸", code: "ws", continent: "Oceania",     population: "0.2M", language: "Samoan",        currency: "Tālā",       tier: 3 },
+  { country: "Vanuatu",         capital: "Port Vila",       flag: "🇻🇺", code: "vu", continent: "Oceania",     population: "0.3M", language: "Bislama",       currency: "Vatu",       tier: 3 },
   // ── Middle East ─────────────────────────────────────────────
-  { country: "Turkey",          capital: "Ankara",          flag: "🇹🇷", continent: "Middle East", population: "85M",  language: "Turkish",       currency: "Lira",       tier: 1 },
-  { country: "Saudi Arabia",    capital: "Riyadh",          flag: "🇸🇦", continent: "Middle East", population: "36M",  language: "Arabic",        currency: "Riyal",      tier: 1 },
-  { country: "Iran",            capital: "Tehran",          flag: "🇮🇷", continent: "Middle East", population: "89M",  language: "Persian",       currency: "Rial",       tier: 2 },
-  { country: "Iraq",            capital: "Baghdad",         flag: "🇮🇶", continent: "Middle East", population: "43M",  language: "Arabic",        currency: "Dinar",      tier: 2 },
-  { country: "Israel",          capital: "Jerusalem",       flag: "🇮🇱", continent: "Middle East", population: "9M",   language: "Hebrew",        currency: "Shekel",     tier: 2 },
-  { country: "Jordan",          capital: "Amman",           flag: "🇯🇴", continent: "Middle East", population: "10M",  language: "Arabic",        currency: "Dinar",      tier: 2 },
-  { country: "UAE",             capital: "Abu Dhabi",       flag: "🇦🇪", continent: "Middle East", population: "9M",   language: "Arabic",        currency: "Dirham",     tier: 1 },
-  { country: "Qatar",           capital: "Doha",            flag: "🇶🇦", continent: "Middle East", population: "2.9M", language: "Arabic",        currency: "Riyal",      tier: 2 },
-  { country: "Kuwait",          capital: "Kuwait City",     flag: "🇰🇼", continent: "Middle East", population: "4.3M", language: "Arabic",        currency: "Dinar",      tier: 3 },
-  { country: "Bahrain",         capital: "Manama",          flag: "🇧🇭", continent: "Middle East", population: "1.5M", language: "Arabic",        currency: "Dinar",      tier: 3 },
-  { country: "Oman",            capital: "Muscat",          flag: "🇴🇲", continent: "Middle East", population: "4.5M", language: "Arabic",        currency: "Rial",       tier: 3 },
-  { country: "Yemen",           capital: "Sana'a",          flag: "🇾🇪", continent: "Middle East", population: "34M",  language: "Arabic",        currency: "Rial",       tier: 3 },
-  { country: "Syria",           capital: "Damascus",        flag: "🇸🇾", continent: "Middle East", population: "22M",  language: "Arabic",        currency: "Pound",      tier: 2 },
-  { country: "Lebanon",         capital: "Beirut",          flag: "🇱🇧", continent: "Middle East", population: "5M",   language: "Arabic",        currency: "Pound",      tier: 2 },
-  { country: "Armenia",         capital: "Yerevan",         flag: "🇦🇲", continent: "Middle East", population: "3M",   language: "Armenian",      currency: "Dram",       tier: 3 },
-  { country: "Georgia",         capital: "Tbilisi",         flag: "🇬🇪", continent: "Middle East", population: "4M",   language: "Georgian",      currency: "Lari",       tier: 3 },
-  { country: "Azerbaijan",      capital: "Baku",            flag: "🇦🇿", continent: "Middle East", population: "10M",  language: "Azerbaijani",   currency: "Manat",      tier: 3 },
+  { country: "Turkey",          capital: "Ankara",          flag: "🇹🇷", code: "tr", continent: "Middle East", population: "85M",  language: "Turkish",       currency: "Lira",       tier: 1 },
+  { country: "Saudi Arabia",    capital: "Riyadh",          flag: "🇸🇦", code: "sa", continent: "Middle East", population: "36M",  language: "Arabic",        currency: "Riyal",      tier: 1 },
+  { country: "Iran",            capital: "Tehran",          flag: "🇮🇷", code: "ir", continent: "Middle East", population: "89M",  language: "Persian",       currency: "Rial",       tier: 2 },
+  { country: "Iraq",            capital: "Baghdad",         flag: "🇮🇶", code: "iq", continent: "Middle East", population: "43M",  language: "Arabic",        currency: "Dinar",      tier: 2 },
+  { country: "Israel",          capital: "Jerusalem",       flag: "🇮🇱", code: "il", continent: "Middle East", population: "9M",   language: "Hebrew",        currency: "Shekel",     tier: 2 },
+  { country: "Jordan",          capital: "Amman",           flag: "🇯🇴", code: "jo", continent: "Middle East", population: "10M",  language: "Arabic",        currency: "Dinar",      tier: 2 },
+  { country: "UAE",             capital: "Abu Dhabi",       flag: "🇦🇪", code: "ae", continent: "Middle East", population: "9M",   language: "Arabic",        currency: "Dirham",     tier: 1 },
+  { country: "Qatar",           capital: "Doha",            flag: "🇶🇦", code: "qa", continent: "Middle East", population: "2.9M", language: "Arabic",        currency: "Riyal",      tier: 2 },
+  { country: "Kuwait",          capital: "Kuwait City",     flag: "🇰🇼", code: "kw", continent: "Middle East", population: "4.3M", language: "Arabic",        currency: "Dinar",      tier: 3 },
+  { country: "Bahrain",         capital: "Manama",          flag: "🇧🇭", code: "bh", continent: "Middle East", population: "1.5M", language: "Arabic",        currency: "Dinar",      tier: 3 },
+  { country: "Oman",            capital: "Muscat",          flag: "🇴🇲", code: "om", continent: "Middle East", population: "4.5M", language: "Arabic",        currency: "Rial",       tier: 3 },
+  { country: "Yemen",           capital: "Sana'a",          flag: "🇾🇪", code: "ye", continent: "Middle East", population: "34M",  language: "Arabic",        currency: "Rial",       tier: 3 },
+  { country: "Syria",           capital: "Damascus",        flag: "🇸🇾", code: "sy", continent: "Middle East", population: "22M",  language: "Arabic",        currency: "Pound",      tier: 2 },
+  { country: "Lebanon",         capital: "Beirut",          flag: "🇱🇧", code: "lb", continent: "Middle East", population: "5M",   language: "Arabic",        currency: "Pound",      tier: 2 },
+  { country: "Armenia",         capital: "Yerevan",         flag: "🇦🇲", code: "am", continent: "Middle East", population: "3M",   language: "Armenian",      currency: "Dram",       tier: 3 },
+  { country: "Georgia",         capital: "Tbilisi",         flag: "🇬🇪", code: "ge", continent: "Middle East", population: "4M",   language: "Georgian",      currency: "Lari",       tier: 3 },
+  { country: "Azerbaijan",      capital: "Baku",            flag: "🇦🇿", code: "az", continent: "Middle East", population: "10M",  language: "Azerbaijani",   currency: "Manat",      tier: 3 },
 ];
 
 // ── Difficulty settings ─────────────────────────────────────
@@ -168,6 +168,29 @@ const SKINS = [
   { id: "gold",    name: "Golden",  threshold: 300, icon: "✨", rgb: "247,201,72",  hex: "#f7c948" },
   { id: "neon",    name: "Neon",    threshold: 500, icon: "⚡", rgb: "85,239,196",  hex: "#55efc4" },
 ];
+
+// ════════════════════════════════════════════════════════════
+//  FLAG IMAGE CACHE  (flagcdn.com 40×30 PNGs)
+// ════════════════════════════════════════════════════════════
+const FLAG_CACHE = {};   // code → HTMLImageElement (or null if failed)
+
+function getFlagImg(code) {
+  if (!code) return null;
+  if (FLAG_CACHE[code] !== undefined) return FLAG_CACHE[code];
+  // Start loading; mark as pending (null) until done
+  FLAG_CACHE[code] = null;
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload  = () => { FLAG_CACHE[code] = img; };
+  img.onerror = () => { FLAG_CACHE[code] = null; };
+  img.src = `https://flagcdn.com/w160/${code}.png`;
+  return null;   // not ready yet — caller will retry next frame
+}
+
+// Pre-warm the cache: start loading flags for all countries immediately
+function prewarmFlags() {
+  COUNTRIES.forEach(c => { if (c.code) getFlagImg(c.code); });
+}
 
 // ════════════════════════════════════════════════════════════
 //  WEB AUDIO – synthesised sound effects (no files needed)
@@ -616,7 +639,14 @@ function populateLearnScreen() {
       : "";
     return `
     <div class="learn-card" data-continent="${c.continent}">
-      <div class="learn-flag">${c.flag}</div>
+      <div class="learn-flag">
+        <img class="learn-flag-img"
+             src="https://flagcdn.com/w160/${c.code}.png"
+             alt="${c.country} flag"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"
+             loading="lazy" />
+        <span class="learn-flag-emoji" style="display:none">${c.flag}</span>
+      </div>
       <div class="learn-country">${c.country}</div>
       <div class="learn-capital">🏛️ ${c.capital}</div>
       <div class="learn-continent">${c.continent}</div>
@@ -769,8 +799,8 @@ function startGame() {
     basket: {
       x:      canvas.width / 2,
       y:      canvas.height - 52,
-      w:      140,
-      h:      44,
+      w:      initialMode === "flagMode" ? 110 : 140,  // flag basket wider for image
+      h:      initialMode === "flagMode" ? 58  : 44,   // flag basket taller for image clarity
       speed:  7,
       squish: 0,   // 0 = normal, positive = squish-down anim, negative = bounce-up
     },
@@ -1463,10 +1493,45 @@ function drawBasket() {
   ctx.shadowColor  = "rgba(0,0,0,0.6)";
   ctx.shadowBlur   = 4;
   if (state.mode === "flagMode") {
-    // Render a large flag emoji centred in the basket
-    ctx.font      = "28px 'Segoe UI', sans-serif";
-    ctx.fillStyle = "#fff";
-    ctx.fillText(state.flag, x + (skin.id !== "classic" ? 7 : 0), y + h / 2 + 1);
+    // Draw real flag image centred in basket; fall back to emoji while loading
+    const pool   = questionPool();
+    const entry  = pool[state.questionIdx] || COUNTRIES[0];
+    const fImg   = entry.code ? getFlagImg(entry.code) : null;
+    const cx     = x + (skin.id !== "classic" ? 7 : 0);
+    const cy     = y + h / 2;
+    if (fImg) {
+      // Fill as much of the basket as possible, maintain aspect ratio
+      const pad = 5;
+      const maxW = w - pad * 2 - (skin.id !== "classic" ? 22 : 0);
+      const maxH = h - pad * 2;
+      // Fit flag within maxW × maxH maintaining natural aspect
+      const imgAspect = fImg.naturalWidth / fImg.naturalHeight;
+      let fw, fh;
+      if (maxW / maxH > imgAspect) {
+        fh = maxH; fw = Math.round(fh * imgAspect);
+      } else {
+        fw = maxW; fh = Math.round(fw / imgAspect);
+      }
+      const rx = cx - fw / 2, ry = cy - fh / 2;
+      // White border behind flag for clean look
+      ctx.save();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "rgba(255,255,255,0.9)";
+      ctx.beginPath();
+      ctx.roundRect(rx - 2, ry - 2, fw + 4, fh + 4, 5);
+      ctx.fill();
+      // Clip and draw flag
+      ctx.beginPath();
+      ctx.roundRect(rx, ry, fw, fh, 4);
+      ctx.clip();
+      ctx.drawImage(fImg, rx, ry, fw, fh);
+      ctx.restore();
+    } else {
+      // Image not yet loaded — show emoji fallback
+      ctx.font      = "28px 'Segoe UI', sans-serif";
+      ctx.fillStyle = "#fff";
+      ctx.fillText(state.flag, cx, cy + 1);
+    }
   } else {
     const label = truncateLabel(basketLabel(), w - (skin.id !== "classic" ? 28 : 14));
     ctx.fillStyle = "#fff";
@@ -1527,3 +1592,4 @@ function lighten(hex, amount) {
 // ── Init ─────────────────────────────────────────────────────
 buildSkinSelector();
 buildLeaderboardDisplay();
+prewarmFlags();   // start loading flag images in background
