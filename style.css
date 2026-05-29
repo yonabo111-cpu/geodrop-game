@@ -15,11 +15,16 @@
 
 html, body {
   width: 100%; height: 100%;
+  /* Use dynamic viewport height to avoid iOS address-bar overlap */
+  height: 100dvh;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(160deg, var(--sky-top), var(--sky-bottom));
   color: var(--text);
   overflow: hidden;
   user-select: none;
+  /* Safe-area insets for notch / home indicator */
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-top: env(safe-area-inset-top);
 }
 
 /* ─── Stars background ─── */
@@ -419,7 +424,13 @@ h1 {
 }
 
 /* ─── Game Screen ─── */
-#gameScreen { flex-direction: column; background: transparent; }
+#gameScreen {
+  flex-direction: column;
+  background: transparent;
+  /* Use dynamic viewport height to account for iOS address bar */
+  height: 100dvh;
+  height: 100vh; /* fallback */
+}
 
 #hud {
   width: 100%; max-width: 800px;
@@ -455,6 +466,10 @@ h1 {
   display: block;
   border-radius: 16px;
   box-shadow: 0 0 40px rgba(0,0,0,.5), inset 0 0 60px rgba(0,0,0,.2);
+  touch-action: none;   /* prevent scroll hijack during touch drag */
+}
+@media (max-width: 600px) {
+  #gameCanvas { border-radius: 0; box-shadow: none; }
 }
 
 /* Mobile controls */
@@ -474,15 +489,121 @@ h1 {
 }
 .ctrl-btn:active { background: rgba(255,255,255,.25); }
 
+/* ── Always show mobile controls on touch devices ── */
 @media (pointer: coarse) { #mobileControls { display: flex; } }
-@media (max-width: 500px) {
+
+/* ══════════════════════════════════════════════════
+   MOBILE — ≤ 600px
+══════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+  /* Show mobile controls */
   #mobileControls { display: flex; }
-  #countryLabel { font-size: .88rem; padding: 4px 10px; max-width: 155px; }
-  #score, #level { font-size: 1.4rem; }
-  .mode-btn { padding: 8px 4px; }
-  .mode-desc { display: none; }
-  .region-btn { font-size: .68rem; padding: 4px 7px; }
-  .start-card { padding: 20px 16px 18px; }
+
+  /* ── Start / Game-over card ── */
+  .start-card {
+    padding: 16px 14px 16px;
+    border-radius: 18px;
+    width: 100vw;
+    max-height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Smaller globe + title */
+  .globe-icon { font-size: 36px; margin-bottom: 2px; }
+  h1 { font-size: 1.7rem; letter-spacing: 3px; margin-bottom: 2px; }
+  .tagline { font-size: .78rem; margin-bottom: 10px; }
+
+  /* ── Mode buttons: 2×2 grid on small screens ── */
+  .mode-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .mode-btn { padding: 8px 6px; border-radius: 12px; }
+  .mode-icon  { font-size: 1.2rem; }
+  .mode-title { font-size: .75rem; }
+  .mode-desc  { font-size: .62rem; }
+
+  /* ── Region buttons: wrap tighter ── */
+  .region-btn { font-size: .68rem; padding: 4px 8px; }
+
+  /* ── How to play ── */
+  .how-to { padding: 10px 12px; margin-bottom: 10px; }
+  .how-to li { font-size: .77rem; }
+
+  /* ── Difficulty ── */
+  .diff-btn { padding: 8px 0; font-size: .82rem; }
+
+  /* ── Skin selector ── */
+  .skin-btn { min-width: 48px; padding: 7px 8px; }
+  .skin-icon { font-size: 1.1rem; }
+  .skin-name { font-size: .6rem; }
+
+  /* ── Primary / secondary buttons ── */
+  .primary-btn   { padding: 13px; font-size: .97rem; }
+  .secondary-btn { padding: 10px; font-size: .88rem; }
+
+  /* ── Score summary ── */
+  .sum-row { font-size: .82rem; }
+  .sum-row strong { font-size: .9rem; }
+
+  /* ── HUD ── */
+  #hud {
+    padding: 6px 10px 4px;
+    gap: 6px;
+  }
+  .hud-block { min-width: 50px; }
+  #score, #level { font-size: 1.3rem; }
+  .hud-label { font-size: .58rem; letter-spacing: 1px; }
+
+  #countryLabel {
+    font-size: .8rem;
+    padding: 3px 10px;
+    max-width: 130px;
+    border-radius: 16px;
+  }
+  .mode-badge {
+    font-size: .58rem;
+    padding: 2px 8px;
+    letter-spacing: 1px;
+  }
+  .lives { font-size: .85rem; letter-spacing: 1px; }
+  .icon-btn { width: 26px; height: 26px; font-size: .82rem; }
+  .hud-btn-row { gap: 4px; }
+
+  /* ── Mobile control buttons — bigger tap targets ── */
+  #mobileControls {
+    max-width: 100%;
+    padding: 8px 12px calc(14px + env(safe-area-inset-bottom, 0px));
+    gap: 12px;
+  }
+  .ctrl-btn {
+    padding: 20px 0;
+    font-size: 1.8rem;
+    border-radius: 18px;
+    flex: 1;
+  }
+
+  /* ── Pause card ── */
+  .pause-card { padding: 28px 24px; }
+  .pause-card h2 { font-size: 1.5rem; }
+  .pause-card .primary-btn,
+  .pause-card .secondary-btn { width: 180px; }
+}
+
+/* ══════════════════════════════════════════════════
+   VERY SMALL — ≤ 380px  (older / small-bezel phones)
+══════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  h1 { font-size: 1.4rem; letter-spacing: 2px; }
+  .mode-title { font-size: .7rem; }
+  .mode-desc  { display: none; }
+  #countryLabel { font-size: .72rem; max-width: 110px; padding: 3px 8px; }
+  #score, #level { font-size: 1.1rem; }
+  .region-btn { font-size: .62rem; padding: 3px 6px; }
+  .ctrl-btn { font-size: 1.6rem; padding: 18px 0; }
 }
 
 /* ════════════════════════════════════════════════════════
@@ -672,12 +793,36 @@ h1 {
   display: block;
   flex: 1;
 }
+@media (max-width: 600px) {
+  #mapIframe { height: 55vh; }
+  .map-modal-card { border-radius: 16px; }
+  .map-modal-header { padding: 12px 14px; }
+}
 
 .learn-back-btn {
   flex-shrink: 0;
   margin-top: 10px;
   max-width: 320px;
   align-self: center;
+}
+@media (max-width: 600px) {
+  .learn-wrapper { padding: 0 10px 12px; }
+  .learn-header { padding: 14px 0 10px; }
+  .learn-header h2 { font-size: 1.25rem; }
+  .learn-sub { font-size: .78rem; margin-bottom: 8px; }
+  .learn-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+  }
+  .learn-card { padding: 10px 8px; min-height: 170px; }
+  .learn-flag { height: 44px; }
+  .learn-flag-img { height: 44px; max-width: 80px; }
+  .learn-country { font-size: .78rem; }
+  .learn-capital { font-size: .7rem; }
+  .learn-facts span { font-size: .58rem; padding: 2px 4px; }
+  .learn-filter-btn { font-size: .7rem; padding: 3px 10px; }
+  .learn-search-input { font-size: .85rem; padding: 8px 14px; }
+  .learn-back-btn { max-width: 100%; }
 }
 
 /* ════════════════════════════════════════════════════════

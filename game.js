@@ -586,14 +586,29 @@ canvas.addEventListener("mouseup",    () => { mouseDrag = false; });
 canvas.addEventListener("mouseleave", () => { mouseDrag = false; });
 
 // ════════════════════════════════════════════════════════════
+//  RESPONSIVE SCALE HELPER
+//  Returns a font-size scaled to the canvas width.
+//  Base reference width: 380px (typical phone portrait).
+// ════════════════════════════════════════════════════════════
+function scaledFont(basePx) {
+  // 380px → 1× ; 760px → clamp at 1.4×
+  const scale = Math.min(1.4, Math.max(0.75, canvas.width / 380));
+  return Math.round(basePx * scale);
+}
+
+// ════════════════════════════════════════════════════════════
 //  CANVAS RESIZE
 // ════════════════════════════════════════════════════════════
 function resizeCanvas() {
-  const area = document.getElementById("gameArea");
-  const maxW = Math.min(area.clientWidth - 20, 760);
-  const maxH = area.clientHeight - 10;
-  canvas.width  = maxW;
-  canvas.height = maxH;
+  const area    = document.getElementById("gameArea");
+  const isMobile = window.innerWidth <= 600;
+  // On mobile use full area width; on desktop cap at 760px
+  const maxW = isMobile
+    ? area.clientWidth
+    : Math.min(area.clientWidth - 20, 760);
+  const maxH = area.clientHeight - (isMobile ? 0 : 10);
+  canvas.width  = Math.max(maxW, 240);
+  canvas.height = Math.max(maxH, 300);
 }
 window.addEventListener("resize", () => {
   resizeCanvas();
@@ -799,9 +814,9 @@ function startGame() {
     basket: {
       x:      canvas.width / 2,
       y:      canvas.height - 52,
-      w:      initialMode === "flagMode" ? 110 : 140,  // flag basket wider for image
-      h:      initialMode === "flagMode" ? 58  : 44,   // flag basket taller for image clarity
-      speed:  7,
+      w:      initialMode === "flagMode" ? scaledFont(110) : scaledFont(140),
+      h:      initialMode === "flagMode" ? scaledFont(58)  : scaledFont(44),
+      speed:  Math.round(scaledFont(7)),
       squish: 0,   // 0 = normal, positive = squish-down anim, negative = bounce-up
     },
     shake:    0,
@@ -1004,8 +1019,8 @@ function dropOneCapsule() {
   const flag    = item.flag || "🌐";
   const correct = correctAnswer();
   const w       = measureCapsule(flag + " " + text);
-  const h       = 40;
-  const margin  = 60;
+  const h       = Math.round(scaledFont(40));   // capsule height scales with canvas
+  const margin  = Math.max(30, Math.round(canvas.width * 0.08));
   const usableW = canvas.width - margin * 2;
 
   let x, tries = 0;
@@ -1030,8 +1045,9 @@ function dropOneCapsule() {
 }
 
 function measureCapsule(text) {
-  ctx.font = "bold 13px 'Segoe UI', sans-serif";
-  return ctx.measureText(text).width + 38;
+  const fs = scaledFont(13);
+  ctx.font = `bold ${fs}px 'Segoe UI', sans-serif`;
+  return ctx.measureText(text).width + Math.round(fs * 2.9);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -1055,6 +1071,8 @@ function catchCapsule(cap) {
     // Basket bounce-up on correct catch
     state.basket.squish = -0.35;
     SFX.catch();
+    // Haptic feedback on mobile — short double-tap for success
+    if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
 
     spawnParticles(cap.x, cap.y, cap.color, 22, true);
     const streakTag = state.streak >= 2 ? ` 🔥x${state.streak}` : "";
@@ -1086,6 +1104,8 @@ function catchCapsule(cap) {
     // Basket squish-down on wrong catch
     state.basket.squish = 0.45;
     SFX.miss();
+    // Haptic feedback — single longer buzz for wrong answer
+    if (navigator.vibrate) navigator.vibrate(120);
 
     spawnParticles(cap.x, cap.y, "#ff6b6b", 14, false);
     loseLife(wrongCatchMsg());
@@ -1095,6 +1115,8 @@ function catchCapsule(cap) {
 }
 
 function loseLife(msg) {
+  // Haptic: strong double-buzz for losing a life
+  if (navigator.vibrate) navigator.vibrate([80, 50, 180]);
   state.lives--;
   state.shake        = 18;
   state.streak       = 0;
@@ -1393,14 +1415,15 @@ function drawCapsules() {
     // Flag above text
     ctx.shadowColor  = "rgba(0,0,0,0.5)";
     ctx.shadowBlur   = 3;
-    ctx.font         = "13px 'Segoe UI', sans-serif";
+    const fs = scaledFont(13);
+    ctx.font         = `${fs}px 'Segoe UI', sans-serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle    = "#fff";
-    ctx.fillText(flag, x, y - 6);
+    ctx.fillText(flag, x, y - h * 0.15);
 
-    ctx.font      = "bold 11px 'Segoe UI', sans-serif";
-    ctx.fillText(text, x, y + 9);
+    ctx.font      = `bold ${scaledFont(11)}px 'Segoe UI', sans-serif`;
+    ctx.fillText(text, x, y + h * 0.23);
     ctx.shadowBlur = 0;
 
     ctx.restore();
@@ -1482,10 +1505,10 @@ function drawBasket() {
   }
 
   if (skin.id !== "classic") {
-    ctx.font         = "14px 'Segoe UI', sans-serif";
+    ctx.font         = `${scaledFont(14)}px 'Segoe UI', sans-serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(skin.icon, x - w / 2 + 14, y + h / 2);
+    ctx.fillText(skin.icon, x - w / 2 + scaledFont(14), y + h / 2);
   }
 
   ctx.textAlign    = "center";
@@ -1528,14 +1551,14 @@ function drawBasket() {
       ctx.restore();
     } else {
       // Image not yet loaded — show emoji fallback
-      ctx.font      = "28px 'Segoe UI', sans-serif";
+      ctx.font      = `${scaledFont(26)}px 'Segoe UI', sans-serif`;
       ctx.fillStyle = "#fff";
       ctx.fillText(state.flag, cx, cy + 1);
     }
   } else {
     const label = truncateLabel(basketLabel(), w - (skin.id !== "classic" ? 28 : 14));
     ctx.fillStyle = "#fff";
-    ctx.font      = "bold 12px 'Segoe UI', sans-serif";
+    ctx.font      = `bold ${scaledFont(12)}px 'Segoe UI', sans-serif`;
     ctx.fillText(label, x + (skin.id !== "classic" ? 7 : 0), y + h / 2);
   }
   ctx.shadowBlur   = 0;
@@ -1544,7 +1567,7 @@ function drawBasket() {
 }
 
 function truncateLabel(text, maxWidth) {
-  ctx.font = "bold 12px 'Segoe UI', sans-serif";
+  ctx.font = `bold ${scaledFont(12)}px 'Segoe UI', sans-serif`;
   if (ctx.measureText(text).width <= maxWidth) return text;
   let t = text;
   while (t.length > 4 && ctx.measureText(t + "…").width > maxWidth) t = t.slice(0, -1);
