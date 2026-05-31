@@ -495,6 +495,29 @@ function escapeHtml(s) {
   return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
+// ════════════════════════════════════════════════════════════
+//  VIBRATION  — unlock on first touch, then use throughout
+// ════════════════════════════════════════════════════════════
+let vibrationUnlocked = false;
+
+function vibrate(pattern) {
+  if (!navigator.vibrate) return;
+  if (!vibrationUnlocked) return;        // wait for unlock
+  try { navigator.vibrate(pattern); } catch(e) {}
+}
+
+// Unlock vibration on very first user touch anywhere on the page
+function unlockVibration() {
+  if (vibrationUnlocked) return;
+  vibrationUnlocked = true;
+  // Send a zero-length pulse to "warm up" the vibrator API
+  try { navigator.vibrate(0); } catch(e) {}
+  document.removeEventListener("touchstart", unlockVibration, true);
+  document.removeEventListener("pointerdown", unlockVibration, true);
+}
+document.addEventListener("touchstart",  unlockVibration, { once: true, capture: true, passive: true });
+document.addEventListener("pointerdown", unlockVibration, { once: true, capture: true, passive: true });
+
 // ── Button wire-ups ─────────────────────────────────────────
 document.getElementById("startBtn").addEventListener("click", startGame);
 document.getElementById("restartBtn").addEventListener("click", startGame);
@@ -586,14 +609,37 @@ canvas.addEventListener("mouseup",    () => { mouseDrag = false; });
 canvas.addEventListener("mouseleave", () => { mouseDrag = false; });
 
 // ════════════════════════════════════════════════════════════
+//  RESPONSIVE SCALE HELPER
+//  Returns a font-size scaled to the canvas width.
+//  Base reference width: 380px (typical phone portrait).
+// ════════════════════════════════════════════════════════════
+function scaledFont(basePx) {
+  // 360px phone portrait → ~0.95×; 390px Pixel → 1×; 760px desktop → 1.4× max
+  const scale = Math.min(1.4, Math.max(0.7, canvas.width / 390));
+  return Math.round(basePx * scale);
+}
+
+// ════════════════════════════════════════════════════════════
 //  CANVAS RESIZE
 // ════════════════════════════════════════════════════════════
 function resizeCanvas() {
-  const area = document.getElementById("gameArea");
-  const maxW = Math.min(area.clientWidth - 20, 760);
-  const maxH = area.clientHeight - 10;
-  canvas.width  = maxW;
-  canvas.height = maxH;
+  const isMobile = window.innerWidth <= 600;
+
+  if (isMobile) {
+    // On mobile: measure exact pixels taken by HUD + controls, give the rest to canvas
+    const hud      = document.getElementById("hud");
+    const controls = document.getElementById("mobileControls");
+    const hudH     = hud.getBoundingClientRect().height      || 0;
+    const ctrlH    = controls.getBoundingClientRect().height || 0;
+    const W = window.innerWidth;
+    const H = Math.max(200, window.innerHeight - hudH - ctrlH);
+    canvas.width  = Math.floor(W);
+    canvas.height = Math.floor(H);
+  } else {
+    const area = document.getElementById("gameArea");
+    canvas.width  = Math.min(area.clientWidth  - 20, 760);
+    canvas.height = Math.max(area.clientHeight - 10, 300);
+  }
 }
 window.addEventListener("resize", () => {
   resizeCanvas();
@@ -799,9 +845,9 @@ function startGame() {
     basket: {
       x:      canvas.width / 2,
       y:      canvas.height - 52,
-      w:      initialMode === "flagMode" ? 110 : 140,  // flag basket wider for image
-      h:      initialMode === "flagMode" ? 58  : 44,   // flag basket taller for image clarity
-      speed:  7,
+      w:      initialMode === "flagMode" ? scaledFont(110) : scaledFont(140),
+      h:      initialMode === "flagMode" ? scaledFont(58)  : scaledFont(44),
+      speed:  Math.round(scaledFont(7)),
       squish: 0,   // 0 = normal, positive = squish-down anim, negative = bounce-up
     },
     shake:    0,
@@ -1004,8 +1050,8 @@ function dropOneCapsule() {
   const flag    = item.flag || "🌐";
   const correct = correctAnswer();
   const w       = measureCapsule(flag + " " + text);
-  const h       = 40;
-  const margin  = 60;
+  const h       = Math.round(scaledFont(40));   // capsule height scales with canvas
+  const margin  = Math.max(30, Math.round(canvas.width * 0.08));
   const usableW = canvas.width - margin * 2;
 
   let x, tries = 0;
@@ -1030,8 +1076,9 @@ function dropOneCapsule() {
 }
 
 function measureCapsule(text) {
-  ctx.font = "bold 13px 'Segoe UI', sans-serif";
-  return ctx.measureText(text).width + 38;
+  const fs = scaledFont(13);
+  ctx.font = `bold ${fs}px 'Segoe UI', sans-serif`;
+  return ctx.measureText(text).width + Math.round(fs * 2.9);
 }
 
 // ════════════════════════════════════════════════════════════
@@ -1055,6 +1102,7 @@ function catchCapsule(cap) {
     // Basket bounce-up on correct catch
     state.basket.squish = -0.35;
     SFX.catch();
+    vibrate([40, 30, 40]);   // ✅ correct catch
 
     spawnParticles(cap.x, cap.y, cap.color, 22, true);
     const streakTag = state.streak >= 2 ? ` 🔥x${state.streak}` : "";
@@ -1086,6 +1134,7 @@ function catchCapsule(cap) {
     // Basket squish-down on wrong catch
     state.basket.squish = 0.45;
     SFX.miss();
+    vibrate(120);            // ❌ wrong catch
 
     spawnParticles(cap.x, cap.y, "#ff6b6b", 14, false);
     loseLife(wrongCatchMsg());
@@ -1095,6 +1144,7 @@ function catchCapsule(cap) {
 }
 
 function loseLife(msg) {
+  vibrate([80, 50, 180]);   // 💔 lose a life
   state.lives--;
   state.shake        = 18;
   state.streak       = 0;
@@ -1393,14 +1443,15 @@ function drawCapsules() {
     // Flag above text
     ctx.shadowColor  = "rgba(0,0,0,0.5)";
     ctx.shadowBlur   = 3;
-    ctx.font         = "13px 'Segoe UI', sans-serif";
+    const fs = scaledFont(13);
+    ctx.font         = `${fs}px 'Segoe UI', sans-serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle    = "#fff";
-    ctx.fillText(flag, x, y - 6);
+    ctx.fillText(flag, x, y - h * 0.15);
 
-    ctx.font      = "bold 11px 'Segoe UI', sans-serif";
-    ctx.fillText(text, x, y + 9);
+    ctx.font      = `bold ${scaledFont(11)}px 'Segoe UI', sans-serif`;
+    ctx.fillText(text, x, y + h * 0.23);
     ctx.shadowBlur = 0;
 
     ctx.restore();
@@ -1482,10 +1533,10 @@ function drawBasket() {
   }
 
   if (skin.id !== "classic") {
-    ctx.font         = "14px 'Segoe UI', sans-serif";
+    ctx.font         = `${scaledFont(14)}px 'Segoe UI', sans-serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(skin.icon, x - w / 2 + 14, y + h / 2);
+    ctx.fillText(skin.icon, x - w / 2 + scaledFont(14), y + h / 2);
   }
 
   ctx.textAlign    = "center";
@@ -1528,14 +1579,14 @@ function drawBasket() {
       ctx.restore();
     } else {
       // Image not yet loaded — show emoji fallback
-      ctx.font      = "28px 'Segoe UI', sans-serif";
+      ctx.font      = `${scaledFont(26)}px 'Segoe UI', sans-serif`;
       ctx.fillStyle = "#fff";
       ctx.fillText(state.flag, cx, cy + 1);
     }
   } else {
     const label = truncateLabel(basketLabel(), w - (skin.id !== "classic" ? 28 : 14));
     ctx.fillStyle = "#fff";
-    ctx.font      = "bold 12px 'Segoe UI', sans-serif";
+    ctx.font      = `bold ${scaledFont(12)}px 'Segoe UI', sans-serif`;
     ctx.fillText(label, x + (skin.id !== "classic" ? 7 : 0), y + h / 2);
   }
   ctx.shadowBlur   = 0;
@@ -1544,7 +1595,7 @@ function drawBasket() {
 }
 
 function truncateLabel(text, maxWidth) {
-  ctx.font = "bold 12px 'Segoe UI', sans-serif";
+  ctx.font = `bold ${scaledFont(12)}px 'Segoe UI', sans-serif`;
   if (ctx.measureText(text).width <= maxWidth) return text;
   let t = text;
   while (t.length > 4 && ctx.measureText(t + "…").width > maxWidth) t = t.slice(0, -1);
@@ -1559,7 +1610,7 @@ function drawFlash(W, H) {
   const alpha    = progress < 0.3 ? progress / 0.3 : 1;
 
   ctx.globalAlpha  = alpha;
-  ctx.font         = "bold 26px 'Segoe UI', sans-serif";
+  ctx.font         = `bold ${scaledFont(22)}px 'Segoe UI', sans-serif`;
   ctx.textAlign    = "center";
   ctx.textBaseline = "middle";
   ctx.shadowColor  = color;

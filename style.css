@@ -15,6 +15,7 @@
 
 html, body {
   width: 100%; height: 100%;
+  height: 100dvh;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(160deg, var(--sky-top), var(--sky-bottom));
   color: var(--text);
@@ -419,14 +420,23 @@ h1 {
 }
 
 /* ─── Game Screen ─── */
-#gameScreen { flex-direction: column; background: transparent; }
+#gameScreen {
+  flex-direction: column;
+  background: transparent;
+  height: 100svh; /* small viewport height — excludes browser chrome */
+  height: 100dvh; /* dynamic — preferred */
+  overflow: hidden;
+}
 
+/* ── HUD ── */
 #hud {
-  width: 100%; max-width: 800px;
+  width: 100%;
+  max-width: 800px;
   padding: 10px 20px 6px;
   display: flex; align-items: center;
   justify-content: space-between;
   gap: 12px; z-index: 20;
+  flex-shrink: 0;
 }
 .hud-block { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 70px; }
 .center-hud { flex: 1; }
@@ -446,22 +456,28 @@ h1 {
 }
 .lives { font-size: 1rem; letter-spacing: 2px; }
 
+/* ── Game Area ── */
 #gameArea {
-  flex: 1; width: 100%;
-  display: flex; align-items: center; justify-content: center;
+  flex: 1;
+  width: 100%;
+  display: flex; align-items: stretch; justify-content: center;
   position: relative;
+  min-height: 0;   /* critical: allows flex child to shrink below content size */
 }
 #gameCanvas {
   display: block;
   border-radius: 16px;
   box-shadow: 0 0 40px rgba(0,0,0,.5), inset 0 0 60px rgba(0,0,0,.2);
+  touch-action: none;
 }
 
-/* Mobile controls */
+/* ── Mobile controls ── */
 #mobileControls {
-  display: none; justify-content: space-between;
+  display: none;
+  justify-content: space-between;
   width: 100%; max-width: 380px;
   padding: 10px 16px 18px; gap: 16px;
+  flex-shrink: 0;
 }
 .ctrl-btn {
   flex: 1; padding: 18px;
@@ -473,16 +489,129 @@ h1 {
   -webkit-tap-highlight-color: transparent;
 }
 .ctrl-btn:active { background: rgba(255,255,255,.25); }
-
 @media (pointer: coarse) { #mobileControls { display: flex; } }
-@media (max-width: 500px) {
-  #mobileControls { display: flex; }
-  #countryLabel { font-size: .88rem; padding: 4px 10px; max-width: 155px; }
-  #score, #level { font-size: 1.4rem; }
-  .mode-btn { padding: 8px 4px; }
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE-FIRST  ≤ 600px
+   The game is designed for portrait phone here.
+   Goal: slim HUD → canvas fills screen → big control buttons.
+══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+  /* ── Screens ── */
+  .screen { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+  /* ── Start / Game-over / Leaderboard card ── */
+  .start-card {
+    width: 100vw;
+    min-height: 100svh;
+    border-radius: 0;
+    padding: 20px 16px 24px;
+    box-shadow: none;
+    justify-content: flex-start;
+  }
+
+  .globe-icon { font-size: 32px; margin-bottom: 2px; }
+  h1 { font-size: 1.6rem; letter-spacing: 3px; margin-bottom: 2px; }
+  .tagline { font-size: .76rem; margin-bottom: 10px; }
+
+  /* ── Mode buttons: 2×2 grid ── */
+  .mode-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .mode-btn { padding: 8px 6px; border-radius: 12px; }
+  .mode-icon  { font-size: 1.1rem; }
+  .mode-title { font-size: .72rem; }
+  .mode-desc  { font-size: .60rem; }
+
+  .mode-select  { margin-bottom: 10px; }
+  .region-select { margin-bottom: 10px; }
+  .region-btn { font-size: .67rem; padding: 4px 8px; }
+
+  .how-to { padding: 8px 12px; margin-bottom: 10px; }
+  .how-to li { font-size: .75rem; padding: 1px 0; }
+
+  .difficulty-select { margin-bottom: 10px; }
+  .diff-btn { padding: 8px 0; font-size: .82rem; }
+
+  .skin-select { margin-bottom: 10px; }
+  .skin-btn { min-width: 46px; padding: 6px 7px; }
+  .skin-icon { font-size: 1rem; }
+  .skin-name { font-size: .58rem; }
+
+  .primary-btn   { padding: 13px; font-size: .96rem; }
+  .secondary-btn { padding: 10px; font-size: .86rem; }
+  .sum-row { font-size: .82rem; }
+  .sum-row strong { font-size: .88rem; }
+
+  /* ── Game screen: ultra-compact HUD ── */
+  #gameScreen {
+    height: 100svh;
+    height: 100dvh;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  #hud {
+    padding: 4px 8px 3px;
+    gap: 4px;
+    max-width: 100%;
+  }
+  .hud-block { min-width: 44px; gap: 0; }
+  .hud-label { font-size: .52rem; letter-spacing: 1px; }
+  #score, #level { font-size: 1.1rem; }
+
+  #countryLabel {
+    font-size: .75rem;
+    padding: 3px 10px;
+    max-width: 36vw;
+    border-radius: 14px;
+  }
+  .mode-badge {
+    font-size: .52rem;
+    padding: 2px 6px;
+    letter-spacing: .8px;
+    margin-bottom: 2px;
+  }
+  .hud-bottom-row { gap: 6px; margin-top: 1px; }
+  .lives { font-size: .8rem; letter-spacing: 1px; }
+  .streak-display { font-size: .72rem; }
+  .icon-btn { width: 24px; height: 24px; font-size: .75rem; }
+  .hud-btn-row { gap: 3px; }
+
+  /* ── Canvas: full bleed ── */
+  #gameArea { align-items: stretch; }
+  #gameCanvas { border-radius: 0; box-shadow: none; width: 100% !important; }
+
+  /* ── Control buttons: full width, fat tap targets ── */
+  #mobileControls {
+    display: flex;
+    max-width: 100%;
+    padding: 6px 10px calc(10px + env(safe-area-inset-bottom, 0px));
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .ctrl-btn {
+    flex: 1;
+    padding: 0;
+    height: 60px;
+    font-size: 1.9rem;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Pause overlay ── */
+  .pause-card { padding: 24px 20px; }
+  .pause-card h2 { font-size: 1.4rem; }
+  .pause-card .primary-btn,
+  .pause-card .secondary-btn { width: 170px; }
+}
+
+/* ── Very small phones ≤ 375px ── */
+@media (max-width: 375px) {
+  h1 { font-size: 1.35rem; letter-spacing: 2px; }
   .mode-desc { display: none; }
-  .region-btn { font-size: .68rem; padding: 4px 7px; }
-  .start-card { padding: 20px 16px 18px; }
+  #countryLabel { font-size: .68rem; max-width: 32vw; }
+  #score, #level { font-size: 1rem; }
+  .region-btn { font-size: .62rem; padding: 3px 6px; }
+  .ctrl-btn { height: 54px; font-size: 1.7rem; }
 }
 
 /* ════════════════════════════════════════════════════════
@@ -672,12 +801,36 @@ h1 {
   display: block;
   flex: 1;
 }
+@media (max-width: 600px) {
+  #mapIframe { height: 55vh; }
+  .map-modal-card { border-radius: 16px; }
+  .map-modal-header { padding: 12px 14px; }
+}
 
 .learn-back-btn {
   flex-shrink: 0;
   margin-top: 10px;
   max-width: 320px;
   align-self: center;
+}
+@media (max-width: 600px) {
+  .learn-wrapper { padding: 0 10px 12px; }
+  .learn-header { padding: 14px 0 10px; }
+  .learn-header h2 { font-size: 1.25rem; }
+  .learn-sub { font-size: .78rem; margin-bottom: 8px; }
+  .learn-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+  }
+  .learn-card { padding: 10px 8px; min-height: 170px; }
+  .learn-flag { height: 44px; }
+  .learn-flag-img { height: 44px; max-width: 80px; }
+  .learn-country { font-size: .78rem; }
+  .learn-capital { font-size: .7rem; }
+  .learn-facts span { font-size: .58rem; padding: 2px 4px; }
+  .learn-filter-btn { font-size: .7rem; padding: 3px 10px; }
+  .learn-search-input { font-size: .85rem; padding: 8px 14px; }
+  .learn-back-btn { max-width: 100%; }
 }
 
 /* ════════════════════════════════════════════════════════
