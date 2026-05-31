@@ -708,34 +708,107 @@ function populateLearnScreen() {
 }
 
 // ── In-app Map Modal ──────────────────────────────────────────
-function openMapModal(countryName) {
+// ── Nominatim bbox cache so we only fetch once per country ──
+const MAP_BBOX_CACHE = {};
+
+// Some country names in our data differ from what Nominatim returns best results for
+const NOMINATIM_NAME_MAP = {
+  "UK":              "United Kingdom",
+  "Czech Republic":  "Czechia",
+  "North Macedonia": "Macedonia",
+  "South Korea":     "Republic of Korea",
+  "North Korea":     "Democratic People's Republic of Korea",
+  "DR Congo":        "Democratic Republic of the Congo",
+  "Ivory Coast":     "Côte d'Ivoire",
+  "Cape Verde":      "Cabo Verde",
+  "East Timor":      "Timor-Leste",
+  "Myanmar":         "Myanmar",
+  "Eswatini":        "Eswatini",
+  "Moldova":         "Republic of Moldova",
+};
+
+async function openMapModal(countryName) {
   const modal   = document.getElementById("mapModal");
   const iframe  = document.getElementById("mapIframe");
   const title   = document.getElementById("mapModalTitle");
   if (!modal || !iframe || !title) return;
+
   title.textContent = "🗺️ " + countryName;
-  // Use OSM embed search — works without lat/lon coordinates
-  iframe.src = "https://www.openstreetmap.org/export/embed.html?bbox=-180,-90,180,90&layer=mapnik&marker=0,0&query=" + encodeURIComponent(countryName);
+  // Show loader, hide old iframe content
+  const loader = document.getElementById("mapLoader");
+  if (loader) loader.classList.remove("hidden");
+  iframe.src = "about:blank";
   modal.classList.remove("hidden");
-  // Slight delay then update to real search
-  setTimeout(() => {
-    iframe.src = "https://www.openstreetmap.org/export/embed.html?query=" + encodeURIComponent(countryName);
-  }, 100);
+
+  // Hide loader once iframe finishes loading
+  const hideLoader = () => { if (loader) loader.classList.add("hidden"); };
+  iframe.onload = hideLoader;
+
+  try {
+    let bbox = MAP_BBOX_CACHE[countryName];
+
+    if (!bbox) {
+      // Use override name if we have one, else use the country name directly
+      const searchName = NOMINATIM_NAME_MAP[countryName] || countryName;
+      // Ask Nominatim for the country bounding box
+      const url = "https://nominatim.openstreetmap.org/search?q="
+        + encodeURIComponent(searchName)
+        + "&format=json&limit=1&featuretype=country";
+      const res  = await fetch(url, { headers: { "Accept-Language": "en" } });
+      const data = await res.json();
+
+      if (data && data[0] && data[0].boundingbox) {
+        const bb = data[0].boundingbox;
+        // Nominatim returns [south, north, west, east]
+        // OSM embed bbox param wants: west,south,east,north
+        bbox = {
+          west:  parseFloat(bb[2]),
+          south: parseFloat(bb[0]),
+          east:  parseFloat(bb[3]),
+          north: parseFloat(bb[1]),
+          lat:   parseFloat(data[0].lat),
+          lon:   parseFloat(data[0].lon),
+        };
+        MAP_BBOX_CACHE[countryName] = bbox;
+      }
+    }
+
+    title.textContent = "🗺️ " + countryName;   // remove loading indicator
+
+    if (bbox) {
+      // Add a small padding around the bbox so the country isn't edge-to-edge
+      const padLat = (bbox.north - bbox.south) * 0.08;
+      const padLon = (bbox.east  - bbox.west)  * 0.08;
+      const w = (bbox.west  - padLon).toFixed(5);
+      const s = (bbox.south - padLat).toFixed(5);
+      const e = (bbox.east  + padLon).toFixed(5);
+      const n = (bbox.north + padLat).toFixed(5);
+      // OSM embed: bbox=left,bottom,right,top (west,south,east,north)
+      iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${w},${s},${e},${n}&layer=mapnik&marker=${bbox.lat},${bbox.lon}`;
+    } else {
+      // Fallback: use a Google Maps search link inside the iframe isn't possible,
+      // so fall back to a world-level OSM view centred on the country name search
+      iframe.src = "https://www.openstreetmap.org/export/embed.html?bbox=-180,-85,180,85&layer=mapnik";
+    }
+
+  } catch (err) {
+    title.textContent = "🗺️ " + countryName;
+    // Network error fallback — basic world map
+    iframe.src = "https://www.openstreetmap.org/export/embed.html?bbox=-180,-85,180,85&layer=mapnik";
+  }
 }
 
-document.getElementById("mapModalClose").addEventListener("click", () => {
+function closeMapModal() {
   const modal  = document.getElementById("mapModal");
   const iframe = document.getElementById("mapIframe");
+  const loader = document.getElementById("mapLoader");
   if (modal)  modal.classList.add("hidden");
-  if (iframe) iframe.src = "";  // stop loading
-});
-
-// Close modal on backdrop click
+  if (iframe) { iframe.onload = null; iframe.src = ""; }
+  if (loader) loader.classList.remove("hidden"); // reset for next open
+}
+document.getElementById("mapModalClose").addEventListener("click", closeMapModal);
 document.getElementById("mapModal").addEventListener("click", e => {
-  if (e.target === document.getElementById("mapModal")) {
-    document.getElementById("mapModal").classList.add("hidden");
-    document.getElementById("mapIframe").src = "";
-  }
+  if (e.target === document.getElementById("mapModal")) closeMapModal();
 });
 
 // ── Learn search filter ───────────────────────────────────────

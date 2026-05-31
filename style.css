@@ -794,17 +794,45 @@ h1 {
   flex-shrink: 0;
 }
 .map-modal-close:hover { background: rgba(255,100,100,.2); color: #fff; }
+.map-iframe-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 #mapIframe {
   width: 100%; height: 440px;
   border: none;
   border-radius: 0 0 20px 20px;
   display: block;
   flex: 1;
+  position: relative;
+  z-index: 1;
+}
+.map-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,.6);
+  background: rgba(10,10,40,.95);
+  border-radius: 0 0 20px 20px;
+  z-index: 2;
+  letter-spacing: .5px;
+  animation: loaderPulse 1.4s ease-in-out infinite;
+}
+.map-loader.hidden { display: none; }
+@keyframes loaderPulse {
+  0%, 100% { opacity: .5; }
+  50%       { opacity: 1; }
 }
 @media (max-width: 600px) {
   #mapIframe { height: 55vh; }
   .map-modal-card { border-radius: 16px; }
   .map-modal-header { padding: 12px 14px; }
+  .map-loader { border-radius: 0 0 16px 16px; }
 }
 
 .learn-back-btn {
