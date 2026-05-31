@@ -230,8 +230,11 @@
         <span id="mapModalTitle" class="map-modal-title"></span>
         <button id="mapModalClose" class="map-modal-close" title="Close">✕</button>
       </div>
-      <iframe id="mapIframe" src="" frameborder="0" allowfullscreen
-              title="OpenStreetMap" loading="lazy"></iframe>
+      <div class="map-iframe-wrap">
+        <div id="mapLoader" class="map-loader">🗺️ Loading map…</div>
+        <iframe id="mapIframe" src="" frameborder="0" allowfullscreen
+                title="OpenStreetMap"></iframe>
+      </div>
     </div>
   </div>
 
