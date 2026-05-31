@@ -15,16 +15,12 @@
 
 html, body {
   width: 100%; height: 100%;
-  /* Use dynamic viewport height to avoid iOS address-bar overlap */
   height: 100dvh;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(160deg, var(--sky-top), var(--sky-bottom));
   color: var(--text);
   overflow: hidden;
   user-select: none;
-  /* Safe-area insets for notch / home indicator */
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-top: env(safe-area-inset-top);
 }
 
 /* ─── Stars background ─── */
@@ -427,17 +423,20 @@ h1 {
 #gameScreen {
   flex-direction: column;
   background: transparent;
-  /* Use dynamic viewport height to account for iOS address bar */
-  height: 100dvh;
-  height: 100vh; /* fallback */
+  height: 100svh; /* small viewport height — excludes browser chrome */
+  height: 100dvh; /* dynamic — preferred */
+  overflow: hidden;
 }
 
+/* ── HUD ── */
 #hud {
-  width: 100%; max-width: 800px;
+  width: 100%;
+  max-width: 800px;
   padding: 10px 20px 6px;
   display: flex; align-items: center;
   justify-content: space-between;
   gap: 12px; z-index: 20;
+  flex-shrink: 0;
 }
 .hud-block { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 70px; }
 .center-hud { flex: 1; }
@@ -457,26 +456,28 @@ h1 {
 }
 .lives { font-size: 1rem; letter-spacing: 2px; }
 
+/* ── Game Area ── */
 #gameArea {
-  flex: 1; width: 100%;
-  display: flex; align-items: center; justify-content: center;
+  flex: 1;
+  width: 100%;
+  display: flex; align-items: stretch; justify-content: center;
   position: relative;
+  min-height: 0;   /* critical: allows flex child to shrink below content size */
 }
 #gameCanvas {
   display: block;
   border-radius: 16px;
   box-shadow: 0 0 40px rgba(0,0,0,.5), inset 0 0 60px rgba(0,0,0,.2);
-  touch-action: none;   /* prevent scroll hijack during touch drag */
-}
-@media (max-width: 600px) {
-  #gameCanvas { border-radius: 0; box-shadow: none; }
+  touch-action: none;
 }
 
-/* Mobile controls */
+/* ── Mobile controls ── */
 #mobileControls {
-  display: none; justify-content: space-between;
+  display: none;
+  justify-content: space-between;
   width: 100%; max-width: 380px;
   padding: 10px 16px 18px; gap: 16px;
+  flex-shrink: 0;
 }
 .ctrl-btn {
   flex: 1; padding: 18px;
@@ -488,122 +489,129 @@ h1 {
   -webkit-tap-highlight-color: transparent;
 }
 .ctrl-btn:active { background: rgba(255,255,255,.25); }
-
-/* ── Always show mobile controls on touch devices ── */
 @media (pointer: coarse) { #mobileControls { display: flex; } }
 
-/* ══════════════════════════════════════════════════
-   MOBILE — ≤ 600px
-══════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   MOBILE-FIRST  ≤ 600px
+   The game is designed for portrait phone here.
+   Goal: slim HUD → canvas fills screen → big control buttons.
+══════════════════════════════════════════════════════════════ */
 @media (max-width: 600px) {
 
-  /* Show mobile controls */
-  #mobileControls { display: flex; }
+  /* ── Screens ── */
+  .screen { overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
-  /* ── Start / Game-over card ── */
+  /* ── Start / Game-over / Leaderboard card ── */
   .start-card {
-    padding: 16px 14px 16px;
-    border-radius: 18px;
     width: 100vw;
-    max-height: 100dvh;
+    min-height: 100svh;
     border-radius: 0;
+    padding: 20px 16px 24px;
     box-shadow: none;
+    justify-content: flex-start;
   }
 
-  /* Smaller globe + title */
-  .globe-icon { font-size: 36px; margin-bottom: 2px; }
-  h1 { font-size: 1.7rem; letter-spacing: 3px; margin-bottom: 2px; }
-  .tagline { font-size: .78rem; margin-bottom: 10px; }
+  .globe-icon { font-size: 32px; margin-bottom: 2px; }
+  h1 { font-size: 1.6rem; letter-spacing: 3px; margin-bottom: 2px; }
+  .tagline { font-size: .76rem; margin-bottom: 10px; }
 
-  /* ── Mode buttons: 2×2 grid on small screens ── */
-  .mode-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
+  /* ── Mode buttons: 2×2 grid ── */
+  .mode-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .mode-btn { padding: 8px 6px; border-radius: 12px; }
-  .mode-icon  { font-size: 1.2rem; }
-  .mode-title { font-size: .75rem; }
-  .mode-desc  { font-size: .62rem; }
+  .mode-icon  { font-size: 1.1rem; }
+  .mode-title { font-size: .72rem; }
+  .mode-desc  { font-size: .60rem; }
 
-  /* ── Region buttons: wrap tighter ── */
-  .region-btn { font-size: .68rem; padding: 4px 8px; }
+  .mode-select  { margin-bottom: 10px; }
+  .region-select { margin-bottom: 10px; }
+  .region-btn { font-size: .67rem; padding: 4px 8px; }
 
-  /* ── How to play ── */
-  .how-to { padding: 10px 12px; margin-bottom: 10px; }
-  .how-to li { font-size: .77rem; }
+  .how-to { padding: 8px 12px; margin-bottom: 10px; }
+  .how-to li { font-size: .75rem; padding: 1px 0; }
 
-  /* ── Difficulty ── */
+  .difficulty-select { margin-bottom: 10px; }
   .diff-btn { padding: 8px 0; font-size: .82rem; }
 
-  /* ── Skin selector ── */
-  .skin-btn { min-width: 48px; padding: 7px 8px; }
-  .skin-icon { font-size: 1.1rem; }
-  .skin-name { font-size: .6rem; }
+  .skin-select { margin-bottom: 10px; }
+  .skin-btn { min-width: 46px; padding: 6px 7px; }
+  .skin-icon { font-size: 1rem; }
+  .skin-name { font-size: .58rem; }
 
-  /* ── Primary / secondary buttons ── */
-  .primary-btn   { padding: 13px; font-size: .97rem; }
-  .secondary-btn { padding: 10px; font-size: .88rem; }
-
-  /* ── Score summary ── */
+  .primary-btn   { padding: 13px; font-size: .96rem; }
+  .secondary-btn { padding: 10px; font-size: .86rem; }
   .sum-row { font-size: .82rem; }
-  .sum-row strong { font-size: .9rem; }
+  .sum-row strong { font-size: .88rem; }
 
-  /* ── HUD ── */
-  #hud {
-    padding: 6px 10px 4px;
-    gap: 6px;
+  /* ── Game screen: ultra-compact HUD ── */
+  #gameScreen {
+    height: 100svh;
+    height: 100dvh;
+    padding-top: env(safe-area-inset-top, 0px);
   }
-  .hud-block { min-width: 50px; }
-  #score, #level { font-size: 1.3rem; }
-  .hud-label { font-size: .58rem; letter-spacing: 1px; }
+
+  #hud {
+    padding: 4px 8px 3px;
+    gap: 4px;
+    max-width: 100%;
+  }
+  .hud-block { min-width: 44px; gap: 0; }
+  .hud-label { font-size: .52rem; letter-spacing: 1px; }
+  #score, #level { font-size: 1.1rem; }
 
   #countryLabel {
-    font-size: .8rem;
+    font-size: .75rem;
     padding: 3px 10px;
-    max-width: 130px;
-    border-radius: 16px;
+    max-width: 36vw;
+    border-radius: 14px;
   }
   .mode-badge {
-    font-size: .58rem;
-    padding: 2px 8px;
-    letter-spacing: 1px;
+    font-size: .52rem;
+    padding: 2px 6px;
+    letter-spacing: .8px;
+    margin-bottom: 2px;
   }
-  .lives { font-size: .85rem; letter-spacing: 1px; }
-  .icon-btn { width: 26px; height: 26px; font-size: .82rem; }
-  .hud-btn-row { gap: 4px; }
+  .hud-bottom-row { gap: 6px; margin-top: 1px; }
+  .lives { font-size: .8rem; letter-spacing: 1px; }
+  .streak-display { font-size: .72rem; }
+  .icon-btn { width: 24px; height: 24px; font-size: .75rem; }
+  .hud-btn-row { gap: 3px; }
 
-  /* ── Mobile control buttons — bigger tap targets ── */
+  /* ── Canvas: full bleed ── */
+  #gameArea { align-items: stretch; }
+  #gameCanvas { border-radius: 0; box-shadow: none; width: 100% !important; }
+
+  /* ── Control buttons: full width, fat tap targets ── */
   #mobileControls {
+    display: flex;
     max-width: 100%;
-    padding: 8px 12px calc(14px + env(safe-area-inset-bottom, 0px));
-    gap: 12px;
+    padding: 6px 10px calc(10px + env(safe-area-inset-bottom, 0px));
+    gap: 10px;
+    flex-shrink: 0;
   }
   .ctrl-btn {
-    padding: 20px 0;
-    font-size: 1.8rem;
-    border-radius: 18px;
     flex: 1;
+    padding: 0;
+    height: 60px;
+    font-size: 1.9rem;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
   }
 
-  /* ── Pause card ── */
-  .pause-card { padding: 28px 24px; }
-  .pause-card h2 { font-size: 1.5rem; }
+  /* ── Pause overlay ── */
+  .pause-card { padding: 24px 20px; }
+  .pause-card h2 { font-size: 1.4rem; }
   .pause-card .primary-btn,
-  .pause-card .secondary-btn { width: 180px; }
+  .pause-card .secondary-btn { width: 170px; }
 }
 
-/* ══════════════════════════════════════════════════
-   VERY SMALL — ≤ 380px  (older / small-bezel phones)
-══════════════════════════════════════════════════ */
-@media (max-width: 380px) {
-  h1 { font-size: 1.4rem; letter-spacing: 2px; }
-  .mode-title { font-size: .7rem; }
-  .mode-desc  { display: none; }
-  #countryLabel { font-size: .72rem; max-width: 110px; padding: 3px 8px; }
-  #score, #level { font-size: 1.1rem; }
+/* ── Very small phones ≤ 375px ── */
+@media (max-width: 375px) {
+  h1 { font-size: 1.35rem; letter-spacing: 2px; }
+  .mode-desc { display: none; }
+  #countryLabel { font-size: .68rem; max-width: 32vw; }
+  #score, #level { font-size: 1rem; }
   .region-btn { font-size: .62rem; padding: 3px 6px; }
-  .ctrl-btn { font-size: 1.6rem; padding: 18px 0; }
+  .ctrl-btn { height: 54px; font-size: 1.7rem; }
 }
 
 /* ════════════════════════════════════════════════════════

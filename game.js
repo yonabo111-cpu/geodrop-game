@@ -495,6 +495,29 @@ function escapeHtml(s) {
   return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
+// ════════════════════════════════════════════════════════════
+//  VIBRATION  — unlock on first touch, then use throughout
+// ════════════════════════════════════════════════════════════
+let vibrationUnlocked = false;
+
+function vibrate(pattern) {
+  if (!navigator.vibrate) return;
+  if (!vibrationUnlocked) return;        // wait for unlock
+  try { navigator.vibrate(pattern); } catch(e) {}
+}
+
+// Unlock vibration on very first user touch anywhere on the page
+function unlockVibration() {
+  if (vibrationUnlocked) return;
+  vibrationUnlocked = true;
+  // Send a zero-length pulse to "warm up" the vibrator API
+  try { navigator.vibrate(0); } catch(e) {}
+  document.removeEventListener("touchstart", unlockVibration, true);
+  document.removeEventListener("pointerdown", unlockVibration, true);
+}
+document.addEventListener("touchstart",  unlockVibration, { once: true, capture: true, passive: true });
+document.addEventListener("pointerdown", unlockVibration, { once: true, capture: true, passive: true });
+
 // ── Button wire-ups ─────────────────────────────────────────
 document.getElementById("startBtn").addEventListener("click", startGame);
 document.getElementById("restartBtn").addEventListener("click", startGame);
@@ -591,8 +614,8 @@ canvas.addEventListener("mouseleave", () => { mouseDrag = false; });
 //  Base reference width: 380px (typical phone portrait).
 // ════════════════════════════════════════════════════════════
 function scaledFont(basePx) {
-  // 380px → 1× ; 760px → clamp at 1.4×
-  const scale = Math.min(1.4, Math.max(0.75, canvas.width / 380));
+  // 360px phone portrait → ~0.95×; 390px Pixel → 1×; 760px desktop → 1.4× max
+  const scale = Math.min(1.4, Math.max(0.7, canvas.width / 390));
   return Math.round(basePx * scale);
 }
 
@@ -600,15 +623,23 @@ function scaledFont(basePx) {
 //  CANVAS RESIZE
 // ════════════════════════════════════════════════════════════
 function resizeCanvas() {
-  const area    = document.getElementById("gameArea");
   const isMobile = window.innerWidth <= 600;
-  // On mobile use full area width; on desktop cap at 760px
-  const maxW = isMobile
-    ? area.clientWidth
-    : Math.min(area.clientWidth - 20, 760);
-  const maxH = area.clientHeight - (isMobile ? 0 : 10);
-  canvas.width  = Math.max(maxW, 240);
-  canvas.height = Math.max(maxH, 300);
+
+  if (isMobile) {
+    // On mobile: measure exact pixels taken by HUD + controls, give the rest to canvas
+    const hud      = document.getElementById("hud");
+    const controls = document.getElementById("mobileControls");
+    const hudH     = hud.getBoundingClientRect().height      || 0;
+    const ctrlH    = controls.getBoundingClientRect().height || 0;
+    const W = window.innerWidth;
+    const H = Math.max(200, window.innerHeight - hudH - ctrlH);
+    canvas.width  = Math.floor(W);
+    canvas.height = Math.floor(H);
+  } else {
+    const area = document.getElementById("gameArea");
+    canvas.width  = Math.min(area.clientWidth  - 20, 760);
+    canvas.height = Math.max(area.clientHeight - 10, 300);
+  }
 }
 window.addEventListener("resize", () => {
   resizeCanvas();
@@ -1071,8 +1102,7 @@ function catchCapsule(cap) {
     // Basket bounce-up on correct catch
     state.basket.squish = -0.35;
     SFX.catch();
-    // Haptic feedback on mobile — short double-tap for success
-    if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
+    vibrate([40, 30, 40]);   // ✅ correct catch
 
     spawnParticles(cap.x, cap.y, cap.color, 22, true);
     const streakTag = state.streak >= 2 ? ` 🔥x${state.streak}` : "";
@@ -1104,8 +1134,7 @@ function catchCapsule(cap) {
     // Basket squish-down on wrong catch
     state.basket.squish = 0.45;
     SFX.miss();
-    // Haptic feedback — single longer buzz for wrong answer
-    if (navigator.vibrate) navigator.vibrate(120);
+    vibrate(120);            // ❌ wrong catch
 
     spawnParticles(cap.x, cap.y, "#ff6b6b", 14, false);
     loseLife(wrongCatchMsg());
@@ -1115,8 +1144,7 @@ function catchCapsule(cap) {
 }
 
 function loseLife(msg) {
-  // Haptic: strong double-buzz for losing a life
-  if (navigator.vibrate) navigator.vibrate([80, 50, 180]);
+  vibrate([80, 50, 180]);   // 💔 lose a life
   state.lives--;
   state.shake        = 18;
   state.streak       = 0;
@@ -1582,7 +1610,7 @@ function drawFlash(W, H) {
   const alpha    = progress < 0.3 ? progress / 0.3 : 1;
 
   ctx.globalAlpha  = alpha;
-  ctx.font         = "bold 26px 'Segoe UI', sans-serif";
+  ctx.font         = `bold ${scaledFont(22)}px 'Segoe UI', sans-serif`;
   ctx.textAlign    = "center";
   ctx.textBaseline = "middle";
   ctx.shadowColor  = color;
