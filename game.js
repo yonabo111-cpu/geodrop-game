@@ -702,7 +702,6 @@ function populateLearnScreen() {
         <span title="Currency">💰 ${c.currency}</span>
       </div>
       ${weakBadge}
-      <button class="learn-map-btn" onclick="openMapModal('${c.country.replace(/'/g, "\\'")}')" title="View on map">🗺️ Map</button>
     </div>`;
   }).join("");
 }
@@ -917,7 +916,7 @@ function startGame() {
     speedMult:     1.0,
     basket: {
       x:      canvas.width / 2,
-      y:      canvas.height - 52,
+      y:      canvas.height - (initialMode === "flagMode" ? scaledFont(58) : scaledFont(44)) - 12,
       w:      initialMode === "flagMode" ? scaledFont(110) : scaledFont(140),
       h:      initialMode === "flagMode" ? scaledFont(58)  : scaledFont(44),
       speed:  Math.round(scaledFont(7)),
@@ -1122,7 +1121,7 @@ function dropOneCapsule() {
   const text    = item.text;
   const flag    = item.flag || "🌐";
   const correct = correctAnswer();
-  const w       = measureCapsule(flag + " " + text);
+  const w       = measureCapsule(text);
   const h       = Math.round(scaledFont(40));   // capsule height scales with canvas
   const margin  = Math.max(30, Math.round(canvas.width * 0.08));
   const usableW = canvas.width - margin * 2;
@@ -1513,18 +1512,14 @@ function drawCapsules() {
     ctx.ellipse(x, y - h * 0.15, w * 0.35, h * 0.22, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Flag above text
+    // Text centered in capsule
     ctx.shadowColor  = "rgba(0,0,0,0.5)";
     ctx.shadowBlur   = 3;
-    const fs = scaledFont(13);
-    ctx.font         = `${fs}px 'Segoe UI', sans-serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle    = "#fff";
-    ctx.fillText(flag, x, y - h * 0.15);
-
-    ctx.font      = `bold ${scaledFont(11)}px 'Segoe UI', sans-serif`;
-    ctx.fillText(text, x, y + h * 0.23);
+    ctx.font      = `bold ${scaledFont(13)}px 'Segoe UI', sans-serif`;
+    ctx.fillText(text, x, y);
     ctx.shadowBlur = 0;
 
     ctx.restore();
